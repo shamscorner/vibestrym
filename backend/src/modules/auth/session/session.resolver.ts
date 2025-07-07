@@ -35,6 +35,7 @@ export class SessionResolver {
 		return this.sessionService.login(req, input, userAgent)
 	}
 
+	@Authorization()
 	@Mutation(() => Boolean, { name: 'logoutUser' })
 	async logout(@Context() { req }: GqlContext) {
 		return this.sessionService.logout(req)

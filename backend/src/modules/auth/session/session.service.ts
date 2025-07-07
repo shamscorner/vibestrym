@@ -12,7 +12,12 @@ import type { SessionData } from 'express-session'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { RedisService } from '@/src/core/redis/redis.service'
 import { getSessionMetadata } from '@/src/shared/utils/session-metadata.util'
-import { destroySession, saveSession } from '@/src/shared/utils/session.util'
+import {
+	destroySession,
+	getSessionIdWithSessionFolder,
+	getUserSessionsKey,
+	saveSession
+} from '@/src/shared/utils/session.util'
 
 import { LoginInput } from './inputs/login.input'
 
@@ -35,46 +40,54 @@ export class SessionService {
 			throw new NotFoundException('User not found in session')
 		}
 
-		// Use pattern matching to find sessions for this user
-		const sessionFolder = this.getSessionFolder()
-		const pattern = `${sessionFolder}*`
-		const keys = await this.redisService.keys(pattern)
+		// Use Redis set to track user sessions for O(1) lookup
+		const userSessionsKey = getUserSessionsKey(userId)
+		const sessionIds = await this.redisService.smembers(userSessionsKey)
 
+		if (sessionIds.length === 0) return []
+
+		// Use batch operations with error handling
+		const sessionKeys = sessionIds.map(id =>
+			getSessionIdWithSessionFolder(this.configService, id)
+		)
+		const pipeline = this.redisService.pipeline()
+		sessionKeys.forEach(key => pipeline.get(key))
+
+		const results = await pipeline.exec()
 		const userSessions: SessionDataInRedis[] = []
 
-		// Use pipeline for better performance when fetching multiple keys
-		const pipeline = this.redisService.pipeline()
-		keys.forEach(key => pipeline.get(key))
-		const results = await pipeline.exec()
+		if (!results) return []
 
-		for (let i = 0; i < keys.length; i++) {
-			const sessionData = results?.[i]?.[1] as string | null
+		for (let i = 0; i < results.length; i++) {
+			const [error, sessionData] = results[i]
 
-			if (sessionData) {
-				const session = JSON.parse(sessionData) as SessionData
-
-				if (session.userId === userId) {
+			if (!error && sessionData) {
+				try {
+					const session = JSON.parse(
+						sessionData as string
+					) as SessionData
 					userSessions.push({
 						...session,
-						id: keys[i].replace(sessionFolder, '')
+						id: sessionIds[i]
 					})
+				} catch {
+					// Remove invalid session from tracking set
+					await this.redisService.srem(userSessionsKey, sessionIds[i])
 				}
+			} else if (error) {
+				// Remove non-existent session from tracking set
+				await this.redisService.srem(userSessionsKey, sessionIds[i])
 			}
 		}
 
-		const convertToTimestamp = (date?: string | number | Date) => {
-			if (!date) return 0
-			if (typeof date === 'string') return new Date(date).getTime()
-			if (date instanceof Date) return date.getTime()
-			return date
-		}
+		// Sort by timestamp (more efficient comparison)
+		userSessions.sort((a, b) => {
+			const aTime = this.getTimestamp(a.createdAt)
+			const bTime = this.getTimestamp(b.createdAt)
+			return bTime - aTime
+		})
 
-		userSessions.sort(
-			(a, b) =>
-				convertToTimestamp(b.createdAt) -
-				convertToTimestamp(a.createdAt)
-		)
-
+		// Filter out current session
 		return userSessions.filter(session => session.id !== req.session.id)
 	}
 
@@ -112,11 +125,21 @@ export class SessionService {
 
 		const metadata = getSessionMetadata(request, userAgent)
 
-		return saveSession(request, user, metadata)
+		return saveSession(this.redisService, request, user, metadata)
 	}
 
 	async logout(request: Request) {
-		return destroySession(request, this.configService)
+		const userId = request.session.userId
+		if (!userId) return true
+
+		console.log('Destroying session for user:', userId)
+
+		return destroySession(
+			this.redisService,
+			request,
+			userId,
+			this.configService
+		)
 	}
 
 	clearSession(req: Request) {
@@ -130,7 +153,17 @@ export class SessionService {
 		if (req.session.id === id) {
 			throw new ConflictException('Cannot delete the current session')
 		}
-		await this.redisService.del(this.getSessionIdWithSessionFolder(id))
+
+		// Remove from session storage and user tracking
+		const userId = req.session.userId
+		const pipeline = this.redisService.pipeline()
+		pipeline.del(getSessionIdWithSessionFolder(this.configService, id))
+
+		if (userId) {
+			pipeline.srem(getUserSessionsKey(userId), id)
+		}
+
+		await pipeline.exec()
 		return true
 	}
 
@@ -138,16 +171,15 @@ export class SessionService {
 		sessionId: string
 	): Promise<SessionData | null> {
 		const sessionData = await this.redisService.get(
-			this.getSessionIdWithSessionFolder(sessionId)
+			getSessionIdWithSessionFolder(this.configService, sessionId)
 		)
 		return sessionData ? (JSON.parse(sessionData) as SessionData) : null
 	}
 
-	private getSessionFolder() {
-		return this.configService.getOrThrow<string>('SESSION_FOLDER')
-	}
-
-	private getSessionIdWithSessionFolder(sessionId: string): string {
-		return `${this.getSessionFolder()}${sessionId}`
+	private getTimestamp(date?: string | number | Date): number {
+		if (!date) return 0
+		if (typeof date === 'number') return date
+		if (typeof date === 'string') return new Date(date).getTime()
+		return date.getTime()
 	}
 }
