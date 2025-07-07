@@ -9,9 +9,10 @@ import { CreateUserInput } from './inputs/create-user.input'
 export class AccountService {
 	constructor(private readonly prismaService: PrismaService) {}
 
-	async findAll() {
-		const users = await this.prismaService.user.findMany()
-		return users
+	async me(id: string) {
+		return this.prismaService.user.findUnique({
+			where: { id }
+		})
 	}
 
 	async create(input: CreateUserInput) {
