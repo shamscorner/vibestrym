@@ -8,6 +8,7 @@ import { verify } from 'argon2'
 import type { Request } from 'express'
 
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import { getSessionMetadata } from '@/src/shared/utils/session-metadata.util'
 import { destroySession, saveSession } from '@/src/shared/utils/session.util'
 
 import { LoginInput } from './inputs/login.input'
@@ -19,7 +20,7 @@ export class SessionService {
 		private readonly configService: ConfigService
 	) {}
 
-	public async login(request: Request, input: LoginInput) {
+	public async login(request: Request, input: LoginInput, userAgent: string) {
 		const { login, password } = input
 
 		const user = await this.prismaService.user.findFirst({
@@ -41,7 +42,9 @@ export class SessionService {
 			throw new UnauthorizedException('Invalid password')
 		}
 
-		return saveSession(request, user)
+		const metadata = getSessionMetadata(request, userAgent)
+
+		return saveSession(request, user, metadata)
 	}
 
 	public async logout(request: Request) {
