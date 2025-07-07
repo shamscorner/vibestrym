@@ -35,12 +35,20 @@ export class SessionService {
 			throw new NotFoundException('User not found in session')
 		}
 
-		const keys = await this.redisService.keys('*')
+		// Use pattern matching to find sessions for this user
+		const sessionFolder = this.getSessionFolder()
+		const pattern = `${sessionFolder}*`
+		const keys = await this.redisService.keys(pattern)
 
 		const userSessions: SessionDataInRedis[] = []
 
-		for (const key of keys) {
-			const sessionData = await this.redisService.get(key)
+		// Use pipeline for better performance when fetching multiple keys
+		const pipeline = this.redisService.pipeline()
+		keys.forEach(key => pipeline.get(key))
+		const results = await pipeline.exec()
+
+		for (let i = 0; i < keys.length; i++) {
+			const sessionData = results?.[i]?.[1] as string | null
 
 			if (sessionData) {
 				const session = JSON.parse(sessionData) as SessionData
@@ -48,7 +56,7 @@ export class SessionService {
 				if (session.userId === userId) {
 					userSessions.push({
 						...session,
-						id: key.split(':')[1]
+						id: keys[i].replace(sessionFolder, '')
 					})
 				}
 			}
@@ -135,7 +143,11 @@ export class SessionService {
 		return sessionData ? (JSON.parse(sessionData) as SessionData) : null
 	}
 
+	private getSessionFolder() {
+		return this.configService.getOrThrow<string>('SESSION_FOLDER')
+	}
+
 	private getSessionIdWithSessionFolder(sessionId: string): string {
-		return `${this.configService.getOrThrow<string>('SESSION_FOLDER')}${sessionId}`
+		return `${this.getSessionFolder()}${sessionId}`
 	}
 }
