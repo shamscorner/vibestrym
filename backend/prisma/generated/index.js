@@ -135,7 +135,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/shamscorner/Projects/real-world-projects/bdlive/backend/prisma/generated",
+      "value": "/Users/shamscorner/Projects/real-world-projects/bdlive/bdlive/backend/prisma/generated",
       "fromEnvVar": null
     },
     "config": {
@@ -149,11 +149,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/shamscorner/Projects/real-world-projects/bdlive/backend/prisma/schema.prisma",
+    "sourceFilePath": "/Users/shamscorner/Projects/real-world-projects/bdlive/bdlive/backend/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "..",
@@ -163,6 +163,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
