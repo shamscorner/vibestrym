@@ -14,24 +14,24 @@ countries.registerLocale(CountriesData as LocaleData)
 import DeviceDetector = require('device-detector-js')
 
 export function getSessionMetadata(
-	req: Request,
+	request: Request,
 	userAgent: string
 ): SessionMetadata {
 	let ip: string | undefined
 
 	if (IS_DEV_ENV) {
 		ip = '118.179.72.209'
-	} else if (req.headers['cf-connecting-ip']) {
-		ip = Array.isArray(req.headers['cf-connecting-ip'])
-			? req.headers['cf-connecting-ip'][0]
-			: req.headers['cf-connecting-ip']
-	} else if (req.headers['x-forwarded-for']) {
+	} else if (request.headers['cf-connecting-ip']) {
+		ip = Array.isArray(request.headers['cf-connecting-ip'])
+			? request.headers['cf-connecting-ip'][0]
+			: request.headers['cf-connecting-ip']
+	} else if (request.headers['x-forwarded-for']) {
 		ip =
-			typeof req.headers['x-forwarded-for'] === 'string'
-				? req.headers['x-forwarded-for'].split(',')[0]
-				: req.headers['x-forwarded-for'][0]
+			typeof request.headers['x-forwarded-for'] === 'string'
+				? request.headers['x-forwarded-for'].split(',')[0]
+				: request.headers['x-forwarded-for'][0]
 	} else {
-		ip = req.ip
+		ip = request.ip
 	}
 
 	const location = lookup(ip || '')
