@@ -51,10 +51,10 @@ export function saveSession(
 }
 
 export function destroySession(
+	configService: ConfigService,
 	redisService: RedisService,
 	request: Request,
-	userId: string,
-	configService: ConfigService
+	userId: string
 ) {
 	// Store sessionId to use after session destruction
 	const sessionId = request.session.id
@@ -83,4 +83,26 @@ export function destroySession(
 				})
 		})
 	})
+}
+
+export async function clearUserSessions(
+	configService: ConfigService,
+	redisService: RedisService,
+	userId: string
+) {
+	const userSessionsKey = getUserSessionsKey(userId)
+
+	// Get all session IDs for the user
+	const sessionIds = await redisService.smembers(userSessionsKey)
+
+	// Delete each individual session
+	if (sessionIds.length > 0) {
+		const sessionKeys = sessionIds.map(sessionId =>
+			getSessionIdWithSessionFolder(configService, sessionId)
+		)
+		await redisService.del(...sessionKeys)
+	}
+
+	// Delete the user's session set
+	await redisService.del(userSessionsKey)
 }

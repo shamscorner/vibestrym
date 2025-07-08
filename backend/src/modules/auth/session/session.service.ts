@@ -171,10 +171,10 @@ export class SessionService {
 		console.log('Destroying session for user:', userId)
 
 		return destroySession(
+			this.configService,
 			this.redisService,
 			request,
-			userId,
-			this.configService
+			userId
 		)
 	}
 

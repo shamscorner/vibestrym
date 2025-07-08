@@ -6,6 +6,7 @@ import type { SentMessageInfo } from 'nodemailer'
 
 import { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 
+import { DeactivateTemplate } from '../templates/deactivate.template'
 import { PasswordRecoveryTemplate } from '../templates/password-recovery.template'
 import { VerificationTemplate } from '../templates/verification.template'
 
@@ -36,6 +37,15 @@ export class MailService {
 		)
 
 		return this.sendMail(email, 'Password Reset', html)
+	}
+
+	async sendDeactivateToken(
+		email: string,
+		token: string,
+		metadata: SessionMetadata
+	): Promise<SentMessageInfo> {
+		const html = await render(DeactivateTemplate({ token, metadata }))
+		return this.sendMail(email, 'Account Deactivation', html)
 	}
 
 	private sendMail(email: string, subject: string, html: string) {
