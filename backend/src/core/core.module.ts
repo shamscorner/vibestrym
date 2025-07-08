@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 
 import { AuthModule } from '../modules/auth/auth.module'
+import { CronModule } from '../modules/cron/cron.module'
 import { MailModule } from '../modules/libs/mail/mail.module'
 import { IS_DEV_ENV } from '../shared/utils/is-dev.util'
 
@@ -26,6 +27,7 @@ import { RedisModule } from './redis/redis.module'
 		PrismaModule,
 		RedisModule,
 		MailModule,
+		CronModule,
 		AuthModule
 	],
 	controllers: [],

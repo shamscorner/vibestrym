@@ -6,6 +6,7 @@ import type { SentMessageInfo } from 'nodemailer'
 
 import { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 
+import { AccountDeletionTemplate } from '../templates/account-deletion.template'
 import { DeactivateTemplate } from '../templates/deactivate.template'
 import { PasswordRecoveryTemplate } from '../templates/password-recovery.template'
 import { VerificationTemplate } from '../templates/verification.template'
@@ -35,7 +36,6 @@ export class MailService {
 		const html = await render(
 			PasswordRecoveryTemplate({ domain, token, metadata })
 		)
-
 		return this.sendMail(email, 'Password Reset', html)
 	}
 
@@ -46,6 +46,12 @@ export class MailService {
 	): Promise<SentMessageInfo> {
 		const html = await render(DeactivateTemplate({ token, metadata }))
 		return this.sendMail(email, 'Account Deactivation', html)
+	}
+
+	async sendAccountDeletion(email: string): Promise<SentMessageInfo> {
+		const domain = this.configService.getOrThrow<string>('ALLOWED_ORIGIN')
+		const html = await render(AccountDeletionTemplate({ domain }))
+		return this.sendMail(email, 'Account Deleted', html)
 	}
 
 	private sendMail(email: string, subject: string, html: string) {
