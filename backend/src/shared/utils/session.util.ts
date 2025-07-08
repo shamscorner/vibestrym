@@ -44,8 +44,8 @@ export function saveSession(
 
 			redisService
 				.sadd(`${USERS_SESSIONS_KEY}:${user.id}`, request.session.id)
-				.then(() => resolve(user))
-				.catch(() => resolve(user))
+				.then(() => resolve({ user }))
+				.catch(() => resolve({ user }))
 		})
 	})
 }

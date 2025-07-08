@@ -12,6 +12,7 @@ import type { SessionData } from 'express-session'
 
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { RedisService } from '@/src/core/redis/redis.service'
+import { generateTotp } from '@/src/shared/utils/generate-totp.util'
 import { getSessionMetadata } from '@/src/shared/utils/session-metadata.util'
 import {
 	destroySession,
@@ -106,7 +107,7 @@ export class SessionService {
 	}
 
 	async login(request: Request, input: LoginInput, userAgent: string) {
-		const { login, password } = input
+		const { login, password, pin } = input
 
 		const user = await this.prismaService.user.findFirst({
 			where: {
@@ -133,6 +134,29 @@ export class SessionService {
 			throw new BadRequestException(
 				'Account not verified. Please check your email for confirmation'
 			)
+		}
+
+		console.log('is TOTP enabled:', user.isTotpEnabled)
+		if (user.isTotpEnabled) {
+			console.log('pin', pin)
+			if (!pin) {
+				return {
+					user: null,
+					message: 'Code required to complete login'
+				}
+			}
+
+			const totp = generateTotp(
+				this.configService,
+				user.email,
+				user.totpSecret || undefined
+			)
+
+			const delta = totp.validate({ token: pin })
+
+			if (delta === null) {
+				throw new BadRequestException('Invalid code')
+			}
 		}
 
 		const metadata = getSessionMetadata(request, userAgent)

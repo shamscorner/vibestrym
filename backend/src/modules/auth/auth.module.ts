@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common'
 import { AccountModule } from './account/account.module'
 import { PasswordRecoveryModule } from './password-recovery/password-recovery.module'
 import { SessionModule } from './session/session.module'
+import { TotpModule } from './totp/totp.module'
 import { VerificationModule } from './verification/verification.module'
 
 @Module({
@@ -10,7 +11,8 @@ import { VerificationModule } from './verification/verification.module'
 		AccountModule,
 		SessionModule,
 		VerificationModule,
-		PasswordRecoveryModule
+		PasswordRecoveryModule,
+		TotpModule
 	]
 })
 export class AuthModule {}
