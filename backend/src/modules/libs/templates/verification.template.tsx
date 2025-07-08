@@ -1,5 +1,6 @@
 import { Section, Text } from '@react-email/components'
 import * as React from 'react'
+import { CheckCircleIcon } from 'lucide-react'
 
 import { EmailButton, EmailFooter, EmailHeader, EmailLayout, TroubleshootingSection } from './components'
 
@@ -14,7 +15,7 @@ export const VerificationTemplate = ({ domain, token }: VerificationTemplateProp
   return (
     <EmailLayout preview="Account Verification">
       <EmailHeader
-        icon="✓"
+        icon={<CheckCircleIcon />}
         title="Verify Your Email"
         subtitle="Almost there! Just one more step to get started."
       />

@@ -1,5 +1,6 @@
 import { Section, Text } from '@react-email/components'
 import * as React from 'react'
+import { LockIcon } from 'lucide-react'
 
 import type { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 import { EmailButton, EmailFooter, EmailHeader, EmailLayout, RequestInfoSection, TroubleshootingSection } from './components'
@@ -16,7 +17,7 @@ export function PasswordRecoveryTemplate({ domain, token, metadata }: PasswordRe
   return (
     <EmailLayout preview="Password Reset">
       <EmailHeader
-        icon="🔒"
+        icon={<LockIcon />}
         title="Password Reset"
         subtitle="Secure your account with a new password"
       />
