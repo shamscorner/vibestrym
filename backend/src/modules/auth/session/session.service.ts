@@ -1,4 +1,5 @@
 import {
+	BadRequestException,
 	ConflictException,
 	Injectable,
 	NotFoundException,
@@ -19,6 +20,8 @@ import {
 	saveSession
 } from '@/src/shared/utils/session.util'
 
+import { VerificationService } from '../verification/verification.service'
+
 import { LoginInput } from './inputs/login.input'
 
 type SessionDataInRedis = SessionData & {
@@ -30,7 +33,8 @@ export class SessionService {
 	constructor(
 		private readonly prismaService: PrismaService,
 		private readonly configService: ConfigService,
-		private readonly redisService: RedisService
+		private readonly redisService: RedisService,
+		private readonly verificationService: VerificationService
 	) {}
 
 	async findByUser(req: Request) {
@@ -121,6 +125,14 @@ export class SessionService {
 
 		if (!isValidPassword) {
 			throw new UnauthorizedException('Invalid password')
+		}
+
+		if (!user.isEmailVerified) {
+			await this.verificationService.sendVerificationToken(user)
+
+			throw new BadRequestException(
+				'Account not verified. Please check your email for confirmation'
+			)
 		}
 
 		const metadata = getSessionMetadata(request, userAgent)

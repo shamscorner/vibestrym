@@ -13,7 +13,7 @@ export function getMailerConfig(configService: ConfigService): MailerOptions {
 			}
 		},
 		defaults: {
-			from: `"BDLive" ${configService.getOrThrow<string>('MAIL_LOGIN')}`
+			from: `"BDLive" ${configService.getOrThrow<string>('MAIL_FROM')}`
 		}
 	}
 }
