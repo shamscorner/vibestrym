@@ -79,6 +79,7 @@ type Mutation {
   changeProfileAvatar(avatar: Upload!): Boolean!
   changeProfileInfo(data: ChangeProfileInfoInput!): Boolean!
   changeStreamInfo(data: ChangeStreamInfoInput!): Boolean!
+  changeStreamThumbnail(thumbnail: Upload!): Boolean!
   clearSessionCookie: Boolean!
   createSocialLink(data: SocialLinkInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
@@ -91,6 +92,7 @@ type Mutation {
   removeProfileAvatar: Boolean!
   removeSession(id: String!): Boolean!
   removeSocialLink(id: String!): Boolean!
+  removeStreamThumbnail: Boolean!
   reorderSocialLinks(list: [SocialLinkOrderInput!]!): Boolean!
   resetPassword(data: ResetPasswordInput!): Boolean!
   updateSocialLink(data: SocialLinkInput!, id: String!): Boolean!

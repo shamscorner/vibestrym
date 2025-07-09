@@ -1,9 +1,9 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 import GqlUpload from 'graphql-upload/Upload.mjs'
-import * as sharp from 'sharp'
 
 import type { User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import { uploadImage } from '@/src/shared/utils/upload.util'
 
 import { StorageService } from '../../libs/storage/storage.service'
 
@@ -21,47 +21,19 @@ export class ProfileService {
 	) {}
 
 	async changeAvatar(user: User, file: GqlUpload['file']) {
-		if (!file) {
-			throw new Error('No file provided')
-		}
-
-		if (user.avatar) {
-			await this.storageService.remove(user.avatar)
-		}
-
-		const chunks: Buffer[] = []
-
-		for await (const chunk of file.createReadStream()) {
-			chunks.push(chunk as Buffer)
-		}
-
-		const buffer = Buffer.concat(chunks)
-
-		const fileName = `/channels/${user.username}.webp`
-
-		if (file.filename && file.filename.endsWith('.gif')) {
-			const processedBuffer = await sharp(buffer, { animated: true })
-				.resize(512, 512)
-				.webp()
-				.toBuffer()
-
-			await this.storageService.upload(
-				processedBuffer,
-				fileName,
-				'image/webp'
-			)
-		} else {
-			const processedBuffer = await sharp(buffer)
-				.resize(512, 512)
-				.webp()
-				.toBuffer()
-
-			await this.storageService.upload(
-				processedBuffer,
-				fileName,
-				'image/webp'
-			)
-		}
+		const fileName = await uploadImage(
+			this.storageService,
+			file,
+			{
+				path: `/channels`,
+				name: user.username,
+				size: {
+					width: 512,
+					height: 512
+				}
+			},
+			user.avatar
+		)
 
 		await this.prismaService.user.update({
 			where: {

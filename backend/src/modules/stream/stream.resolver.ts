@@ -1,8 +1,11 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs'
+import GqlUpload from 'graphql-upload/Upload.mjs'
 
 import { User } from '@/prisma/generated'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
+import { FileValidationPipe } from '@/src/shared/pipes/file-validation.pipe'
 
 import { ChangeStreamInfoInput } from './inputs/change-stream-info.input'
 import { FiltersInput } from './inputs/filters.input'
@@ -32,5 +35,21 @@ export class StreamResolver {
 		@Args('data') input: ChangeStreamInfoInput
 	) {
 		return this.streamService.changeInfo(user, input)
+	}
+
+	@Authorization()
+	@Mutation(() => Boolean, { name: 'changeStreamThumbnail' })
+	async changeThumbnail(
+		@Authorized() user: User,
+		@Args('thumbnail', { type: () => GraphQLUpload }, FileValidationPipe)
+		thumbnail: GqlUpload['file']
+	) {
+		return this.streamService.changeThumbnail(user, thumbnail)
+	}
+
+	@Authorization()
+	@Mutation(() => Boolean, { name: 'removeStreamThumbnail' })
+	public async removeThumbnail(@Authorized() user: User) {
+		return this.streamService.removeThumbnail(user)
 	}
 }
