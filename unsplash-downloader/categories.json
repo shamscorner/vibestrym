@@ -1,0 +1,20 @@
+[
+    { "title": "Fan Q&A", "slug": "fan-qa" },
+    { "title": "Creative Collab", "slug": "creative-collab" },
+    { "title": "Game Night", "slug": "game-night" },
+    { "title": "Tutorial Time", "slug": "tutorial-time" },
+    { "title": "Live Reacts", "slug": "live-reacts" },
+    { "title": "Behind the Scenes", "slug": "behind-the-scenes" },
+    { "title": "Ask Me Anything", "slug": "ask-me-anything" },
+    { "title": "Challenge Accepted", "slug": "challenge-accepted" },
+    { "title": "Story Time", "slug": "story-time" },
+    { "title": "Jam Session", "slug": "jam-session" },
+    { "title": "Fitness Fun", "slug": "fitness-fun" },
+    { "title": "Cooking Class", "slug": "cooking-class" },
+    { "title": "Art Attack", "slug": "art-attack" },
+    { "title": "Book Club", "slug": "book-club" },
+    { "title": "Travel Talk", "slug": "travel-talk" },
+    { "title": "Tech Talk", "slug": "tech-talk" },
+    { "title": "Movie Night", "slug": "movie-night" },
+    { "title": "Meditation Moment", "slug": "meditation-moment" }
+]

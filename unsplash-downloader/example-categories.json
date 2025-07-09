@@ -1,0 +1,10 @@
+[
+    { "title": "Nature Photography", "slug": "nature-photography" },
+    { "title": "Urban Architecture", "slug": "urban-architecture" },
+    { "title": "Food & Culinary", "slug": "food-culinary" },
+    { "title": "Travel & Adventure", "slug": "travel-adventure" },
+    { "title": "Business & Technology", "slug": "business-technology" },
+    { "title": "Health & Wellness", "slug": "health-wellness" },
+    { "title": "Abstract Art", "slug": "abstract-art" },
+    { "title": "Minimalism", "slug": "minimalism" }
+]
