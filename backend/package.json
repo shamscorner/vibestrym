@@ -20,6 +20,7 @@
 		"test:e2e": "jest --config ./test/jest-e2e.json",
 		"db:push": "prisma db push",
 		"db:studio": "prisma studio",
+		"db:seed": "ts-node src/core/prisma/prisma.seed.ts",
 		"ngrok:start": "ngrok http http://localhost:4000"
 	},
 	"dependencies": {

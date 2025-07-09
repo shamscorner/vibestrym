@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import GqlUpload from 'graphql-upload/Upload.mjs'
 import { AccessToken } from 'livekit-server-sdk'
 
-import type { Prisma, Stream, User } from '@/prisma/generated'
+import type { Prisma, User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { uploadImage } from '@/src/shared/utils/upload.util'
 
@@ -38,7 +38,8 @@ export class StreamService {
 				...whereClause
 			},
 			include: {
-				user: true
+				user: true,
+				category: true
 			},
 			orderBy: {
 				createdAt: 'desc'
@@ -60,45 +61,48 @@ export class StreamService {
 		if (total === 0) return []
 
 		const requestedCount = Math.min(4, total)
-		const streams: Stream[] = []
 		const usedIndices = new Set<number>()
 
-		while (streams.length < requestedCount) {
+		// Generate all unique random indices upfront
+		while (usedIndices.size < requestedCount) {
 			const randomSkip = Math.floor(Math.random() * total)
-
-			if (!usedIndices.has(randomSkip)) {
-				usedIndices.add(randomSkip)
-
-				const stream = await this.prismaService.stream.findFirst({
-					where: {
-						user: {
-							isDeactivated: false
-						}
-					},
-					include: {
-						user: true
-					},
-					skip: randomSkip
-				})
-
-				if (stream) {
-					streams.push(stream)
-				}
-			}
+			usedIndices.add(randomSkip)
 		}
 
-		return streams
+		// Fetch all streams in parallel
+		const streamPromises = Array.from(usedIndices).map(skip =>
+			this.prismaService.stream.findFirst({
+				where: {
+					user: {
+						isDeactivated: false
+					}
+				},
+				include: {
+					user: true,
+					category: true
+				},
+				skip
+			})
+		)
+
+		const streams = await Promise.all(streamPromises)
+		return streams.filter(Boolean) // Remove any null results
 	}
 
 	async changeInfo(user: User, input: ChangeStreamInfoInput) {
-		const { title } = input
+		const { title, categoryId } = input
 
 		await this.prismaService.stream.update({
 			where: {
 				userId: user.id
 			},
 			data: {
-				title
+				title,
+				category: {
+					connect: {
+						id: categoryId
+					}
+				}
 			}
 		})
 
@@ -226,6 +230,14 @@ export class StreamService {
 				{
 					user: {
 						username: {
+							contains: searchTerm,
+							mode: 'insensitive'
+						}
+					}
+				},
+				{
+					category: {
+						title: {
 							contains: searchTerm,
 							mode: 'insensitive'
 						}
