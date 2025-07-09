@@ -10,6 +10,7 @@ const IMAGE_WIDTH = parseInt(process.env.IMAGE_WIDTH) || 285;
 const IMAGE_HEIGHT = parseInt(process.env.IMAGE_HEIGHT) || 380;
 const DOWNLOAD_DELAY = parseInt(process.env.DOWNLOAD_DELAY) || 2000;
 const DEFAULT_CATEGORIES_FILE = process.env.CATEGORIES_FILE || './categories.json';
+const OUTPUT_FOLDER = process.env.OUTPUT_FOLDER || 'downloads';
 
 /**
  * Load categories from a JSON file
@@ -55,13 +56,13 @@ async function downloadImage(url, filename) {
         const arrayBuffer = await response.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
-        // Create downloads directory if it doesn't exist
-        const downloadsDir = path.join(__dirname, 'downloads');
-        if (!fs.existsSync(downloadsDir)) {
-            fs.mkdirSync(downloadsDir);
+        // Create output directory if it doesn't exist
+        const outputDir = path.join(__dirname, OUTPUT_FOLDER);
+        if (!fs.existsSync(outputDir)) {
+            fs.mkdirSync(outputDir, { recursive: true });
         }
 
-        const filePath = path.join(downloadsDir, filename);
+        const filePath = path.join(outputDir, filename);
         fs.writeFileSync(filePath, buffer);
 
         console.log(`✅ Downloaded: ${filename}`);
@@ -106,7 +107,7 @@ async function downloadAllCategoryThumbnails(categories, categoriesFile = DEFAUL
     console.log(`📂 Using categories from: ${categoriesFile}`);
     console.log(`🚀 Starting download of ${categories.length} category thumbnails...`);
     console.log(`📏 Target size: ${IMAGE_WIDTH} × ${IMAGE_HEIGHT}`);
-    console.log(`📁 Images will be saved to: ./downloads/\n`);
+    console.log(`📁 Images will be saved to: ./${OUTPUT_FOLDER}/\n`);
 
     const results = {
         successful: [],
@@ -175,7 +176,7 @@ async function downloadAllCategoryThumbnails(categories, categoriesFile = DEFAUL
         results.failed.forEach(title => console.log(`  - ${title}`));
     }
 
-    console.log(`\n📁 Check the ./downloads/ folder for your images!`);
+    console.log(`\n📁 Check the ./${OUTPUT_FOLDER}/ folder for your images!`);
 }
 
 /**
