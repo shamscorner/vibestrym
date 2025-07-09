@@ -54,7 +54,12 @@ export class AccountService {
 				username,
 				email,
 				password: await hash(password),
-				displayName: username // Default display name is the username
+				displayName: username, // Default display name is the username
+				stream: {
+					create: {
+						title: `Stream ${username}`
+					}
+				}
 			}
 		})
 
