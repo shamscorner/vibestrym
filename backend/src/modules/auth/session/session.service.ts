@@ -136,7 +136,6 @@ export class SessionService {
 			)
 		}
 
-		console.log('is TOTP enabled:', user.isTotpEnabled)
 		if (user.isTotpEnabled) {
 			console.log('pin', pin)
 			if (!pin) {

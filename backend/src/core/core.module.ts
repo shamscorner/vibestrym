@@ -6,6 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { AuthModule } from '../modules/auth/auth.module'
 import { CronModule } from '../modules/cron/cron.module'
 import { MailModule } from '../modules/libs/mail/mail.module'
+import { StorageModule } from '../modules/libs/storage/storage.module'
 import { IS_DEV_ENV } from '../shared/utils/is-dev.util'
 
 import { getGraphQLConfig } from './config/graphql.config'
@@ -27,6 +28,7 @@ import { RedisModule } from './redis/redis.module'
 		PrismaModule,
 		RedisModule,
 		MailModule,
+		StorageModule,
 		CronModule,
 		AuthModule
 	],
