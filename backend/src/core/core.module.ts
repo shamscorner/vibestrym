@@ -5,6 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql'
 
 import { AuthModule } from '../modules/auth/auth.module'
 import { CronModule } from '../modules/cron/cron.module'
+import { FollowModule } from '../modules/follow/follow.module'
 import { LivekitModule } from '../modules/libs/livekit/livekit.module'
 import { MailModule } from '../modules/libs/mail/mail.module'
 import { StorageModule } from '../modules/libs/storage/storage.module'
@@ -41,7 +42,8 @@ import { RedisModule } from './redis/redis.module'
 		CronModule,
 		AuthModule,
 		StreamModule,
-		WebhookModule
+		WebhookModule,
+		FollowModule
 	],
 	controllers: [],
 	providers: []
