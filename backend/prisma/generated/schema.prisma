@@ -41,6 +41,11 @@ model User {
   stream       Stream?
   chatMessages ChatMessage[]
 
+  telegramId String? @unique @map("telegram_id")
+
+  notifications        Notification[]
+  notificationSettings NotificationSettings?
+
   followers  Follow[] @relation(name: "followers")
   followings Follow[] @relation(name: "followings")
 
@@ -70,6 +75,7 @@ enum TokenType {
   EMAIL_VERIFY
   PASSWORD_RESET
   DEACTIVATE_ACCOUNT
+  TELEGRAM_AUTH
 
   @@map("token_types")
 }
@@ -88,6 +94,16 @@ model Token {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("tokens")
+}
+
+enum NotificationType {
+  STREAM_START
+  NEW_FOLLOWER
+  NEW_SPONSORSHIP
+  ENABLE_TWO_FACTOR
+  VERIFIED_CHANNEL
+
+  @@map("notification_types")
 }
 
 model Stream {
@@ -169,4 +185,35 @@ model Follow {
   @@index([followerId])
   @@index([followingId])
   @@map("follows")
+}
+
+model Notification {
+  id String @id @default(uuid())
+
+  message String
+  type    NotificationType
+  isRead  Boolean          @default(false) @map("is_read")
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("notifications")
+}
+
+model NotificationSettings {
+  id String @id @default(uuid())
+
+  siteNotifications     Boolean @default(true) @map("site_notifications")
+  telegramNotifications Boolean @default(false) @map("telegram_notifications")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("notification_settings")
 }

@@ -9,6 +9,7 @@ import { FollowModule } from '../modules/follow/follow.module'
 import { LivekitModule } from '../modules/libs/livekit/livekit.module'
 import { MailModule } from '../modules/libs/mail/mail.module'
 import { StorageModule } from '../modules/libs/storage/storage.module'
+import { NotificationModule } from '../modules/notification/notification.module'
 import { StreamModule } from '../modules/stream/stream.module'
 import { WebhookModule } from '../modules/webhook/webhook.module'
 import { IS_DEV_ENV } from '../shared/utils/is-dev.util'
@@ -43,7 +44,8 @@ import { RedisModule } from './redis/redis.module'
 		AuthModule,
 		StreamModule,
 		WebhookModule,
-		FollowModule
+		FollowModule,
+		NotificationModule
 	],
 	controllers: [],
 	providers: []
