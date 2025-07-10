@@ -4,6 +4,7 @@ import { Stream, User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 
 import { LivekitService } from '../libs/livekit/livekit.service'
+import { TelegramService } from '../libs/telegram/telegram.service'
 import { NotificationService } from '../notification/notification.service'
 
 @Injectable()
@@ -13,7 +14,8 @@ export class WebhookService {
 	constructor(
 		private readonly prismaService: PrismaService,
 		private readonly livekitService: LivekitService,
-		private readonly notificationService: NotificationService
+		private readonly notificationService: NotificationService,
+		private readonly telegramService: TelegramService
 	) {}
 
 	async receiveWebhookLivekit(body: string, authorization: string) {
@@ -102,6 +104,24 @@ export class WebhookService {
 
 		if (notificationPromises.length > 0) {
 			await Promise.all(notificationPromises)
+		}
+
+		// telegram notifications
+		const telegramPromises = followers
+			.filter(
+				follow =>
+					follow.follower.notificationSettings
+						?.telegramNotifications && follow.follower.telegramId
+			)
+			.map(follow =>
+				this.telegramService.sendStreamStart(
+					follow.follower.telegramId || '',
+					user
+				)
+			)
+
+		if (telegramPromises.length > 0) {
+			await Promise.all(telegramPromises)
 		}
 	}
 }

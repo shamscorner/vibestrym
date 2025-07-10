@@ -18,6 +18,7 @@ import {
 } from '@/src/shared/utils/session.util'
 
 import { MailService } from '../../libs/mail/mail.service'
+import { TelegramService } from '../../libs/telegram/telegram.service'
 
 import { DeactivateAccountInput } from './inputs/deactivate-account.input'
 
@@ -27,7 +28,8 @@ export class DeactivateService {
 		private readonly prismaService: PrismaService,
 		private readonly redisService: RedisService,
 		private readonly configService: ConfigService,
-		private readonly mailService: MailService
+		private readonly mailService: MailService,
+		private readonly telegramService: TelegramService
 	) {}
 
 	public async deactivate(
@@ -122,6 +124,18 @@ export class DeactivateService {
 			deactivateToken.token,
 			metadata
 		)
+
+		if (
+			deactivateToken.user &&
+			deactivateToken.user.notificationSettings?.telegramNotifications &&
+			deactivateToken.user.telegramId
+		) {
+			void this.telegramService.sendDeactivateToken(
+				deactivateToken.user.telegramId,
+				deactivateToken.token,
+				metadata
+			)
+		}
 
 		return true
 	}

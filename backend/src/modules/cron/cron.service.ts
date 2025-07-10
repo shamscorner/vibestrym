@@ -7,6 +7,7 @@ import { PrismaService } from '@/src/core/prisma/prisma.service'
 
 import { MailService } from '../libs/mail/mail.service'
 import { StorageService } from '../libs/storage/storage.service'
+import { TelegramService } from '../libs/telegram/telegram.service'
 
 @Injectable()
 export class CronService {
@@ -15,7 +16,8 @@ export class CronService {
 	constructor(
 		private readonly prismaService: PrismaService,
 		private readonly mailService: MailService,
-		private readonly storageService: StorageService
+		private readonly storageService: StorageService,
+		private readonly telegramService: TelegramService
 	) {}
 
 	// @Cron('*/10 * * * * *')
@@ -32,12 +34,26 @@ export class CronService {
 				deactivatedAt: {
 					lte: sevenDaysAgo
 				}
+			},
+			include: {
+				notificationSettings: true,
+				stream: true
 			}
 		})
 
 		for (const user of deactivatedAccounts) {
 			await this.mailService.sendAccountDeletion(user.email)
+
+			// Send Telegram notification if enabled
+			if (
+				user.notificationSettings?.telegramNotifications &&
+				user.telegramId
+			) {
+				await this.telegramService.sendAccountDeletion(user.telegramId)
+			}
+
 			void this.deleteUserAvatar(user)
+			void this.deleteStreamThumbnail(user.stream?.thumbnailUrl)
 			this.logger.log(`Sent account deletion email to ${user.email}`)
 		}
 
@@ -58,5 +74,10 @@ export class CronService {
 	private async deleteUserAvatar(user: User) {
 		if (!user.avatar) return
 		await this.storageService.remove(user.avatar)
+	}
+
+	private async deleteStreamThumbnail(thumbnailUrl?: string | null) {
+		if (!thumbnailUrl) return
+		await this.storageService.remove(thumbnailUrl)
 	}
 }
