@@ -21,6 +21,9 @@ export function getGraphQLConfig(
 			// more plugins can be added here
 		],
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		context: ({ req, res }) => ({ req, res })
+		context: ({ req, res }) => ({ req, res }),
+		subscriptions: {
+			'graphql-ws': true
+		}
 	}
 }
