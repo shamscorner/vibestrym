@@ -1,13 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common'
 
-import { User } from '@/prisma/generated'
 // import { Cron, CronExpression } from '@nestjs/schedule'
 
+import { User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 
 import { MailService } from '../libs/mail/mail.service'
 import { StorageService } from '../libs/storage/storage.service'
 import { TelegramService } from '../libs/telegram/telegram.service'
+import { NotificationService } from '../notification/notification.service'
 
 @Injectable()
 export class CronService {
@@ -17,11 +18,12 @@ export class CronService {
 		private readonly prismaService: PrismaService,
 		private readonly mailService: MailService,
 		private readonly storageService: StorageService,
-		private readonly telegramService: TelegramService
+		private readonly telegramService: TelegramService,
+		private readonly notificationService: NotificationService
 	) {}
 
-	// @Cron('*/10 * * * * *')
-	// @Cron(CronExpression.EVERY_10_SECONDS) // enable & increase it on production
+	// @Cron(CronExpression.EVERY_10_SECONDS) // only for testing purposes
+	// @Cron(CronExpression.EVERY_DAY_AT_1AM) // runs every day at 1 AM
 	async deleteDeactivatedAccounts() {
 		this.logger.log('Running cron job to delete deactivated accounts')
 
@@ -50,11 +52,15 @@ export class CronService {
 				user.telegramId
 			) {
 				await this.telegramService.sendAccountDeletion(user.telegramId)
+				this.logger.log(
+					`Sent account deletion Telegram message to ${user.telegramId}`
+				)
 			}
 
 			void this.deleteUserAvatar(user)
 			void this.deleteStreamThumbnail(user.stream?.thumbnailUrl)
 			this.logger.log(`Sent account deletion email to ${user.email}`)
+			await this.throttleExecution()
 		}
 
 		await this.prismaService.user.deleteMany({
@@ -71,6 +77,123 @@ export class CronService {
 		)
 	}
 
+	// @Cron(CronExpression.EVERY_10_SECONDS) // only for testing purposes
+	// @Cron(CronExpression.EVERY_4_HOURS)
+	async notifyUsersEnableTwoFactor() {
+		this.logger.log(
+			'Running cron job to notify users to enable two-factor authentication'
+		)
+
+		const users = await this.prismaService.user.findMany({
+			where: {
+				isTotpEnabled: false
+			},
+			include: {
+				notificationSettings: true
+			}
+		})
+
+		for (const user of users) {
+			await this.mailService.sendEnableTwoFactor(user.email)
+
+			if (user.notificationSettings?.siteNotifications) {
+				await this.notificationService.createEnableTwoFactor(user.id)
+				this.logger.log(
+					`Sent enable two-factor site notification to ${user.id}`
+				)
+			}
+
+			if (
+				user.notificationSettings?.telegramNotifications &&
+				user.telegramId
+			) {
+				await this.telegramService.sendEnableTwoFactor(user.telegramId)
+				this.logger.log(
+					`Sent enable two-factor Telegram message to ${user.telegramId}`
+				)
+			}
+
+			this.logger.log(`Sent enable two-factor email to ${user.email}`)
+
+			await this.throttleExecution()
+		}
+	}
+
+	// @Cron(CronExpression.EVERY_10_SECONDS) // only for testing purposes
+	// @Cron(CronExpression.EVERY_DAY_AT_1AM)
+	async verifyChannels() {
+		this.logger.log('Running cron job to verify channels')
+
+		const users = await this.prismaService.user.findMany({
+			include: {
+				notificationSettings: true
+			}
+		})
+
+		for (const user of users) {
+			const followersCount = await this.prismaService.follow.count({
+				where: {
+					followingId: user.id
+				}
+			})
+
+			if (followersCount > 0 && !user.isVerified) {
+				await this.prismaService.user.update({
+					where: {
+						id: user.id
+					},
+					data: {
+						isVerified: true
+					}
+				})
+
+				await this.mailService.sendVerifyChannel(user.email)
+
+				if (user.notificationSettings?.siteNotifications) {
+					await this.notificationService.createVerifyChannel(user.id)
+					this.logger.log(
+						`Sent channel verification site notification to ${user.id}`
+					)
+				}
+
+				if (
+					user.notificationSettings?.telegramNotifications &&
+					user.telegramId
+				) {
+					await this.telegramService.sendVerifyChannel(
+						user.telegramId
+					)
+					this.logger.log(
+						`Sent channel verification Telegram message to ${user.telegramId}`
+					)
+				}
+
+				this.logger.log(
+					`Sent channel verification email to ${user.email}`
+				)
+
+				await this.throttleExecution()
+			}
+		}
+	}
+
+	// @Cron(CronExpression.EVERY_10_SECONDS) // only for testing purposes
+	// @Cron(CronExpression.EVERY_DAY_AT_1AM)
+	async deleteOldNotifications() {
+		const sevenDaysAgo = new Date()
+		sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+
+		await this.prismaService.notification.deleteMany({
+			where: {
+				createdAt: {
+					lte: sevenDaysAgo
+				}
+			}
+		})
+
+		this.logger.log(`Deleted notifications older than 7 days`)
+	}
+
 	private async deleteUserAvatar(user: User) {
 		if (!user.avatar) return
 		await this.storageService.remove(user.avatar)
@@ -79,5 +202,11 @@ export class CronService {
 	private async deleteStreamThumbnail(thumbnailUrl?: string | null) {
 		if (!thumbnailUrl) return
 		await this.storageService.remove(thumbnailUrl)
+	}
+
+	private async throttleExecution() {
+		// Throttle to avoid rate limits
+		// Change this to a different value on production
+		await new Promise(resolve => setTimeout(resolve, 2000))
 	}
 }

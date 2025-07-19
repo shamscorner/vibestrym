@@ -8,8 +8,10 @@ import { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 
 import { AccountDeletionTemplate } from '../templates/account-deletion.template'
 import { DeactivateTemplate } from '../templates/deactivate.template'
+import { EnableTwoFactorTemplate } from '../templates/enable-two-factor.template'
 import { PasswordRecoveryTemplate } from '../templates/password-recovery.template'
 import { VerificationTemplate } from '../templates/verification.template'
+import { VerifyChannelTemplate } from '../templates/verify-channel.template'
 
 @Injectable()
 export class MailService {
@@ -52,6 +54,17 @@ export class MailService {
 		const domain = this.configService.getOrThrow<string>('ALLOWED_ORIGIN')
 		const html = await render(AccountDeletionTemplate({ domain }))
 		return this.sendMail(email, 'Account Deleted', html)
+	}
+
+	async sendEnableTwoFactor(email: string): Promise<SentMessageInfo> {
+		const domain = this.configService.getOrThrow<string>('ALLOWED_ORIGIN')
+		const html = await render(EnableTwoFactorTemplate({ domain }))
+		return this.sendMail(email, 'Secure Your Account', html)
+	}
+
+	async sendVerifyChannel(email: string): Promise<SentMessageInfo> {
+		const html = await render(VerifyChannelTemplate())
+		return this.sendMail(email, 'Your Channel is Verified', html)
 	}
 
 	private sendMail(email: string, subject: string, html: string) {

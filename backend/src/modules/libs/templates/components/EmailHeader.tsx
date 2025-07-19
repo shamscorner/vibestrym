@@ -14,7 +14,7 @@ export const EmailHeader = ({ icon, title, subtitle, danger = false }: EmailHead
     <Section className={cn(`bg-[#18B9AE] px-8 py-12 text-center`, danger ? 'bg-red-500' : 'bg-[#18B9AE]')}>
       <div className='w-16 h-16 bg-white/20 rounded-full mx-auto mb-6 flex items-center justify-center'>
         <div className='w-8 h-8 bg-white rounded-full flex items-center justify-center'>
-          <div className='text-[#18B9AE] w-5 h-5 flex items-center justify-center'>
+          <div className={cn('w-5 h-5 flex items-center justify-center', danger ? 'text-red-500' : 'text-[#18B9AE]')}>
             {icon}
           </div>
         </div>
