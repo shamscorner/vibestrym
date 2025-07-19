@@ -5,6 +5,7 @@ import { FollowModel } from '@/src/modules/follow/models/follow.model'
 import { NotificationSettingsModel } from '@/src/modules/notification/models/notification-settings.model'
 import { NotificationModel } from '@/src/modules/notification/models/notification.model'
 import { StreamModel } from '@/src/modules/stream/models/stream.model'
+import { PlanModel } from '@/src/modules/stream/sponsorship/plan/models/plan.model'
 
 import { SocialLinkModel } from '../../profile/models/social-link.model'
 
@@ -69,6 +70,9 @@ export class UserModel implements User {
 
 	@Field(() => NotificationSettingsModel)
 	public notificationSettings: NotificationSettingsModel
+
+	@Field(() => [PlanModel])
+	public sponsorshipPlans: PlanModel[]
 
 	@Field(() => Date)
 	public createdAt: Date
