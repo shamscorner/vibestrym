@@ -5,6 +5,7 @@ import {
 	HttpCode,
 	HttpStatus,
 	Post,
+	RawBody,
 	UnauthorizedException
 } from '@nestjs/common'
 
@@ -16,7 +17,7 @@ export class WebhookController {
 
 	@Post('livekit')
 	@HttpCode(HttpStatus.OK)
-	public async receiveWebhookLivekit(
+	async receiveWebhookLivekit(
 		@Body() body: string,
 		@Headers('Authorization') authorization: string
 	) {
@@ -24,5 +25,25 @@ export class WebhookController {
 			throw new UnauthorizedException('Authorization header is missing')
 		}
 		return this.webhookService.receiveWebhookLivekit(body, authorization)
+	}
+
+	@Post('stripe')
+	@HttpCode(HttpStatus.OK)
+	async receiveWebhookStripe(
+		@RawBody() rawBody: string,
+		@Headers('stripe-signature') signature: string
+	) {
+		if (!signature) {
+			throw new UnauthorizedException(
+				'Stripe signature is missing in the header'
+			)
+		}
+
+		const event = this.webhookService.constructStripeEvent(
+			rawBody,
+			signature
+		)
+
+		await this.webhookService.receiveWebhookStripe(event)
 	}
 }

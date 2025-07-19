@@ -1,4 +1,4 @@
-import type { User } from '@/prisma/generated'
+import type { SponsorshipPlan, User } from '@/prisma/generated'
 import type { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 
 export const MESSAGES = {
@@ -81,5 +81,12 @@ export const MESSAGES = {
 		`<b>🌟 Amazing news! Your channel is now verified</b>\n\n` +
 		`Guess what? Your channel just got the official verification badge!\n\n` +
 		`This badge shows everyone your channel is the real deal and helps build trust with your viewers.\n\n` +
-		`Thanks for being part of the BDLive family and keep creating awesome content!`
+		`Thanks for being part of the BDLive family and keep creating awesome content!`,
+
+	newSponsorship: (plan: SponsorshipPlan, sponsor: User) =>
+		`<b>🎉 Great news! You've got a new Sponsorship</b>\n\n` +
+		`You've received a new sponsorship for the plan <b>${plan.title}</b>.\n` +
+		`💰 Amount: <b>${plan.price} ₽</b>\n` +
+		`👤 Sponsor: <a href="https://bdlive.com/${sponsor.username}">${sponsor.displayName}</a>\n` +
+		`📅 Date: <b>${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</b>`
 }
