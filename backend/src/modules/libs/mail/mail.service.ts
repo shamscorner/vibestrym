@@ -6,12 +6,12 @@ import type { SentMessageInfo } from 'nodemailer'
 
 import { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 
-import { AccountDeletionTemplate } from '../templates/account-deletion.template'
-import { DeactivateTemplate } from '../templates/deactivate.template'
-import { EnableTwoFactorTemplate } from '../templates/enable-two-factor.template'
-import { PasswordRecoveryTemplate } from '../templates/password-recovery.template'
-import { VerificationTemplate } from '../templates/verification.template'
-import { VerifyChannelTemplate } from '../templates/verify-channel.template'
+import { AccountDeletionTemplate } from './templates/account-deletion.template'
+import { DeactivateTemplate } from './templates/deactivate.template'
+import { EnableTwoFactorTemplate } from './templates/enable-two-factor.template'
+import { PasswordRecoveryTemplate } from './templates/password-recovery.template'
+import { VerificationTemplate } from './templates/verification.template'
+import { VerifyChannelTemplate } from './templates/verify-channel.template'
 
 @Injectable()
 export class MailService {
