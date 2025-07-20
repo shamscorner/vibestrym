@@ -8,6 +8,9 @@
     "rules": {
       "nursery": {
         "noUnknownAtRule": "off"
+      },
+      "style": {
+        "noNestedTernary": "off"
       }
     }
   }

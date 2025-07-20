@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { captureException } from '@sentry/nextjs';
 import { CircleCheckIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -51,6 +52,12 @@ export function CreateAccountForm({
       setIsSuccess(true);
     },
     onError: (error) => {
+      captureException(error, {
+        extra: {
+          action: 'create-account',
+          variables: form.getValues(),
+        },
+      });
       toast.error(error.message || t('errorMessage'));
     },
   });
