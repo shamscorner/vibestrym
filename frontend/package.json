@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
+    "dev": "graphql-codegen --config graphql.config.ts && next dev --turbopack",
+    "build": "graphql-codegen --config graphql.config.ts && next build",
     "start": "next start",
     "lint": "next lint",
     "format": "npx ultracite format",
