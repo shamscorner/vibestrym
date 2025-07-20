@@ -32,6 +32,15 @@
       "googleButton": "Login with Google",
       "loginText": "Don't have an account?",
       "loginLink": "Log in"
+    },
+    "verify": {
+      "title": "Verify your BDLive account",
+      "description": "Almost there! Just verify your email to start streaming.",
+      "errorAlert": {
+        "title": "Verification failed",
+        "description": "We couldn't verify your account. Please try again or contact support."
+      },
+      "loginAgain": "Log in again"
     }
   }
 }
