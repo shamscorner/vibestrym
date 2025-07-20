@@ -52,13 +52,14 @@ export function CreateAccountForm({
       setIsSuccess(true);
     },
     onError: (error) => {
+      setIsSuccess(false);
+      toast.error(error.message || t('errorMessage'));
       captureException(error, {
         extra: {
           action: 'create-account',
           variables: form.getValues(),
         },
       });
-      toast.error(error.message || t('errorMessage'));
     },
   });
 
@@ -175,7 +176,7 @@ export function CreateAccountForm({
         </div>
         <div className="text-center text-sm">
           {t('loginText')}{' '}
-          <Link className="underline underline-offset-4" href="/">
+          <Link className="underline underline-offset-4" href="/account/login">
             {t('loginLink')}
           </Link>
         </div>
