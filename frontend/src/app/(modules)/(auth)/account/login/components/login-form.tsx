@@ -143,7 +143,7 @@ export function LoginForm({
                       <FormLabel>{t('password.label')}</FormLabel>
                       <Link
                         className="ml-auto text-sm underline-offset-4 hover:underline"
-                        href="/"
+                        href="/account/recovery/reset-password"
                       >
                         {t('forgotPassword')}
                       </Link>
