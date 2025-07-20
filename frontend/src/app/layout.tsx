@@ -4,7 +4,7 @@ import './globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import type { ReactNode } from 'react';
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from '@/components/ui/common/sonner';
 import { ApolloClientProvider } from '@/providers/ApolloClientProvider';
 import { ThemeProvider } from '@/providers/theme-provider';
 
