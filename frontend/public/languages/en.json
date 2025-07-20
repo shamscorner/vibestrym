@@ -1,6 +1,37 @@
 {
   "home": {
     "title": "Welcome to BDLive",
-    "description": "Your one-stop streaming platform for easier access to live events and shows."
+    "description": "Your go-to streaming spot for catching live events, shows, tutorials, funny moments and more easily!"
+  },
+  "auth": {
+    "register": {
+      "title": "Create your BDLive account",
+      "description": "Join our community to start streaming and sharing your favorite moments.",
+      "heading": "Sign up on BDLive",
+      "backButtonLabel": "Already got an account? Sign in",
+      "username": {
+        "label": "Username",
+        "description": "You can always change it later."
+      },
+      "email": {
+        "label": "Email",
+        "description": "We might send you important account updates."
+      },
+      "password": {
+        "label": "Password",
+        "description": "Gotta be at least 8 characters long!"
+      },
+      "submitButton": "Sign up",
+      "successAlert": {
+        "title": "Check your inbox!",
+        "description": "We've sent a verification email. If you don't see it, peek in your spam folder."
+      },
+      "errorMessage": "Oops! Something went wrong creating your account.",
+      "passwordRecovery": "Forgot your password?",
+      "socialDivider": "Or continue with",
+      "googleButton": "Login with Google",
+      "loginText": "Don't have an account?",
+      "loginLink": "Log in"
+    }
   }
 }

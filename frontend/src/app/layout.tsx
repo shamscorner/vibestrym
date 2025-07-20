@@ -3,6 +3,8 @@ import { Geist } from 'next/font/google';
 import './globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
+import type { ReactNode } from 'react';
+import { Toaster } from '@/components/ui/sonner';
 import { ApolloClientProvider } from '@/providers/ApolloClientProvider';
 import { ThemeProvider } from '@/providers/theme-provider';
 
@@ -19,7 +21,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   const locale = await getLocale();
   const messages = await getMessages();
@@ -37,7 +39,8 @@ export default async function RootLayout({
               disableTransitionOnChange
               enableSystem
             >
-              {children}
+              <main>{children}</main>
+              <Toaster />
             </ThemeProvider>
           </NextIntlClientProvider>
         </ApolloClientProvider>
