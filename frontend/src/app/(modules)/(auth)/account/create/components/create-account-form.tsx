@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { GoogleIcon } from '@/components/icons/google-icon';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/common/alert';
 import { Button } from '@/components/ui/common/button';
 import {
   Form,
@@ -82,7 +82,7 @@ export function CreateAccountForm({
         className={cn('flex flex-col gap-6', className)}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col items-center gap-2 text-center">
+        <div className='mb-6 flex flex-col items-center gap-2 text-center'>
           <h1 className="font-bold text-2xl">{t('heading')}</h1>
           <p className="text-balance text-muted-foreground text-sm">
             {t('description')}
@@ -130,15 +130,7 @@ export function CreateAccountForm({
             name="password"
             render={({ field }) => (
               <FormItem>
-                <div className="flex items-center">
-                  <FormLabel>{t('password.label')}</FormLabel>
-                  <Link
-                    className="ml-auto text-sm underline-offset-4 hover:underline"
-                    href="/"
-                  >
-                    {t('passwordRecovery')}
-                  </Link>
-                </div>
+                <FormLabel>{t('password.label')}</FormLabel>
                 <FormControl>
                   <Input
                     disabled={isSubmitting || isLoadingCreate}

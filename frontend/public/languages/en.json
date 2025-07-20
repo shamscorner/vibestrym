@@ -27,7 +27,6 @@
         "description": "We've sent a verification email. If you don't see it, peek in your spam folder."
       },
       "errorMessage": "Oops! Something went wrong creating your account.",
-      "passwordRecovery": "Forgot your password?",
       "socialDivider": "Or continue with",
       "googleButton": "Login with Google",
       "loginText": "Don't have an account?",
@@ -41,6 +40,29 @@
         "description": "We couldn't verify your account. Please try again or contact support."
       },
       "loginAgain": "Log in again"
+    },
+    "login": {
+      "title": "Log in to BDLive",
+      "description": "Welcome back! Log in to continue.",
+      "heading": "Log in to your BDLive account",
+      "login": {
+        "label": "Username or Email",
+        "description": "Enter your username or email to log in."
+      },
+      "password": {
+        "label": "Password",
+        "description": "Enter your password to log in."
+      },
+      "forgotPassword": "Forgot your password?",
+      "submitButton": "Log in",
+      "socialDivider": "Or continue with",
+      "googleButton": "Login with Google",
+      "registerText": "Don't have an account?",
+      "registerLink": "Create an account",
+      "pin": {
+        "label": "Enter your PIN",
+        "description": "Please enter the 6-digit PIN sent to your email."
+      }
     }
   }
 }
