@@ -1,4 +1,6 @@
-export function GoogleIcon(props: React.ComponentProps<'svg'>) {
+import type { ComponentProps } from 'react';
+
+export function GoogleIcon(props: ComponentProps<'svg'>) {
   return (
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
       <title>Google Icon</title>

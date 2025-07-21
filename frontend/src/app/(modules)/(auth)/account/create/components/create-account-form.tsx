@@ -5,11 +5,15 @@ import { captureException } from '@sentry/nextjs';
 import { CircleCheckIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { type ComponentProps, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { GoogleIcon } from '@/components/icons/google-icon';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/common/alert';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@/components/ui/common/alert';
 import { Button } from '@/components/ui/common/button';
 import {
   Form,
@@ -31,7 +35,7 @@ import {
 export function CreateAccountForm({
   className,
   ...props
-}: React.ComponentProps<'form'>) {
+}: ComponentProps<'form'>) {
   const t = useTranslations('auth.register');
 
   const [isSuccess, setIsSuccess] = useState(false);
@@ -82,7 +86,7 @@ export function CreateAccountForm({
         className={cn('flex flex-col gap-6', className)}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className='mb-6 flex flex-col items-center gap-2 text-center'>
+        <div className="mb-6 flex flex-col items-center gap-2 text-center">
           <h1 className="font-bold text-2xl">{t('heading')}</h1>
           <p className="text-balance text-muted-foreground text-sm">
             {t('description')}
@@ -134,7 +138,6 @@ export function CreateAccountForm({
                 <FormControl>
                   <Input
                     disabled={isSubmitting || isLoadingCreate}
-                    placeholder="••••••••"
                     type="password"
                     {...field}
                   />

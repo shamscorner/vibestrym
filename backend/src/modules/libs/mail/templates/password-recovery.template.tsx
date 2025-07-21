@@ -12,13 +12,13 @@ interface PasswordRecoveryTemplateProps {
 }
 
 export function PasswordRecoveryTemplate({ domain, token, metadata }: PasswordRecoveryTemplateProps) {
-  const resetLink = `${domain}/account/recovery/${token}`
+  const resetLink = `${domain}/account/recovery/${token}/update-password`
 
   return (
-    <EmailLayout preview="Password Reset">
+    <EmailLayout preview="Update Password">
       <EmailHeader
         icon={<LockIcon />}
-        title="Password Reset"
+        title="Update Password"
         subtitle="Secure your account with a new password"
       />
 
@@ -29,7 +29,7 @@ export function PasswordRecoveryTemplate({ domain, token, metadata }: PasswordRe
         </Text>
 
         <EmailButton href={resetLink}>
-          Reset Password
+          Update Password
         </EmailButton>
 
         <RequestInfoSection metadata={metadata} />

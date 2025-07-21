@@ -25,7 +25,7 @@ export const MESSAGES = {
 		`<b>🔑 Reset Your Password</b>\n\n` +
 		`Hey there! You asked to reset your password on <b>BDLive</b>.\n\n` +
 		`To set up a new password, just click this link:\n\n` +
-		`<b><a href="https://bdlive.com/account/recovery/${token}">Reset Password</a></b>\n\n` +
+		`<b><a href="https://bdlive.com/account/recovery/${token}/update-password">Update Password</a></b>\n\n` +
 		`📆 <b>Request Time:</b> ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}\n\n` +
 		`<b>Request Details:</b>\n\n` +
 		`🌎 <b>Location:</b> ${metadata.location?.country}, ${metadata.location?.city}\n` +

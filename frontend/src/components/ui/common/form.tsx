@@ -2,7 +2,7 @@
 
 import type { Root } from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
-import { createContext, useContext, useId } from 'react';
+import { type ComponentProps, createContext, useContext, useId } from 'react';
 import {
   Controller,
   type ControllerProps,
@@ -72,7 +72,7 @@ const FormItemContext = createContext<FormItemContextValue>(
   {} as FormItemContextValue
 );
 
-function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
+function FormItem({ className, ...props }: ComponentProps<'div'>) {
   const id = useId();
 
   return (
@@ -86,7 +86,7 @@ function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
-function FormLabel({ className, ...props }: React.ComponentProps<typeof Root>) {
+function FormLabel({ className, ...props }: ComponentProps<typeof Root>) {
   const { error, formItemId } = useFormField();
 
   return (
@@ -100,7 +100,7 @@ function FormLabel({ className, ...props }: React.ComponentProps<typeof Root>) {
   );
 }
 
-function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
+function FormControl({ ...props }: ComponentProps<typeof Slot>) {
   const { error, formItemId, formDescriptionId, formMessageId } =
     useFormField();
 
@@ -117,15 +117,12 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   );
 }
 
-function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
+function FormDescription({ className, ...props }: ComponentProps<'p'>) {
   const { formDescriptionId } = useFormField();
 
   return (
     <p
-      className={cn(
-        'text-muted-foreground text-xs',
-        className
-      )}
+      className={cn('text-muted-foreground text-xs', className)}
       data-slot="form-description"
       id={formDescriptionId}
       {...props}
@@ -133,7 +130,7 @@ function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
   );
 }
 
-function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
+function FormMessage({ className, ...props }: ComponentProps<'p'>) {
   const { error, formMessageId } = useFormField();
   const body = error ? String(error?.message ?? '') : props.children;
 

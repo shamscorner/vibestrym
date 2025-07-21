@@ -5,7 +5,7 @@ import { captureException } from '@sentry/nextjs';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { type ComponentProps, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { GoogleIcon } from '@/components/icons/google-icon';
@@ -30,10 +30,7 @@ import { cn } from '@/utils/tw-merge';
 import { useAuth } from '../../../hooks';
 import { type LoginSchema, loginSchema } from '../login.schema';
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<'form'>) {
+export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
   const t = useTranslations('auth.login');
 
   const router = useRouter();
@@ -100,7 +97,7 @@ export function LoginForm({
                   <FormLabel>{t('pin.label')}</FormLabel>
                   <FormControl>
                     <InputOTP maxLength={6} {...field}>
-                      <InputOTPGroup className='w-full'>
+                      <InputOTPGroup className="w-full">
                         <InputOTPSlot index={0} />
                         <InputOTPSlot index={1} />
                         <InputOTPSlot index={2} />
@@ -151,7 +148,6 @@ export function LoginForm({
                     <FormControl>
                       <Input
                         disabled={isSubmitting || isLoadingLogin}
-                        placeholder="••••••••"
                         type="password"
                         {...field}
                       />

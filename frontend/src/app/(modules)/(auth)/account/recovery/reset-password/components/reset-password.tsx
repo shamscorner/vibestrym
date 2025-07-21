@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { captureException } from '@sentry/nextjs';
 import { CircleCheckIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { type ComponentProps, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import {
@@ -33,7 +33,7 @@ import {
 export function ResetPasswordForm({
   className,
   ...props
-}: React.ComponentProps<'form'>) {
+}: ComponentProps<'form'>) {
   const t = useTranslations('auth.resetPassword');
 
   const [isSuccess, setIsSuccess] = useState(false);
@@ -109,7 +109,7 @@ export function ResetPasswordForm({
             )}
           />
           <Button
-            className='mt-4 w-full'
+            className="mt-4 w-full"
             disabled={isSubmitting || !isValid || isLoadingResetPassword}
             type="submit"
           >
