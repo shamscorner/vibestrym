@@ -1,8 +1,9 @@
-import { ArrowLeftIcon, VideotapeIcon } from 'lucide-react';
+import { ArrowLeftIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
+import { AppLogo } from '@/components/AppLogo';
 import { Button } from '@/components/ui/common/button';
 import AuthBackground from './assets/images/auth-background.webp';
 
@@ -17,12 +18,7 @@ export default function AuthLayout({
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
-          <a className="flex items-center gap-2 font-medium" href="/">
-            <div className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <VideotapeIcon className="size-6" />
-            </div>
-            BDLive
-          </a>
+          <AppLogo />
         </div>
         <div className="flex flex-1 flex-col items-center justify-center gap-10">
           <div className="w-full max-w-sm">{children}</div>

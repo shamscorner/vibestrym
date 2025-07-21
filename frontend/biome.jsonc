@@ -10,7 +10,11 @@
         "noUnknownAtRule": "off"
       },
       "style": {
-        "noNestedTernary": "off"
+        "noNestedTernary": "off",
+        "useBlockStatements": "off"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off"
       }
     }
   }

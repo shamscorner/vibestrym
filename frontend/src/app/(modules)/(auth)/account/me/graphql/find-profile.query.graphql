@@ -1,0 +1,12 @@
+query FindProfile {
+  findProfile {
+    id
+    username
+    displayName
+    email
+    avatar
+    bio
+    isVerified
+    isTotpEnabled
+  }
+}
