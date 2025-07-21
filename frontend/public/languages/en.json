@@ -1,4 +1,32 @@
 {
+  "protected": {
+    "header": {
+      "logo": {
+        "alt": "BDLive Logo",
+        "title": "BDLive - Stream your life with joy! Your go-to platform for live events, shows, tutorials, and more.",
+        "slogan": "Stream your life with joy!"
+      },
+      "search": {
+        "placeholder": "Search for streams, events, or users...",
+        "buttonLabel": "Search"
+      },
+      "menu": {
+        "login": "Log in",
+        "register": "Sign up",
+        "profile": {
+          "logout": "Log out",
+          "dashboard": "Dashboard",
+          "channel": "My Channel",
+          "notifications": {
+            "heading": "Notifications",
+            "loading": "Loading...",
+            "empty": "No notifications yet.",
+            "unreadCount": "{count, plural, =1 {unread} other {unreads}}"
+          }
+        }
+      }
+    }
+  },
   "home": {
     "title": "Welcome to BDLive",
     "description": "Your go-to streaming spot for catching live events, shows, tutorials, funny moments and more easily!"
