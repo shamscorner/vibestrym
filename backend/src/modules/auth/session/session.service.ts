@@ -137,7 +137,6 @@ export class SessionService {
 		}
 
 		if (user.isTotpEnabled) {
-			console.log('pin', pin)
 			if (!pin) {
 				return {
 					user: null,
@@ -166,8 +165,6 @@ export class SessionService {
 	async logout(request: Request) {
 		const userId = request.session.userId
 		if (!userId) return true
-
-		console.log('Destroying session for user:', userId)
 
 		return destroySession(
 			this.configService,
