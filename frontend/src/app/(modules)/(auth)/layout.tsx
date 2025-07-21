@@ -1,17 +1,17 @@
 import { ArrowLeftIcon, VideotapeIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { Button } from '@/components/ui/common/button';
 import AuthBackground from './assets/images/auth-background.webp';
 
-export default async function AuthLayout({
+export default function AuthLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const t = await getTranslations('auth.common');
+  const t = useTranslations('auth.common');
 
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
