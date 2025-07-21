@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { NO_INDEX_PAGE } from '@/constants/seo.constants';
-import { ResetPasswordForm } from './components/reset-password-form';
+import { LogoutForm } from './components/logout-form';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('auth.resetPassword');
+  const t = await getTranslations('auth.logout');
   return {
     title: t('title'),
     description: t('description'),
@@ -12,6 +12,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RecoveryPage() {
-  return <ResetPasswordForm />
+export default function LogoutPage() {
+  return <LogoutForm />
 }

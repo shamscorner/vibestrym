@@ -97,6 +97,20 @@
       "submitButton": "Update Password",
       "successMessage": "Your password has been successfully updated.",
       "errorMessage": "Error updating password. Please try again."
+    },
+    "logout": {
+      "title": "Log out from BDLive",
+      "description": "By logging out, you will be signed out of your account. If you want to log back in, you will need to enter your credentials again on the login page.",
+      "successAlert": {
+        "title": "Logged out successfully",
+        "description": "You have been logged out from BDLive successfully. You can log in again anytime."
+      },
+      "successMessage": "You have been logged out successfully.",
+      "loginAgain": "Log in again"
     }
+  },
+  "dashboard": {
+    "title": "Dashboard - BDLive",
+    "description": "Manage your streams, check analytics, and customize your profile."
   }
 }
