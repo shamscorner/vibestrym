@@ -55,7 +55,7 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
         return;
       }
       auth();
-      router.push('/dashboard');
+      router.push('/dashboard/settings');
     },
     onError: (error) => {
       toast.error(error.message || t('errorMessage'));

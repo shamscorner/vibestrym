@@ -2,6 +2,10 @@
   "common": {
     "liveBadge": {
       "text": "LIVE"
+    },
+    "confirmModal": {
+      "cancelButton": "Cancel",
+      "continueButton": "Continue"
     }
   },
   "app": {
@@ -169,7 +173,99 @@
   },
   "dashboard": {
     "title": "Dashboard - BDLive",
-    "description": "Manage your streams, check analytics, and customize your profile."
+    "description": "Manage your streams, check analytics, and customize your profile.",
+    "settings": {
+      "title": "Settings - BDLive",
+      "description": "Manage your account settings, profile, and preferences.",
+      "header": {
+        "heading": "Settings",
+        "description": "Customize your BDLive experience by adjusting your account settings, profile information, and preferences.",
+        "profile": "Profile",
+        "account": "Account",
+        "appearance": "Appearance",
+        "notifications": "Notifications",
+        "sessions": "Sessions"
+      },
+      "profile": {
+        "header": {
+          "heading": "Profile",
+          "description": "Manage your profile information, including your username, display name, and bio."
+        },
+        "avatar": {
+          "heading": "Profile Picture",
+          "updateButton": "Update Profile Picture",
+          "confirmModal": {
+            "heading": "Remove Profile Picture",
+            "message": "Are you sure you want to remove your profile picture? This action cannot be undone.",
+            "confirmButton": "Remove"
+          },
+          "info": "Supported formats: JPG, JPEG, PNG, WEBP or GIF. Max size: 10 MB.",
+          "updateMessage": {
+            "success": "Profile picture updated successfully.",
+            "error": "Error updating profile picture."
+          },
+          "removeMessage": {
+            "success": "Profile picture removed successfully.",
+            "error": "Error removing profile picture."
+          }
+        },
+        "info": {
+          "heading": "Profile Settings",
+          "username": {
+            "label": "Username",
+            "placeholder": "johndoe",
+            "description": "This is how others will find you on BDLive."
+          },
+          "displayName": {
+            "label": "Display Name",
+            "placeholder": "John Doe",
+            "description": "You can use uppercase letters in your display name as you wish."
+          },
+          "bio": {
+            "label": "About Me",
+            "placeholder": "I love programming",
+            "description": "The information about yourself should contain no more than 300 characters."
+          },
+          "successMessage": "Profile successfully updated",
+          "errorMessage": "Error updating profile",
+          "submitButton": "Save Changes"
+        },
+        "socialLinks": {
+          "createForm": {
+            "heading": "Social Media Links",
+            "title": {
+              "label": "Link Title",
+              "placeholder": "Youtube",
+              "description": "The title of the social media link, e.g., YouTube, Twitter, etc."
+            },
+            "url": {
+              "label": "Link URL",
+              "placeholder": "https://shamscorner.com",
+              "description": "Enter the full URL, e.g., https://shamscorner.com"
+            },
+            "submitButton": "Add",
+            "successMessage": "Social media link successfully added",
+            "errorMessage": "Error adding social media link"
+          },
+          "editForm": {
+            "cancelButton": "Cancel",
+            "submitButton": "Save",
+            "updateMessage": {
+              "success": "Social media link successfully updated",
+              "error": "Error updating social media link"
+            },
+            "removeMessage": {
+              "success": "Social media link successfully removed",
+              "error": "Error removing social media link"
+            }
+          },
+          "reorderMessage": {
+            "success": "Order of social media links changed successfully",
+            "error": "Error changing order of social media links"
+          }
+        }
+      }
+    }
   },
   "followers": {
     "title": "Followers - BDLive",
