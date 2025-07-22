@@ -7,7 +7,7 @@ import { Hint } from '@/components/ui/custom/hint';
 import { useSidebar } from '../../hooks/sidebar';
 
 export function SidebarHeader() {
-  const t = useTranslations('protected.sidebar.header');
+  const t = useTranslations('app.sidebar.header');
 
   const { isCollapsed, open, close } = useSidebar();
 

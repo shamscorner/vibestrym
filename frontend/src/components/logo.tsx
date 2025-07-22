@@ -17,7 +17,7 @@ export function Logo({
   href = '/',
   className,
 }: AppLogoProps) {
-  const t = useTranslations('protected.header.logo');
+  const t = useTranslations('app.header.logo');
 
   return (
     <Link

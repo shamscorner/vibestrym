@@ -17,7 +17,7 @@ import { useCurrent } from '../../(auth)/hooks/useCurrent';
 import { Notifications } from './notifications/notifications';
 
 export function ProfileMenu() {
-  const t = useTranslations('protected.header.menu.profile');
+  const t = useTranslations('app.header.menu.profile');
   const router = useRouter();
 
   const { user, isLoadingProfile } = useCurrent();

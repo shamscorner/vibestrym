@@ -5,7 +5,7 @@ import type { Route } from './route.interface';
 import { SidebarItem } from './sidebar-item';
 
 export function UserNav() {
-  const t = useTranslations('protected.sidebar.userNav');
+  const t = useTranslations('app.sidebar.userNav');
 
   const routes: Route[] = [
     {

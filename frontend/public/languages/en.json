@@ -4,7 +4,7 @@
       "text": "LIVE"
     }
   },
-  "protected": {
+  "app": {
     "header": {
       "logo": {
         "alt": "BDLive Logo",

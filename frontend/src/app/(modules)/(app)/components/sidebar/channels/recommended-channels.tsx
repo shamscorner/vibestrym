@@ -8,7 +8,7 @@ import { useSidebar } from '../../../hooks/sidebar';
 import { ChannelItem, ChannelItemSkeleton } from './channel-item';
 
 export function RecommendedChannels() {
-  const t = useTranslations('protected.sidebar.recommended');
+  const t = useTranslations('app.sidebar.recommended');
 
   const { isCollapsed } = useSidebar();
 

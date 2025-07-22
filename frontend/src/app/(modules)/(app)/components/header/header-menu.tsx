@@ -7,7 +7,7 @@ import { useAuth } from '../../../(auth)/hooks';
 import { ProfileMenu } from '../profile-menu';
 
 export function HeaderMenu() {
-  const t = useTranslations('protected.header.menu');
+  const t = useTranslations('app.header.menu');
   const { isAuthenticated } = useAuth();
 
   return (
