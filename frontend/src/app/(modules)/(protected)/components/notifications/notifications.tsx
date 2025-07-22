@@ -6,7 +6,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/common/popover';
 import { useFindUnreadNotificationsCountQuery } from '@/graphql/_generated/output';
-import { NotificationsList } from './NotificationsList';
+import { NotificationsList } from './notifications-list';
 
 export function Notifications() {
   const { data, loading: isLoadingCount } = useFindUnreadNotificationsCountQuery();

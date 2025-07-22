@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/common/dropdown-menu';
 import { ChannelAvatar } from '@/components/ui/custom/channel-avatar';
 import { useCurrent } from '../../(auth)/hooks/useCurrent';
-import { Notifications } from './notifications/Notifications';
+import { Notifications } from './notifications/notifications';
 
 export function ProfileMenu() {
   const t = useTranslations('protected.header.menu.profile');

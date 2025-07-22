@@ -25,6 +25,28 @@
           }
         }
       }
+    },
+    "sidebar": {
+      "header": {
+        "expand": "Expand",
+        "collapse": "Collapse",
+        "explore": "Explore"
+      },
+      "userNav": {
+        "home": "Home",
+        "categories": "Categories",
+        "streams": "Streams",
+        "recommended": "Recommended"
+      },
+      "dashboardNav": {
+        "settings": "Settings",
+        "streamKeys": "Stream Keys",
+        "chatSettings": "Chat Settings",
+        "followers": "Followers",
+        "sponsors": "Sponsors",
+        "premium": "Premium",
+        "transactions": "Transactions"
+      }
     }
   },
   "home": {
