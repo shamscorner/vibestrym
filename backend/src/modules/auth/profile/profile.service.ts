@@ -25,7 +25,7 @@ export class ProfileService {
 			this.storageService,
 			file,
 			{
-				path: `/channels`,
+				path: `channels`,
 				name: user.username,
 				size: {
 					width: 512,
