@@ -12,7 +12,7 @@ import type { Route } from './route.interface';
 import { SidebarItem } from './sidebar-item';
 
 export function DashboardNav() {
-  const t = useTranslations('protected.sidebar.dashboardNav');
+  const t = useTranslations('app.sidebar.dashboardNav');
 
   const routes: Route[] = [
     {

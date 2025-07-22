@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function NotificationsList({ unreadCount }: Props) {
-  const t = useTranslations('protected.header.menu.profile.notifications');
+  const t = useTranslations('app.header.menu.profile.notifications');
 
   const { refetch } = useFindUnreadNotificationsCountQuery();
 
