@@ -27,13 +27,16 @@ export function Logo({
     >
       <Image
         alt={t('alt')}
+        className="-ml-5"
         height={height}
         priority
         src="/logo.png"
         title={t('title')}
         width={width}
       />
-      <span className='-mt-3 ml-4.5 text-muted-foreground text-xs'>{t('slogan')}</span>
+      <span className="-mt-3 text-muted-foreground text-xs">
+        {t('slogan')}
+      </span>
     </Link>
   );
 }
