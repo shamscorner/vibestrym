@@ -11,7 +11,7 @@ export function FormWrapper({
   heading
 }: PropsWithChildren<FormWrapperProps>) {
   return (
-    <Card className="max-w-3xl">
+    <Card>
       <CardHeader>
         <CardTitle className='text-lg'>{heading}</CardTitle>
       </CardHeader>
