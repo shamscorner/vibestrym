@@ -279,7 +279,7 @@
           "heading": "Website Language",
           "description": "Select a language for the website. The content will be displayed in the selected language.",
           "selectPlaceholder": "Select a language",
-          "successMessage": "The website language has been successfully changed"
+          "successMessage": "Language settings have been successfully updated"
         },
         "color": {
           "heading": "Accent Color",

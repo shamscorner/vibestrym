@@ -9,6 +9,7 @@ import {
 import { Heading } from '@/components/ui/custom/heading';
 import { ChangeAvatarForm } from './profile/change-avatar/change-avatar-form';
 import { ChangeInfoForm } from './profile/change-info/change-info-form';
+import { ChangeLanguageForm } from './profile/change-language/change-language-form';
 import { ChangeThemeForm } from './profile/change-theme/change-theme-form';
 
 export function UserSettings() {
@@ -51,6 +52,7 @@ export function UserSettings() {
           />
           <div className="mt-5 flex flex-col gap-y-8">
             <ChangeThemeForm />
+            <ChangeLanguageForm />
           </div>
         </TabsContent>
         <TabsContent value="notifications">Notifications</TabsContent>
