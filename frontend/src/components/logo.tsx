@@ -11,7 +11,7 @@ export interface AppLogoProps
   href?: string;
 }
 
-export function AppLogo({
+export function Logo({
   width = 140,
   height = 68,
   href = '/',

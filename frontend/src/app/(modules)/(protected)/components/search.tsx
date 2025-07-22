@@ -7,7 +7,7 @@ import { type FormEvent, useState } from 'react';
 import { Button } from '@/components/ui/common/button';
 import { Input } from '@/components/ui/common/input';
 
-export function AppSearch() {
+export function Search() {
   const t = useTranslations('protected.header.search');
 
   const [searchTerm, setSearchTerm] = useState('');

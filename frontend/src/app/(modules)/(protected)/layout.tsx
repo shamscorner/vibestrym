@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
-import { AppHeader } from './components/AppHeader';
-// import { LayoutContainer } from '@/components/layout/LayoutContainer';
-// import { Sidebar } from '@/components/layout/sidebar/Sidebar';
+import { Header } from './components/header/header';
+import { LayoutWrapper } from './components/layout-wrapper';
+import { Sidebar } from './components/sidebar/sidebar';
 
 export default function ProtectedLayout({
   children,
@@ -10,11 +10,10 @@ export default function ProtectedLayout({
     <div className="flex h-full flex-col">
       <div className="flex-1">
         <div className="fixed inset-y-0 z-50 h-[75px] w-full">
-          <AppHeader />
+          <Header />
         </div>
-        {children}
-        {/* <Sidebar /> */}
-        {/* <LayoutContainer>{children}</LayoutContainer> */}
+        <Sidebar />
+        <LayoutWrapper>{children}</LayoutWrapper>
       </div>
     </div>
   );

@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/common/button';
-import { useAuth } from '../../(auth)/hooks';
-import { ProfileMenu } from './ProfileMenu';
+import { useAuth } from '../../../(auth)/hooks';
+import { ProfileMenu } from '../profile-menu';
 
-export function AppHeaderMenu() {
+export function HeaderMenu() {
   const t = useTranslations('protected.header.menu');
   const { isAuthenticated } = useAuth();
 
