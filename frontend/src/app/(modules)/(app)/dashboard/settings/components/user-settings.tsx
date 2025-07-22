@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/common/tabs';
 import { Heading } from '@/components/ui/custom/heading';
 import { ChangeAvatarForm } from './profile/change-avatar/change-avatar-form';
+import { ChangeInfoForm } from './profile/change-info/change-info-form';
 
 export function UserSettings() {
   const t = useTranslations('dashboard.settings');
@@ -35,8 +36,9 @@ export function UserSettings() {
             description={t('profile.header.description')}
             title={t('profile.header.heading')}
           />
-          <div className='mt-5 flex flex-col gap-y-6'>
+          <div className='mt-5 flex flex-col gap-y-8'>
             <ChangeAvatarForm />
+            <ChangeInfoForm />
           </div>
         </TabsContent>
         <TabsContent value="account">Account</TabsContent>
