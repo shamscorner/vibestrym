@@ -1,4 +1,9 @@
 {
+  "common": {
+    "liveBadge": {
+      "text": "LIVE"
+    }
+  },
   "protected": {
     "header": {
       "logo": {
@@ -46,6 +51,9 @@
         "sponsors": "Sponsors",
         "premium": "Premium",
         "transactions": "Transactions"
+      },
+      "recommended": {
+        "heading": "Recommendations"
       }
     }
   },
@@ -162,5 +170,9 @@
   "dashboard": {
     "title": "Dashboard - BDLive",
     "description": "Manage your streams, check analytics, and customize your profile."
+  },
+  "followers": {
+    "title": "Followers - BDLive",
+    "description": "View and manage your followers on BDLive."
   }
 }

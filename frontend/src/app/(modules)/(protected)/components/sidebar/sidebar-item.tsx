@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/common/button';
-import { Hint } from '@/components/ui/custom/Hint';
+import { Hint } from '@/components/ui/custom/hint';
 import { cn } from '@/utils/tw-merge';
 import { useSidebar } from '../../hooks/sidebar';
 import type { Route } from './route.interface';
