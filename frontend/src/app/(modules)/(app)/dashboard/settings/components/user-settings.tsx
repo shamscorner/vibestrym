@@ -9,6 +9,7 @@ import {
 import { Heading } from '@/components/ui/custom/heading';
 import { ChangeAvatarForm } from './profile/change-avatar/change-avatar-form';
 import { ChangeInfoForm } from './profile/change-info/change-info-form';
+import { ChangeThemeForm } from './profile/change-theme/change-theme-form';
 
 export function UserSettings() {
   const t = useTranslations('dashboard.settings');
@@ -20,7 +21,7 @@ export function UserSettings() {
         size="lg"
         title={t('header.heading')}
       />
-      <Tabs className="mt-6 w-full" defaultValue="profile">
+      <Tabs className="mt-6 w-full max-w-2xl" defaultValue="profile">
         <TabsList className="grid max-w-2xl grid-cols-5">
           <TabsTrigger value="profile">{t('header.profile')}</TabsTrigger>
           <TabsTrigger value="account">{t('header.account')}</TabsTrigger>
@@ -36,13 +37,22 @@ export function UserSettings() {
             description={t('profile.header.description')}
             title={t('profile.header.heading')}
           />
-          <div className='mt-5 flex flex-col gap-y-8'>
+          <div className="mt-5 flex flex-col gap-y-8">
             <ChangeAvatarForm />
             <ChangeInfoForm />
           </div>
         </TabsContent>
         <TabsContent value="account">Account</TabsContent>
-        <TabsContent value="appearance">Appearance</TabsContent>
+        <TabsContent value="appearance">
+          <Heading
+            className="mt-5"
+            description={t('appearance.header.description')}
+            title={t('appearance.header.heading')}
+          />
+          <div className="mt-5 flex flex-col gap-y-8">
+            <ChangeThemeForm />
+          </div>
+        </TabsContent>
         <TabsContent value="notifications">Notifications</TabsContent>
         <TabsContent value="sessions">Sessions</TabsContent>
       </Tabs>

@@ -264,6 +264,27 @@
             "error": "Error changing order of social media links"
           }
         }
+      },
+      "appearance": {
+        "header": {
+          "heading": "Appearance",
+          "description": "Customize the look and feel of your BDLive experience. You can change the theme, language, and accent color of the website."
+        },
+        "theme": {
+          "heading": "Change Theme",
+          "description": "Select a theme for the website. You can choose between light and dark themes.",
+          "successMessage": "You are now using a {theme} theme"
+        },
+        "language": {
+          "heading": "Website Language",
+          "description": "Select a language for the website. The content will be displayed in the selected language.",
+          "selectPlaceholder": "Select a language",
+          "successMessage": "The website language has been successfully changed"
+        },
+        "color": {
+          "heading": "Accent Color",
+          "description": "Choose an accent color for the website. This color will be used for buttons, links, and other interactive elements."
+        }
       }
     }
   },
