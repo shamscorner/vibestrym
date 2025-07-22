@@ -1,4 +1,9 @@
 {
+  "common": {
+    "liveBadge": {
+      "text": "লাইভ"
+    }
+  },
   "protected": {
     "header": {
       "logo": {
@@ -47,6 +52,9 @@
         "premium": "প্রিমিয়াম",
         "transactions": "লেনদেন"
       }
+    },
+    "recommended": {
+      "heading": "প্রস্তাবনা"
     }
   },
   "home": {
@@ -162,5 +170,9 @@
   "dashboard": {
     "title": "আপনার BDLive ড্যাশবোর্ড",
     "description": "এখানে আপনি আপনার স্ট্রিমিং কার্যক্রম পরিচালনা করতে পারেন।"
+  },
+  "followers": {
+    "title": "অনুসরণকারী - BDLive",
+    "description": "BDLive এ আপনার অনুসরণকারীদের দেখুন এবং পরিচালনা করুন।"
   }
 }

@@ -3,7 +3,7 @@
 import { ArrowLeftFromLineIcon, ArrowRightFromLineIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/common/button';
-import { Hint } from '@/components/ui/custom/Hint';
+import { Hint } from '@/components/ui/custom/hint';
 import { useSidebar } from '../../hooks/sidebar';
 
 export function SidebarHeader() {
