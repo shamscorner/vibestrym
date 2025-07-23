@@ -7,7 +7,6 @@ import type { CSSProperties } from 'react';
 import { CardContainer } from '@/components/ui/custom/card-container';
 import { BASE_COLORS } from '@/constants/colors.constants';
 import { useConfig } from '@/hooks/config';
-import { cn } from '@/utils/tw-merge';
 
 export function ChangeThemeColorForm() {
   const t = useTranslations('dashboard.settings.appearance.color');
@@ -38,12 +37,7 @@ export function ChangeThemeColorForm() {
               >
                 {isActive && (
                   <CheckIcon
-                    className={cn(
-                      'size-5',
-                      theme.name === 'neutral'
-                        ? 'text-background dark:text-foreground'
-                        : 'text-foreground'
-                    )}
+                    className='size-5 text-background dark:text-foreground'
                   />
                 )}
               </button>
