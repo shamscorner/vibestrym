@@ -6,7 +6,7 @@ import {
   Portal,
   Provider,
   Root,
-  Trigger
+  Trigger,
 } from '@radix-ui/react-tooltip';
 import type { ComponentProps } from 'react';
 import { cn } from '@/utils/tw-merge';
@@ -32,9 +32,7 @@ function Tooltip({ ...props }: ComponentProps<typeof Root>) {
   );
 }
 
-function TooltipTrigger({
-  ...props
-}: ComponentProps<typeof Trigger>) {
+function TooltipTrigger({ ...props }: ComponentProps<typeof Trigger>) {
   return <Trigger data-slot="tooltip-trigger" {...props} />;
 }
 

@@ -40,7 +40,7 @@ export function ChannelAvatar({ size, channel, isLive }: ChannelAvatarProps) {
             size === 'lg' && 'text-2xl'
           )}
         >
-          <span className='-mt-0.5'>{channel.username[0]}</span>
+          <span className="-mt-0.5">{channel.username[0]}</span>
         </AvatarFallback>
       </Avatar>
     </div>

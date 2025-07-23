@@ -13,5 +13,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function LogoutPage() {
-  return <LogoutForm />
+  return <LogoutForm />;
 }

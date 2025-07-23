@@ -34,9 +34,7 @@ export function Logo({
         title={t('title')}
         width={width}
       />
-      <span className="-mt-3 text-muted-foreground text-xs">
-        {t('slogan')}
-      </span>
+      <span className="-mt-3 text-muted-foreground text-xs">{t('slogan')}</span>
     </Link>
   );
 }

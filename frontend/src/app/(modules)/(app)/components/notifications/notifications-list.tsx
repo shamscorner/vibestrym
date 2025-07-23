@@ -31,11 +31,11 @@ export function NotificationsList({ unreadCount }: Props) {
     <>
       <h2 className="flex items-center justify-between font-medium text-lg">
         {t('heading')}
-        {unreadCount &&
+        {unreadCount && (
           <span className="font-normal text-muted-foreground text-sm">
             {unreadCount} {t('unreadCount', { count: unreadCount })}
           </span>
-        }
+        )}
       </h2>
       <Separator className="my-3" />
       {isLoadingNotifications ? (

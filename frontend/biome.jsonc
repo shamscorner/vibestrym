@@ -14,7 +14,8 @@
         "useBlockStatements": "off"
       },
       "suspicious": {
-        "noArrayIndexKey": "off"
+        "noArrayIndexKey": "off",
+        "noDuplicateCustomProperties": "off"
       }
     }
   }

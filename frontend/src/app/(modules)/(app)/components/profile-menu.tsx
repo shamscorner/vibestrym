@@ -1,6 +1,11 @@
 'use client';
 
-import { LayoutDashboardIcon, LoaderIcon, LogOutIcon, UserIcon } from 'lucide-react';
+import {
+  LayoutDashboardIcon,
+  LoaderIcon,
+  LogOutIcon,
+  UserIcon,
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
@@ -13,14 +18,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/common/dropdown-menu';
 import { ChannelAvatar } from '@/components/ui/custom/channel-avatar';
-import { useCurrent } from '../../(auth)/hooks/useCurrent';
+import { useCurrentAccount } from '../../(auth)/hooks/current-account';
 import { Notifications } from './notifications/notifications';
 
 export function ProfileMenu() {
   const t = useTranslations('app.header.menu.profile');
   const router = useRouter();
 
-  const { user, isLoadingProfile } = useCurrent();
+  const { user, isLoadingProfile } = useCurrentAccount();
 
   return isLoadingProfile || !user ? (
     <LoaderIcon className="size-6 animate-spin text-muted-foreground" />

@@ -1,19 +1,21 @@
 'use client';
 
-import { Anchor, Content, Portal, Root, Trigger } from '@radix-ui/react-popover';
+import {
+  Anchor,
+  Content,
+  Portal,
+  Root,
+  Trigger,
+} from '@radix-ui/react-popover';
 import type * as React from 'react';
 
 import { cn } from '@/utils/tw-merge';
 
-function Popover({
-  ...props
-}: React.ComponentProps<typeof Root>) {
+function Popover({ ...props }: React.ComponentProps<typeof Root>) {
   return <Root data-slot="popover" {...props} />;
 }
 
-function PopoverTrigger({
-  ...props
-}: React.ComponentProps<typeof Trigger>) {
+function PopoverTrigger({ ...props }: React.ComponentProps<typeof Trigger>) {
   return <Trigger data-slot="popover-trigger" {...props} />;
 }
 
@@ -39,9 +41,7 @@ function PopoverContent({
   );
 }
 
-function PopoverAnchor({
-  ...props
-}: React.ComponentProps<typeof Anchor>) {
+function PopoverAnchor({ ...props }: React.ComponentProps<typeof Anchor>) {
   return <Anchor data-slot="popover-anchor" {...props} />;
 }
 

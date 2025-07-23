@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { type ChangeEvent, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { useCurrent } from '@/app/(modules)/(auth)/hooks/useCurrent';
+import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
 import { Button } from '@/components/ui/common/button';
 import { Form, FormField } from '@/components/ui/common/form';
 import { Skeleton } from '@/components/ui/common/skeleton';
@@ -26,7 +26,7 @@ import {
 export function ChangeAvatarForm() {
   const t = useTranslations('dashboard.settings.profile.avatar');
 
-  const { user, isLoadingProfile, refetch } = useCurrent();
+  const { user, isLoadingProfile, refetch } = useCurrentAccount();
 
   const inputRef = useRef<HTMLInputElement>(null);
 

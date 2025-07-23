@@ -14,36 +14,30 @@ import {
   Sub,
   SubContent,
   SubTrigger,
-  Trigger
+  Trigger,
 } from '@radix-ui/react-dropdown-menu';
-import { CheckIcon, ChevronRightIcon, CircleIcon, GroupIcon } from 'lucide-react';
+import {
+  CheckIcon,
+  ChevronRightIcon,
+  CircleIcon,
+  GroupIcon,
+} from 'lucide-react';
 import type * as React from 'react';
 
 import { cn } from '@/utils/tw-merge';
 
-function DropdownMenu({
-  ...props
-}: React.ComponentProps<typeof Root>) {
+function DropdownMenu({ ...props }: React.ComponentProps<typeof Root>) {
   return <Root data-slot="dropdown-menu" {...props} />;
 }
 
-function DropdownMenuPortal({
-  ...props
-}: React.ComponentProps<typeof Portal>) {
-  return (
-    <Portal data-slot="dropdown-menu-portal" {...props} />
-  );
+function DropdownMenuPortal({ ...props }: React.ComponentProps<typeof Portal>) {
+  return <Portal data-slot="dropdown-menu-portal" {...props} />;
 }
 
 function DropdownMenuTrigger({
   ...props
 }: React.ComponentProps<typeof Trigger>) {
-  return (
-    <Trigger
-      data-slot="dropdown-menu-trigger"
-      {...props}
-    />
-  );
+  return <Trigger data-slot="dropdown-menu-trigger" {...props} />;
 }
 
 function DropdownMenuContent({
@@ -69,9 +63,7 @@ function DropdownMenuContent({
 function DropdownMenuGroup({
   ...props
 }: React.ComponentProps<typeof GroupIcon>) {
-  return (
-    <GroupIcon data-slot="dropdown-menu-group" {...props} />
-  );
+  return <GroupIcon data-slot="dropdown-menu-group" {...props} />;
 }
 
 function DropdownMenuItem({
@@ -126,12 +118,7 @@ function DropdownMenuCheckboxItem({
 function DropdownMenuRadioGroup({
   ...props
 }: React.ComponentProps<typeof RadioGroup>) {
-  return (
-    <RadioGroup
-      data-slot="dropdown-menu-radio-group"
-      {...props}
-    />
-  );
+  return <RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
 }
 
 function DropdownMenuRadioItem({
@@ -207,9 +194,7 @@ function DropdownMenuShortcut({
   );
 }
 
-function DropdownMenuSub({
-  ...props
-}: React.ComponentProps<typeof Sub>) {
+function DropdownMenuSub({ ...props }: React.ComponentProps<typeof Sub>) {
   return <Sub data-slot="dropdown-menu-sub" {...props} />;
 }
 

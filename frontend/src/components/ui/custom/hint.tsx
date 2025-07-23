@@ -24,13 +24,8 @@ export function Hint({
   return (
     <TooltipProvider>
       <Tooltip delayDuration={0}>
-        <TooltipTrigger asChild={asChild}>
-          {children}
-        </TooltipTrigger>
-        <TooltipContent
-          align={aling}
-          side={side}
-        >
+        <TooltipTrigger asChild={asChild}>{children}</TooltipTrigger>
+        <TooltipContent align={aling} side={side}>
           <p className="font-semibold">{label}</p>
         </TooltipContent>
       </Tooltip>
