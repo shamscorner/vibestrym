@@ -172,6 +172,27 @@
       },
       "successMessage": "You have been logged out successfully.",
       "loginAgain": "Log in again"
+    },
+    "deactivate": {
+      "title": "Deactivate your account",
+      "description": "By deactivating your account, you will lose access to all your data and settings.",
+      "heading": "Deactivate Account",
+      "backButtonLabel": "Go to Dashboard",
+      "email": {
+        "label": "Email",
+        "description": "Your email that you used during registration"
+      },
+      "password": {
+        "label": "Password",
+        "description": "The password you used during registration"
+      },
+      "pin": {
+        "label": "6-digit code",
+        "description": "A code has been sent to your email. If you enabled Telegram notifications, we sent the code there as well"
+      },
+      "submitButton": "Deactivate",
+      "successMessage": "You have successfully deactivated your account",
+      "errorMessage": "Deactivation error"
     }
   },
   "dashboard": {

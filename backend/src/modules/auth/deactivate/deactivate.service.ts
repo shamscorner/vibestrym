@@ -38,7 +38,7 @@ export class DeactivateService {
 		user: User,
 		userAgent: string
 	) {
-		const { email, password, code } = input
+		const { email, password, pin } = input
 
 		if (user.email !== email) {
 			throw new BadRequestException('Invalid email')
@@ -50,12 +50,12 @@ export class DeactivateService {
 			throw new BadRequestException('Invalid password')
 		}
 
-		if (!code) {
+		if (!pin) {
 			await this.sendDeactivateToken(request, user, userAgent)
-			return { message: 'Confirmation code required' }
+			return { message: 'Confirmation pin required' }
 		}
 
-		await this.validateDeactivateToken(request, code)
+		await this.validateDeactivateToken(request, pin)
 
 		return { user }
 	}

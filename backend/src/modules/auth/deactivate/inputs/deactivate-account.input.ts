@@ -26,5 +26,5 @@ export class DeactivateAccountInput {
 	@IsString()
 	@IsOptional()
 	@Length(6, 6)
-	public code?: string
+	public pin?: string
 }
