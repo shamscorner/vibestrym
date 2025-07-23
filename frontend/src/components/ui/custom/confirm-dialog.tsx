@@ -14,11 +14,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '../common/alert-dialog';
+import { Button, type ButtonVariants } from '../common/button';
 
 interface ConfirmDialogProps {
   heading: string;
   message: string;
   confirmButton?: string;
+  actionType?: ButtonVariants['variant'];
   onConfirm: () => void;
 }
 
@@ -27,6 +29,7 @@ export function ConfirmDialog({
   heading,
   message,
   confirmButton = '',
+  actionType = 'default',
   onConfirm,
 }: PropsWithChildren<ConfirmDialogProps>) {
   const t = useTranslations('common.confirmDialog');
@@ -45,8 +48,10 @@ export function ConfirmDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{t('cancelButton')}</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>
-            {confirmButton}
+          <AlertDialogAction asChild>
+            <Button onClick={onConfirm} variant={actionType}>
+              {confirmButton}
+            </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

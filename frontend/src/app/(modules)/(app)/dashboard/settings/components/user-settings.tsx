@@ -9,6 +9,7 @@ import {
 import { Heading } from '@/components/ui/custom/heading';
 import { ChangeEmailForm } from './account/change-email/change-email-form';
 import { ChangePasswordForm } from './account/change-password/change-password-form';
+import { DeactivateAccount } from './account/deactivate-account/deactivate-account';
 import { WrapperTotp } from './account/totp/wrapper-totp';
 import { ChangeAvatarForm } from './profile/change-avatar/change-avatar-form';
 import { ChangeThemeColorForm } from './profile/change-color/change-theme-color-form';
@@ -66,6 +67,12 @@ export function UserSettings() {
             title={t('account.header.security.heading')}
           />
           <WrapperTotp />
+          <Heading
+            className="mt-10 mb-6"
+            description={t('account.header.deactivation.description')}
+            title={t('account.header.deactivation.heading')}
+          />
+          <DeactivateAccount />
         </TabsContent>
 
         <TabsContent value="appearance">

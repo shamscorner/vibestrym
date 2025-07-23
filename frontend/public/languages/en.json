@@ -340,9 +340,9 @@
         },
         "deactivation": {
           "heading": "Account Deactivation",
-          "description": "After deactivating your account, you will not be able to log in. Your account will be completely deleted after 7 days. Until then, you can contact support to restore access and unlock your account.",
-          "confirmModal": {
-            "heading": "Deactivation Confirmation",
+          "description": "Know before you deactivate your account. Access can only be restored within 7 days. After that, your account will be permanently deleted.",
+          "confirmDialog": {
+            "heading": "Confirm Deactivation",
             "message": "Are you sure you want to deactivate your account? Access can only be restored within 7 days."
           },
           "button": "Deactivate"

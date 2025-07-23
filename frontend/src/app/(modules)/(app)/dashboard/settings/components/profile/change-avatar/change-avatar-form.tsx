@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { captureException } from '@sentry/nextjs';
 import { Trash } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { type ChangeEvent, useRef } from 'react';
+import { type ChangeEvent, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
@@ -12,12 +12,12 @@ import { Button } from '@/components/ui/common/button';
 import { Form, FormField } from '@/components/ui/common/form';
 import { Skeleton } from '@/components/ui/common/skeleton';
 import { ChannelAvatar } from '@/components/ui/custom/channel-avatar';
-import { ConfirmDialog } from '@/components/ui/custom/confirm-dialog';
 import { FormWrapper } from '@/components/ui/custom/form-wrapper';
 import {
   useChangeProfileAvatarMutation,
   useRemoveProfileAvatarMutation,
 } from '@/graphql/_generated/output';
+import { useConfirmDialog } from '@/hooks/confirm-dialog';
 import {
   type UploadFileSchema,
   uploadFileSchema,
@@ -25,8 +25,10 @@ import {
 
 export function ChangeAvatarForm() {
   const t = useTranslations('dashboard.settings.profile.avatar');
+  const [avatarKey, setAvatarKey] = useState<number>(Date.now());
 
   const { user, isLoadingProfile, refetch } = useCurrentAccount();
+  const { confirm: confirmRemove } = useConfirmDialog();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -59,6 +61,10 @@ export function ChangeAvatarForm() {
     {
       onCompleted() {
         refetch();
+        // Reset the form value to undefined after successful removal
+        form.setValue('file', undefined);
+        // Force re-render of the avatar component
+        setAvatarKey(Date.now());
         toast.success(t('removeMessage.success'));
       },
       onError(error) {
@@ -100,11 +106,13 @@ export function ChangeAvatarForm() {
                         ? URL.createObjectURL(field.value)
                         : field.value,
                   }}
+                  key={avatarKey}
                   size="xl"
                 />
                 <div className="flex flex-col gap-y-3">
                   <div className="flex items-center gap-x-3">
                     <input
+                      accept="image/*"
                       className="hidden"
                       onChange={handleImageChange}
                       ref={inputRef}
@@ -118,20 +126,24 @@ export function ChangeAvatarForm() {
                       {t('updateButton')}
                     </Button>
                     {user?.avatar && (
-                      <ConfirmDialog
-                        confirmButton={t('confirmDialog.confirmButton')}
-                        heading={t('confirmDialog.heading')}
-                        message={t('confirmDialog.message')}
-                        onConfirm={() => remove()}
+                      <Button
+                        disabled={isLoadingUpdate || isLoadingRemove}
+                        onClick={async () =>
+                          await confirmRemove({
+                            title: t('confirmDialog.heading'),
+                            description: t('confirmDialog.message'),
+                            actionType: 'destructive',
+                            action: async () => {
+                              await remove();
+                              return true;
+                            },
+                          })
+                        }
+                        size="icon"
+                        variant="ghost"
                       >
-                        <Button
-                          disabled={isLoadingUpdate || isLoadingRemove}
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <Trash className="size-4" />
-                        </Button>
-                      </ConfirmDialog>
+                        <Trash className="size-4" />
+                      </Button>
                     )}
                   </div>
                   <p className="text-muted-foreground text-sm">{t('info')}</p>
