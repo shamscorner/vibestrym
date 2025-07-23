@@ -1,35 +1,35 @@
 export const BASE_COLORS = [
   {
-    name: 'violet',
-    color: '262.1 83.3% 57.8%',
-  },
-  {
-    name: 'blue',
-    color: '204, 70%, 53%',
-  },
-  {
-    name: 'turquoise',
-    color: '176, 77%, 41%',
-  },
-  {
-    name: 'yellow',
-    color: '48, 89%, 50%',
-  },
-  {
-    name: 'peach',
-    color: '17, 94%, 67%',
-  },
-  {
-    name: 'pink',
-    color: '330.4 81.2% 60.4%',
-  },
-  {
-    name: 'rose',
-    color: '340, 82%, 52%',
+    name: 'neutral',
+    color: 'oklch(0.205 0 0)',
   },
   {
     name: 'red',
-    color: '0 72.2% 50.6%',
+    color: 'oklch(0.637 0.237 25.331)',
+  },
+  {
+    name: 'rose',
+    color: 'oklch(0.645 0.246 16.439)',
+  },
+  {
+    name: 'orange',
+    color: 'oklch(0.705 0.213 47.604)',
+  },
+  {
+    name: 'green',
+    color: 'oklch(0.723 0.219 149.579)',
+  },
+  {
+    name: 'blue',
+    color: 'oklch(0.623 0.214 259.815)',
+  },
+  {
+    name: 'yellow',
+    color: 'oklch(0.795 0.184 86.047)',
+  },
+  {
+    name: 'violet',
+    color: 'oklch(0.606 0.25 292.717)',
   },
 ] as const;
 
