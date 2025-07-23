@@ -3,7 +3,7 @@
     "liveBadge": {
       "text": "লাইভ"
     },
-    "confirmModal": {
+    "confirmDialog": {
       "cancelButton": "বাতিল করুন",
       "continueButton": "চালিয়ে যান"
     }
@@ -194,7 +194,7 @@
         "avatar": {
           "heading": "প্রোফাইল ছবি",
           "updateButton": "প্রোফাইল ছবি আপডেট করুন",
-          "confirmModal": {
+          "confirmDialog": {
             "heading": "প্রোফাইল ছবি সরান",
             "message": "আপনি কি নিশ্চিত যে আপনি আপনার প্রোফাইল ছবি সরাতে চান? এই পদক্ষেপটি পূর্বাবস্থায় ফেরানো যাবে না।",
             "confirmButton": "সরান"
@@ -240,8 +240,8 @@
             },
             "url": {
               "label": "লিঙ্কের URL",
-              "placeholder": "https://shamscorner.com",
-              "description": "সম্পূর্ণ URL লিখুন, যেমন, https://shamscorner.com"
+              "placeholder": "https://www.youtube.com/@shamscorner",
+              "description": "সম্পূর্ণ URL লিখুন, যেমন, https://www.youtube.com/@shamscorner"
             },
             "submitButton": "যোগ করুন",
             "successMessage": "সোশ্যাল মিডিয়া লিঙ্ক সফলভাবে যোগ করা হয়েছে",
@@ -257,6 +257,12 @@
             "removeMessage": {
               "success": "সোশ্যাল মিডিয়া লিঙ্ক সফলভাবে সরানো হয়েছে",
               "error": "সোশ্যাল মিডিয়া লিঙ্ক সরাতে ত্রুটি"
+            },
+            "deleteConfirmDialog": {
+              "heading": "সোশ্যাল মিডিয়া লিঙ্ক মুছে ফেলুন",
+              "message": "আপনি কি নিশ্চিত যে আপনি এই সোশ্যাল মিডিয়া লিঙ্কটি মুছে ফেলতে চান? এই পদক্ষেপটি পূর্বাবস্থায় ফেরানো যাবে না।",
+              "confirmButton": "মুছে ফেলুন",
+              "cancelButton": "বাতিল করুন"
             }
           },
           "reorderMessage": {

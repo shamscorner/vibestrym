@@ -15,21 +15,21 @@ import {
   AlertDialogTrigger,
 } from '../common/alert-dialog';
 
-interface ConfirmModalProps {
+interface ConfirmDialogProps {
   heading: string;
   message: string;
   confirmButton?: string;
   onConfirm: () => void;
 }
 
-export function ConfirmModal({
+export function ConfirmDialog({
   children,
   heading,
   message,
   confirmButton = '',
   onConfirm,
-}: PropsWithChildren<ConfirmModalProps>) {
-  const t = useTranslations('common.confirmModal');
+}: PropsWithChildren<ConfirmDialogProps>) {
+  const t = useTranslations('common.confirmDialog');
 
   if (!confirmButton) {
     confirmButton = t('continueButton');
