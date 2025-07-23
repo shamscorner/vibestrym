@@ -38,6 +38,7 @@ export function UserSettings() {
           </TabsTrigger>
           <TabsTrigger value="sessions">{t('header.sessions')}</TabsTrigger>
         </TabsList>
+
         <TabsContent value="profile">
           <Heading
             className="mt-5 flex flex-col gap-y-6"
@@ -87,6 +88,7 @@ export function UserSettings() {
             <ChangeThemeColorForm />
           </div>
         </TabsContent>
+
         <TabsContent value="notifications">Notifications</TabsContent>
         <TabsContent value="sessions">Sessions</TabsContent>
       </Tabs>
