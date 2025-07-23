@@ -282,8 +282,8 @@
           "successMessage": "Language settings have been successfully updated"
         },
         "color": {
-          "heading": "Accent Color",
-          "description": "Choose an accent color for the website. This color will be used for buttons, links, and other interactive elements."
+          "heading": "Theme Color",
+          "description": "Choose a theme color for the website. This color will be used for buttons, links, and other interactive elements."
         }
       }
     }
