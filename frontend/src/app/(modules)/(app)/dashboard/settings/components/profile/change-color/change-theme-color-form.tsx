@@ -7,8 +7,9 @@ import type { CSSProperties } from 'react';
 import { CardContainer } from '@/components/ui/custom/card-container';
 import { BASE_COLORS } from '@/constants/colors.constants';
 import { useConfig } from '@/hooks/config';
+import { cn } from '@/utils/tw-merge';
 
-export function ChangeColorForm() {
+export function ChangeThemeColorForm() {
   const t = useTranslations('dashboard.settings.appearance.color');
 
   const config = useConfig();
@@ -18,7 +19,7 @@ export function ChangeColorForm() {
       description={t('description')}
       heading={t('heading')}
       rightContent={
-        <div className='mr-8 grid min-w-[100px] grid-cols-4 gap-5 md:grid-cols-8'>
+        <div className="mr-8 grid min-w-[100px] grid-cols-4 gap-5 md:grid-cols-8">
           {BASE_COLORS.map((theme, index) => {
             const isActive = config.theme === theme.name;
 
@@ -35,7 +36,16 @@ export function ChangeColorForm() {
                 title={theme.name.toUpperCase()}
                 type="button"
               >
-                {isActive && <CheckIcon className="size-5 text-foreground" />}
+                {isActive && (
+                  <CheckIcon
+                    className={cn(
+                      'size-5',
+                      theme.name === 'neutral'
+                        ? 'text-background dark:text-foreground'
+                        : 'text-foreground'
+                    )}
+                  />
+                )}
               </button>
             );
           })}

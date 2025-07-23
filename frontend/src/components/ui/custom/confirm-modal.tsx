@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { useTranslations } from 'next-intl'
-import type { PropsWithChildren } from 'react'
+import { useTranslations } from 'next-intl';
+import type { PropsWithChildren } from 'react';
 
 import {
   AlertDialog,
@@ -12,14 +12,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger
-} from '../common/alert-dialog'
+  AlertDialogTrigger,
+} from '../common/alert-dialog';
 
 interface ConfirmModalProps {
-  heading: string
-  message: string
-  confirmButton?: string
-  onConfirm: () => void
+  heading: string;
+  message: string;
+  confirmButton?: string;
+  onConfirm: () => void;
 }
 
 export function ConfirmModal({
@@ -27,12 +27,12 @@ export function ConfirmModal({
   heading,
   message,
   confirmButton = '',
-  onConfirm
+  onConfirm,
 }: PropsWithChildren<ConfirmModalProps>) {
-  const t = useTranslations('common.confirmModal')
+  const t = useTranslations('common.confirmModal');
 
   if (!confirmButton) {
-    confirmButton = t('continueButton')
+    confirmButton = t('continueButton');
   }
 
   return (
@@ -51,5 +51,5 @@ export function ConfirmModal({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

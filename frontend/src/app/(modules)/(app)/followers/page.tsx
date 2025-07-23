@@ -13,9 +13,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function FollowersPage() {
   return (
-    <div className='flex h-screen flex-col items-center justify-center'>
-      <h1 className='font-bold text-2xl'>Welcome to the Followers Page</h1>
-      <p className='mt-4 text-gray-600'>This is your followers page.</p>
+    <div className="flex h-screen flex-col items-center justify-center">
+      <h1 className="font-bold text-2xl">Welcome to the Followers Page</h1>
+      <p className="mt-4 text-gray-600">This is your followers page.</p>
     </div>
   );
 }

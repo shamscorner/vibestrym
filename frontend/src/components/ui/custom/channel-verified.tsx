@@ -16,11 +16,11 @@ const channelVerifiedSizes = cva('', {
 });
 
 interface ChannelVerifiedProps
-  extends VariantProps<typeof channelVerifiedSizes> { }
+  extends VariantProps<typeof channelVerifiedSizes> {}
 
 export function ChannelVerified({ size }: ChannelVerifiedProps) {
   return (
-    <span className='flex items-center justify-center rounded-full border border-emerald-600'>
+    <span className="flex items-center justify-center rounded-full border border-emerald-600">
       <CheckIcon
         className={cn(
           'stroke-[4px] p-[3px] text-emerald-600 dark:text-emerald-500',

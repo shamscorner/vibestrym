@@ -26,11 +26,11 @@ export function RecommendedChannels() {
       )}
       {isLoadingRecommended
         ? Array.from({ length: 7 }).map((_, index) => (
-          <ChannelItemSkeleton key={index} />
-        ))
+            <ChannelItemSkeleton key={index} />
+          ))
         : channels.map((channel, index) => (
-          <ChannelItem channel={channel} key={index} />
-        ))}
+            <ChannelItem channel={channel} key={index} />
+          ))}
     </div>
   );
 }

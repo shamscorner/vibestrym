@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { useCurrent } from '@/app/(modules)/(auth)/hooks/useCurrent';
+import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
 import { Button } from '@/components/ui/common/button';
 import {
   Form,
@@ -24,7 +24,7 @@ import { type ChangeInfoSchema, changeInfoSchema } from './change-info.schema';
 export function ChangeInfoForm() {
   const t = useTranslations('dashboard.settings.profile.info');
 
-  const { user, isLoadingProfile, refetch } = useCurrent();
+  const { user, isLoadingProfile, refetch } = useCurrentAccount();
 
   const form = useForm<ChangeInfoSchema>({
     resolver: zodResolver(changeInfoSchema),
@@ -87,7 +87,9 @@ export function ChangeInfoForm() {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>{t('displayName.description')}</FormDescription>
+                <FormDescription>
+                  {t('displayName.description')}
+                </FormDescription>
               </FormItem>
             )}
           />

@@ -6,7 +6,7 @@ import { getLocale, getMessages } from 'next-intl/server';
 import type { ReactNode } from 'react';
 import { Toaster } from '@/components/ui/common/sonner';
 import { ThemeColorSwitcher } from '@/components/ui/custom/theme-color-switcher';
-import { ApolloClientProvider } from '@/providers/ApolloClientProvider';
+import { ApolloClientProvider } from '@/providers/apollo-client-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
 
 const geistSans = Geist({

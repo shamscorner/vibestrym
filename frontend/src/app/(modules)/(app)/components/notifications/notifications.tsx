@@ -9,7 +9,8 @@ import { useFindUnreadNotificationsCountQuery } from '@/graphql/_generated/outpu
 import { NotificationsList } from './notifications-list';
 
 export function Notifications() {
-  const { data, loading: isLoadingCount } = useFindUnreadNotificationsCountQuery();
+  const { data, loading: isLoadingCount } =
+    useFindUnreadNotificationsCountQuery();
   const count = data?.findUnreadNotificationsCount ?? 0;
   const displayCount = count > 10 ? '+9' : count;
 

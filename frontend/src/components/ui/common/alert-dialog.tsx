@@ -9,32 +9,22 @@ import {
   Portal,
   Root,
   Title,
-  Trigger
+  Trigger,
 } from '@radix-ui/react-alert-dialog';
 import type { ComponentProps } from 'react';
 import { buttonVariants } from '@/components/ui/common/button';
 import { cn } from '@/utils/tw-merge';
 
-function AlertDialog({
-  ...props
-}: ComponentProps<typeof Root>) {
+function AlertDialog({ ...props }: ComponentProps<typeof Root>) {
   return <Root data-slot="alert-dialog" {...props} />;
 }
 
-function AlertDialogTrigger({
-  ...props
-}: ComponentProps<typeof Trigger>) {
-  return (
-    <Trigger data-slot="alert-dialog-trigger" {...props} />
-  );
+function AlertDialogTrigger({ ...props }: ComponentProps<typeof Trigger>) {
+  return <Trigger data-slot="alert-dialog-trigger" {...props} />;
 }
 
-function AlertDialogPortal({
-  ...props
-}: ComponentProps<typeof Portal>) {
-  return (
-    <Portal data-slot="alert-dialog-portal" {...props} />
-  );
+function AlertDialogPortal({ ...props }: ComponentProps<typeof Portal>) {
+  return <Portal data-slot="alert-dialog-portal" {...props} />;
 }
 
 function AlertDialogOverlay({
@@ -125,12 +115,7 @@ function AlertDialogAction({
   className,
   ...props
 }: ComponentProps<typeof Action>) {
-  return (
-    <Action
-      className={cn(buttonVariants(), className)}
-      {...props}
-    />
-  );
+  return <Action className={cn(buttonVariants(), className)} {...props} />;
 }
 
 function AlertDialogCancel({

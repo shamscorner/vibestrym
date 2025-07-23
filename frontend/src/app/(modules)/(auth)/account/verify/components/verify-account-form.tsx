@@ -7,7 +7,11 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/common/alert';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@/components/ui/common/alert';
 import { Button } from '@/components/ui/common/button';
 import { useVerifyAccountMutation } from '@/graphql/_generated/output';
 import { useAuth } from '../../../hooks';

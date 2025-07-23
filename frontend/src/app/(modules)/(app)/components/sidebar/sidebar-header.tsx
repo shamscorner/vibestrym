@@ -23,9 +23,7 @@ export function SidebarHeader() {
     </div>
   ) : (
     <div className="mb-2 flex w-full items-center justify-between p-3 pl-4">
-      <h2 className="font-semibold text-muted-foreground">
-        {t('explore')}
-      </h2>
+      <h2 className="font-semibold text-muted-foreground">{t('explore')}</h2>
       <Hint asChild label={label} side="right">
         <Button onClick={() => close()} size="icon" variant="ghost">
           <ArrowLeftFromLineIcon className="size-4" />

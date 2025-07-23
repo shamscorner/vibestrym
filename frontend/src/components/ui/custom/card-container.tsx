@@ -23,7 +23,7 @@ export function CardContainer({
 }: PropsWithChildren<CardContainerProps>) {
   return (
     <Card className="p-4">
-      <div className='flex flex-col items-start justify-between gap-5 md:flex-row md:items-center'>
+      <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:items-center">
         <div className="flex flex-row items-center gap-x-4">
           {Icon && (
             <div className="rounded-full bg-foreground p-2.5">

@@ -4,10 +4,7 @@ import { Root } from '@radix-ui/react-label';
 import type { ComponentProps } from 'react';
 import { cn } from '@/utils/tw-merge';
 
-function Label({
-  className,
-  ...props
-}: ComponentProps<typeof Root>) {
+function Label({ className, ...props }: ComponentProps<typeof Root>) {
   return (
     <Root
       className={cn(
