@@ -7,6 +7,7 @@ import {
   TabsTrigger,
 } from '@/components/ui/common/tabs';
 import { Heading } from '@/components/ui/custom/heading';
+import { ChangeEmailForm } from './account/change-email/change-email-form';
 import { ChangeAvatarForm } from './profile/change-avatar/change-avatar-form';
 import { ChangeThemeColorForm } from './profile/change-color/change-theme-color-form';
 import { ChangeInfoForm } from './profile/change-info/change-info-form';
@@ -46,7 +47,18 @@ export function UserSettings() {
             <SocialLinksForm />
           </div>
         </TabsContent>
-        <TabsContent value="account">Account</TabsContent>
+
+        <TabsContent value="account">
+          <Heading
+            className="mt-5"
+            description={t('account.header.description')}
+            title={t('account.header.heading')}
+          />
+          <div className="mt-5 flex flex-col gap-y-8">
+            <ChangeEmailForm />
+          </div>
+        </TabsContent>
+
         <TabsContent value="appearance">
           <Heading
             className="mt-5"

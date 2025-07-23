@@ -271,6 +271,73 @@
           }
         }
       },
+      "account": {
+        "header": {
+          "heading": "Account",
+          "description": "Manage your account settings, including email, password, and security options.",
+          "security": {
+            "heading": "Security Settings",
+            "description": "Set up two-factor authentication and auto-renewals for enhanced protection of your data."
+          },
+          "deactivation": {
+            "heading": "Account Deactivation",
+            "description": "After deactivating your account, you will not be able to log in. Your account will be completely deleted after 7 days. Until then, you can contact support to restore access and unlock your account."
+          }
+        },
+        "email": {
+          "heading": "Email Address",
+          "label": "Email",
+          "description": "Enter your new email address.",
+          "submitButton": "Save",
+          "successMessage": "Email successfully updated",
+          "errorMessage": "Error during mail update"
+        },
+        "password": {
+          "heading": "Account Password",
+          "oldPassword": {
+            "label": "Old Password",
+            "description": "Enter your current password to verify your identity before changing your password."
+          },
+          "newPassword": {
+            "label": "New Password",
+            "description": "Your new password must be at least 8 characters long. It is recommended to use special characters for added security."
+          },
+          "submitButton": "Save",
+          "successMessage": "Password successfully updated",
+          "errorMessage": "Error when updating password"
+        },
+        "twoFactor": {
+          "heading": "TOTP Authentication",
+          "description": "Enhance your account security by enabling TOTP authentication. This additional layer of protection requires entering a unique code, making your account less vulnerable to unauthorized access.",
+          "enable": {
+            "trigger": "Enable",
+            "heading": "Enabling TOTP",
+            "qrInstructions": "Scan the QR code to add TOTP",
+            "secretCodeLabel": "Secret Code: ",
+            "pinLabel": "PIN Code",
+            "pinDescription": "Please enter the 6-digit code provided by your authentication app.",
+            "submitButton": "Confirm",
+            "successMessage": "TOTP authentication enabled",
+            "errorMessage": "Error verifying the code"
+          },
+          "disable": {
+            "trigger": "Disable",
+            "heading": "Are you sure you want to disable TOTP?",
+            "message": "Disabling TOTP authentication will make your account less secure. Are you sure you want to proceed?",
+            "successMessage": "TOTP authentication has been disabled",
+            "errorMessage": "Error disabling"
+          }
+        },
+        "deactivation": {
+          "heading": "Account Deactivation",
+          "description": "After deactivating your account, you will not be able to log in. Your account will be completely deleted after 7 days. Until then, you can contact support to restore access and unlock your account.",
+          "confirmModal": {
+            "heading": "Deactivation Confirmation",
+            "message": "Are you sure you want to deactivate your account? Access can only be restored within 7 days."
+          },
+          "button": "Deactivate"
+        }
+      },
       "appearance": {
         "header": {
           "heading": "Appearance",
