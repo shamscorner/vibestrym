@@ -3,7 +3,7 @@
     "liveBadge": {
       "text": "LIVE"
     },
-    "confirmModal": {
+    "confirmDialog": {
       "cancelButton": "Cancel",
       "continueButton": "Continue"
     }
@@ -194,7 +194,7 @@
         "avatar": {
           "heading": "Profile Picture",
           "updateButton": "Update Profile Picture",
-          "confirmModal": {
+          "confirmDialog": {
             "heading": "Remove Profile Picture",
             "message": "Are you sure you want to remove your profile picture? This action cannot be undone.",
             "confirmButton": "Remove"
@@ -240,10 +240,10 @@
             },
             "url": {
               "label": "Link URL",
-              "placeholder": "https://shamscorner.com",
-              "description": "Enter the full URL, e.g., https://shamscorner.com"
+              "placeholder": "https://www.youtube.com/@shamscorner",
+              "description": "Enter the full URL, e.g., https://www.youtube.com/@shamscorner"
             },
-            "submitButton": "Add",
+            "submitButton": "Add Link",
             "successMessage": "Social media link successfully added",
             "errorMessage": "Error adding social media link"
           },
@@ -257,6 +257,12 @@
             "removeMessage": {
               "success": "Social media link successfully removed",
               "error": "Error removing social media link"
+            },
+            "deleteConfirmDialog": {
+              "heading": "Delete Social Media Link",
+              "message": "Are you sure you want to delete this social media link? This action cannot be undone.",
+              "confirmButton": "Delete",
+              "cancelButton": "Cancel"
             }
           },
           "reorderMessage": {

@@ -12,7 +12,7 @@ export function FormWrapper({
 }: PropsWithChildren<FormWrapperProps>) {
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="pl-5">
         <CardTitle className="text-lg">{heading}</CardTitle>
       </CardHeader>
       <CardContent className="p-0">{children}</CardContent>

@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/common/button';
 import { Form, FormField } from '@/components/ui/common/form';
 import { Skeleton } from '@/components/ui/common/skeleton';
 import { ChannelAvatar } from '@/components/ui/custom/channel-avatar';
-import { ConfirmModal } from '@/components/ui/custom/confirm-modal';
+import { ConfirmDialog } from '@/components/ui/custom/confirm-dialog';
 import { FormWrapper } from '@/components/ui/custom/form-wrapper';
 import {
   useChangeProfileAvatarMutation,
@@ -118,10 +118,10 @@ export function ChangeAvatarForm() {
                       {t('updateButton')}
                     </Button>
                     {user?.avatar && (
-                      <ConfirmModal
-                        confirmButton={t('confirmModal.confirmButton')}
-                        heading={t('confirmModal.heading')}
-                        message={t('confirmModal.message')}
+                      <ConfirmDialog
+                        confirmButton={t('confirmDialog.confirmButton')}
+                        heading={t('confirmDialog.heading')}
+                        message={t('confirmDialog.message')}
                         onConfirm={() => remove()}
                       >
                         <Button
@@ -131,7 +131,7 @@ export function ChangeAvatarForm() {
                         >
                           <Trash className="size-4" />
                         </Button>
-                      </ConfirmModal>
+                      </ConfirmDialog>
                     )}
                   </div>
                   <p className="text-muted-foreground text-sm">{t('info')}</p>

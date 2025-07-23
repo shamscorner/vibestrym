@@ -12,6 +12,7 @@ import { ChangeThemeColorForm } from './profile/change-color/change-theme-color-
 import { ChangeInfoForm } from './profile/change-info/change-info-form';
 import { ChangeLanguageForm } from './profile/change-language/change-language-form';
 import { ChangeThemeForm } from './profile/change-theme/change-theme-form';
+import { SocialLinksForm } from './profile/social-links/social-links-form';
 
 export function UserSettings() {
   const t = useTranslations('dashboard.settings');
@@ -42,6 +43,7 @@ export function UserSettings() {
           <div className="mt-5 flex flex-col gap-y-8">
             <ChangeAvatarForm />
             <ChangeInfoForm />
+            <SocialLinksForm />
           </div>
         </TabsContent>
         <TabsContent value="account">Account</TabsContent>

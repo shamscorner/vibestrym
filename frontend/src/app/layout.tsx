@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import type { ReactNode } from 'react';
 import { Toaster } from '@/components/ui/common/sonner';
+import { ConfirmDialogGlobal } from '@/components/ui/custom/confirm-dialog-global';
 import { ThemeColorSwitcher } from '@/components/ui/custom/theme-color-switcher';
 import { ApolloClientProvider } from '@/providers/apollo-client-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
@@ -42,6 +43,7 @@ export default async function RootLayout({
               enableSystem
             >
               <main>{children}</main>
+              <ConfirmDialogGlobal />
               <Toaster />
             </ThemeProvider>
           </NextIntlClientProvider>
