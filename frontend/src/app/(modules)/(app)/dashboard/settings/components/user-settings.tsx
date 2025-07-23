@@ -9,6 +9,7 @@ import {
 import { Heading } from '@/components/ui/custom/heading';
 import { ChangeEmailForm } from './account/change-email/change-email-form';
 import { ChangePasswordForm } from './account/change-password/change-password-form';
+import { WrapperTotp } from './account/totp/wrapper-totp';
 import { ChangeAvatarForm } from './profile/change-avatar/change-avatar-form';
 import { ChangeThemeColorForm } from './profile/change-color/change-theme-color-form';
 import { ChangeInfoForm } from './profile/change-info/change-info-form';
@@ -59,6 +60,12 @@ export function UserSettings() {
             <ChangeEmailForm />
             <ChangePasswordForm />
           </div>
+          <Heading
+            className="mt-10 mb-6"
+            description={t('account.header.security.description')}
+            title={t('account.header.security.heading')}
+          />
+          <WrapperTotp />
         </TabsContent>
 
         <TabsContent value="appearance">

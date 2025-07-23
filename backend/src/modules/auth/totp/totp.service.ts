@@ -8,6 +8,7 @@ import type { User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { generateTotp } from '@/src/shared/utils/generate-totp.util'
 
+import { DisableTotpInput } from './inputs/disable-totp.input'
 import { EnableTotpInput } from './inputs/enable-totp.input'
 
 @Injectable()
@@ -54,7 +55,21 @@ export class TotpService {
 		return true
 	}
 
-	async disable(user: User) {
+	async disable(user: User, input: DisableTotpInput) {
+		const { pin } = input
+
+		const totp = generateTotp(
+			this.configService,
+			user.email,
+			user.totpSecret || undefined
+		)
+
+		const delta = totp.validate({ token: pin })
+
+		if (delta === null) {
+			throw new BadRequestException('Invalid code')
+		}
+
 		await this.prismaService.user.update({
 			where: {
 				id: user.id

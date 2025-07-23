@@ -28,7 +28,7 @@ function InputOTP({
 function InputOTPGroup({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
-      className={cn('flex items-center', className)}
+      className={cn('flex w-full items-center', className)}
       data-slot="input-otp-group"
       {...props}
     />

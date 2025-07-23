@@ -97,7 +97,7 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
                   <FormLabel>{t('pin.label')}</FormLabel>
                   <FormControl>
                     <InputOTP maxLength={6} {...field}>
-                      <InputOTPGroup className="w-full">
+                      <InputOTPGroup>
                         <InputOTPSlot index={0} />
                         <InputOTPSlot index={1} />
                         <InputOTPSlot index={2} />

@@ -94,6 +94,10 @@ type DeviceModel {
   type: String!
 }
 
+input DisableTotpInput {
+  pin: String!
+}
+
 input EnableTotpInput {
   pin: String!
   secret: String!
@@ -156,7 +160,7 @@ type Mutation {
   createSponsorshipPlan(data: CreatePlanInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
   deactivateAccount(data: DeactivateAccountInput!): AuthModel!
-  disableTotp: Boolean!
+  disableTotp(data: DisableTotpInput!): Boolean!
   enableTotp(data: EnableTotpInput!): Boolean!
   followChannel(channelId: String!): Boolean!
   generateStreamToken(data: GenerateStreamTokenInput!): GenerateStreamTokenModel!
