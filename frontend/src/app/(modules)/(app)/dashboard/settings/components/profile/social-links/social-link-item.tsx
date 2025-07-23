@@ -189,6 +189,7 @@ export function SocialLinkItem({ socialLink, provided }: SocialLinkItemProps) {
               description: t('deleteConfirmDialog.message'),
               confirmText: t('deleteConfirmDialog.confirmButton'),
               cancelText: t('deleteConfirmDialog.cancelButton'),
+              actionType: 'destructive',
               action: async () => {
                 await remove({ variables: { id: socialLink.id } });
                 return true;

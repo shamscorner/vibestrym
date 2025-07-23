@@ -12,6 +12,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/common/alert-dialog';
 import { useConfirmStore } from '@/store/confirm-dialog/confirm-dialog.store';
+import { Button } from '../common/button';
 
 export function ConfirmDialogGlobal() {
   const t = useTranslations('common.confirmDialog');
@@ -41,8 +42,13 @@ export function ConfirmDialogGlobal() {
           <AlertDialogCancel onClick={handleCancel}>
             {item?.cancelText || t('cancelButton')}
           </AlertDialogCancel>
-          <AlertDialogAction onClick={handleConfirm}>
-            {item?.confirmText || t('continueButton')}
+          <AlertDialogAction asChild>
+            <Button
+              onClick={handleConfirm}
+              variant={item?.actionType || 'default'}
+            >
+              {item?.confirmText || t('continueButton')}
+            </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

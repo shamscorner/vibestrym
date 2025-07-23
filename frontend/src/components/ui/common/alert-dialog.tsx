@@ -65,7 +65,7 @@ function AlertDialogContent({
 function AlertDialogHeader({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
-      className={cn('flex flex-col gap-2 text-center sm:text-left', className)}
+      className={cn('flex flex-col gap-2 text-left sm:text-left', className)}
       data-slot="alert-dialog-header"
       {...props}
     />
@@ -75,10 +75,7 @@ function AlertDialogHeader({ className, ...props }: ComponentProps<'div'>) {
 function AlertDialogFooter({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
-      className={cn(
-        'flex flex-col-reverse gap-2 sm:flex-row sm:justify-end',
-        className
-      )}
+      className={cn('flex flex-row justify-end gap-2', className)}
       data-slot="alert-dialog-footer"
       {...props}
     />
