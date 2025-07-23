@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/common/tabs';
 import { Heading } from '@/components/ui/custom/heading';
 import { ChangeEmailForm } from './account/change-email/change-email-form';
+import { ChangePasswordForm } from './account/change-password/change-password-form';
 import { ChangeAvatarForm } from './profile/change-avatar/change-avatar-form';
 import { ChangeThemeColorForm } from './profile/change-color/change-theme-color-form';
 import { ChangeInfoForm } from './profile/change-info/change-info-form';
@@ -56,6 +57,7 @@ export function UserSettings() {
           />
           <div className="mt-5 flex flex-col gap-y-8">
             <ChangeEmailForm />
+            <ChangePasswordForm />
           </div>
         </TabsContent>
 
