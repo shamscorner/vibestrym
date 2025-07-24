@@ -389,6 +389,22 @@
           "heading": "Theme Color",
           "description": "Choose a theme color for the website. This color will be used for buttons, links, and other interactive elements."
         }
+      },
+      "notifications": {
+        "header": {
+          "heading": "Notifications",
+          "description": "Manage your notification settings to control how you receive updates about your account and streams."
+        },
+        "siteNotifications": {
+          "heading": "Site Notifications",
+          "description": "Enable or disable notifications on the site. You will receive notifications about new subscriptions, new streams, password resets, and two-factor authentication codes."
+        },
+        "telegramNotifications": {
+          "heading": "Telegram Notifications",
+          "description": "Enable or disable notifications in Telegram. You will receive notifications about new subscriptions, new streams, password resets, and two-factor authentication codes."
+        },
+        "successMessage": "Notification settings updated successfully",
+        "errorMessage": "Error updating notification settings"
       }
     }
   },

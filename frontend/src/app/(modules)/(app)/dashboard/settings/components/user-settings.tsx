@@ -11,6 +11,7 @@ import { ChangeEmailForm } from './account/change-email/change-email-form';
 import { ChangePasswordForm } from './account/change-password/change-password-form';
 import { DeactivateAccount } from './account/deactivate-account/deactivate-account';
 import { WrapperTotp } from './account/totp/wrapper-totp';
+import { ChangeNotificationsSettingsForm } from './notifications/notification-settings-form';
 import { ChangeAvatarForm } from './profile/change-avatar/change-avatar-form';
 import { ChangeThemeColorForm } from './profile/change-color/change-theme-color-form';
 import { ChangeInfoForm } from './profile/change-info/change-info-form';
@@ -89,7 +90,16 @@ export function UserSettings() {
           </div>
         </TabsContent>
 
-        <TabsContent value="notifications">Notifications</TabsContent>
+        <TabsContent value="notifications">
+          <Heading
+            className="mt-5"
+            description={t('notifications.header.description')}
+            title={t('notifications.header.heading')}
+          />
+          <div className="mt-5 flex flex-col gap-y-8">
+            <ChangeNotificationsSettingsForm />
+          </div>
+        </TabsContent>
         <TabsContent value="sessions">Sessions</TabsContent>
       </Tabs>
     </div>
