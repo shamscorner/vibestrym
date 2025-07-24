@@ -8,5 +8,9 @@ query FindProfile {
     bio
     isVerified
     isTotpEnabled
+    notificationSettings {
+      siteNotifications
+      telegramNotifications
+    }
   }
 }

@@ -14,12 +14,16 @@ export function useCurrentAccount() {
   const [clear] = useClearSessionCookieMutation();
 
   useEffect(() => {
-    if (error) {
-      if (isAuthenticated) {
-        clear();
-      }
-      exit();
+    if (error && process.env.NODE_ENV === 'development') {
+      // biome-ignore lint/suspicious/noConsole: <only for development>
+      console.error('Error fetching current account:', error);
+      return;
     }
+    if (!error) return;
+    if (isAuthenticated) {
+      clear();
+    }
+    exit();
   }, [isAuthenticated, exit, clear, error]);
 
   return {
