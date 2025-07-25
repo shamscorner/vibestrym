@@ -28,6 +28,10 @@
     },
     "dataTable": {
       "notFound": "No data found"
+    },
+    "emptyState": {
+      "heading": "No data available",
+      "description": "There is no data to display at the moment. Please check back later or try a different search."
     }
   },
   "app": {
@@ -85,7 +89,9 @@
   },
   "home": {
     "title": "Welcome to BDLive",
-    "description": "Your go-to streaming spot for catching live events, shows, tutorials, funny moments and more easily!"
+    "description": "Your go-to streaming spot for catching live events, shows, tutorials, funny moments and more easily!",
+    "streamsHeading": "Channels You Might Like",
+    "categoriesHeading": "Categories You Might Like"
   },
   "auth": {
     "common": {
