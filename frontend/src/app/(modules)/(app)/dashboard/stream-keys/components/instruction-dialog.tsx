@@ -32,7 +32,7 @@ export function InstructionModal() {
           {t('step1.description')}
         </p>
 
-        <ol className="list-inside list-decimal space-y-2 pl-4">
+        <ol className="flex list-inside list-decimal flex-col gap-y-2 pl-4">
           <li className="text-muted-foreground text-sm">
             <strong>{t('downloadObs.title')}</strong>
             <br />
@@ -59,7 +59,7 @@ export function InstructionModal() {
           {t('step2.description')}
         </p>
 
-        <ol className="list-inside list-decimal space-y-2 pl-4">
+        <ol className="flex list-inside list-decimal flex-col gap-y-2 pl-4">
           <li className="text-muted-foreground text-sm">
             <strong>{t('openObs.title')}</strong>
             <br />
@@ -87,7 +87,7 @@ export function InstructionModal() {
           {t('step3.description')}
         </p>
 
-        <ol className="list-inside list-decimal space-y-2 pl-4">
+        <ol className='flex list-inside list-decimal flex-col gap-y-2 pl-4'>
           <li className="text-muted-foreground text-sm">
             <strong>{t('startStream.title')}</strong>
             <br />

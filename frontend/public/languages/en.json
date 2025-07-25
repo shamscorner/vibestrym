@@ -583,6 +583,57 @@
         "actions": "Actions",
         "viewChannel": "View Channel"
       }
+    },
+    "plans": {
+      "title": "Premium Plans - BDLive",
+      "description": "Create and manage your premium plans to offer exclusive content to your subscribers.",
+      "header": {
+        "heading": "Premium Plans",
+        "description": "Create and manage your premium plans to offer exclusive content to your subscribers."
+      },
+      "alert": {
+        "heading": "Channel verification required",
+        "description": "To create premium plans, your channel must be verified. You only need 10 subscribers to get the checkmark and unlock access to this feature."
+      },
+      "createForm": {
+        "trigger": "Create Plan",
+        "heading": "Create Plan",
+        "title": {
+          "label": "Title",
+          "placeholder": "Premium subscription for the channel",
+          "description": "Enter the name of your plan. This name will be displayed to your subscribers."
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Describe what your plan includes",
+          "description": "Describe what your plan includes. This will help your subscribers understand the benefits of the subscription."
+        },
+        "price": {
+          "label": "Price",
+          "placeholder": "10.00",
+          "description": "Enter the price of your plan. This is the amount your subscribers will pay for the subscription."
+        },
+        "submitButton": "Create",
+        "successMessage": "Premium plan created",
+        "errorMessage": "Error while creating the plan"
+      },
+      "columns": {
+        "date": "Creation Date",
+        "title": "Title",
+        "price": "Price",
+        "actions": "Actions",
+        "remove": {
+          "heading": "Remove",
+          "successMessage": "Plan removed successfully",
+          "errorMessage": "Error while removing the plan",
+          "confirmDialog": {
+            "heading": "Remove Plan",
+            "message": "Are you sure you want to remove this plan? This action cannot be undone.",
+            "confirmButton": "Remove",
+            "cancelButton": "Cancel"
+          }
+        }
+      }
     }
   },
   "followers": {

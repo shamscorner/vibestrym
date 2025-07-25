@@ -58,7 +58,7 @@ export function ChatSettingsForm() {
         size="lg"
         title={t('header.heading')}
       />
-      <div className="mt-3 space-y-6">
+      <div className="mt-3 flex flex-col gap-y-6">
         {isLoadingProfile ? (
           Array.from({ length: 3 }).map((_, index) => (
             <ToggleCardSkeleton key={index} />
