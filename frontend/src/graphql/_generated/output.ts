@@ -761,6 +761,11 @@ export type CreateIngressMutationVariables = Exact<{
 
 export type CreateIngressMutation = { __typename?: 'Mutation', createIngress: boolean };
 
+export type FindMyTransactionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindMyTransactionsQuery = { __typename?: 'Query', findMyTransactions: Array<{ __typename?: 'TransactionModel', createdAt: any, status: TransactionStatus, amount: number }> };
+
 export type CreateUserMutationVariables = Exact<{
   data: CreateUserInput;
 }>;
@@ -1734,6 +1739,47 @@ export function useCreateIngressMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateIngressMutationHookResult = ReturnType<typeof useCreateIngressMutation>;
 export type CreateIngressMutationResult = Apollo.MutationResult<CreateIngressMutation>;
 export type CreateIngressMutationOptions = Apollo.BaseMutationOptions<CreateIngressMutation, CreateIngressMutationVariables>;
+export const FindMyTransactionsDocument = gql`
+    query FindMyTransactions {
+  findMyTransactions {
+    createdAt
+    status
+    amount
+  }
+}
+    `;
+
+/**
+ * __useFindMyTransactionsQuery__
+ *
+ * To run a query within a React component, call `useFindMyTransactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindMyTransactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindMyTransactionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindMyTransactionsQuery(baseOptions?: Apollo.QueryHookOptions<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>(FindMyTransactionsDocument, options);
+      }
+export function useFindMyTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>(FindMyTransactionsDocument, options);
+        }
+export function useFindMyTransactionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>(FindMyTransactionsDocument, options);
+        }
+export type FindMyTransactionsQueryHookResult = ReturnType<typeof useFindMyTransactionsQuery>;
+export type FindMyTransactionsLazyQueryHookResult = ReturnType<typeof useFindMyTransactionsLazyQuery>;
+export type FindMyTransactionsSuspenseQueryHookResult = ReturnType<typeof useFindMyTransactionsSuspenseQuery>;
+export type FindMyTransactionsQueryResult = Apollo.QueryResult<FindMyTransactionsQuery, FindMyTransactionsQueryVariables>;
 export const CreateUserDocument = gql`
     mutation CreateUser($data: CreateUserInput!) {
   createUser(data: $data)
