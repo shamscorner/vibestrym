@@ -529,6 +529,28 @@
         "successMessage": "Ingress created",
         "errorMessage": "Error creating ingress"
       }
+    },
+    "chatSettings": {
+      "title": "Chat Settings - BDLive",
+      "description": "Manage your chat settings to control who can send messages during your streams.",
+      "header": {
+        "heading": "Chat Settings",
+        "description": "Here you can manage your chat settings."
+      },
+      "isChatEnabled": {
+        "heading": "Enable Chat",
+        "description": "If you enable this setting, users will be able to send messages in the chat during your streams."
+      },
+      "isChatFollowersOnly": {
+        "heading": "Followers-Only Chat",
+        "description": "If you enable this setting, only your followers will be able to send messages in the chat."
+      },
+      "isChatPremiumFollowersOnly": {
+        "heading": "Premium Followers-Only Chat",
+        "description": "If you enable this setting, only your premium followers will be able to send messages in the chat."
+      },
+      "successMessage": "Chat settings updated successfully",
+      "errorMessage": "Error updating chat settings"
     }
   },
   "followers": {
