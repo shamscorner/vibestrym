@@ -4,10 +4,6 @@ export const BASE_COLORS = [
     color: 'oklch(0.205 0 0)',
   },
   {
-    name: 'red',
-    color: 'oklch(0.637 0.237 25.331)',
-  },
-  {
     name: 'rose',
     color: 'oklch(0.645 0.246 16.439)',
   },

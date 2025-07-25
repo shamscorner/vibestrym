@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 import type { PropsWithChildren, ReactNode } from 'react';
+import type { IconType } from 'react-icons'
 
 import { cn } from '@/utils/tw-merge';
 
@@ -8,7 +9,7 @@ import { Card } from '../common/card';
 interface CardContainerProps {
   heading: string;
   description?: string;
-  Icon?: LucideIcon;
+  Icon?: LucideIcon | IconType;
   isRightContentFull?: boolean;
   rightContent?: ReactNode;
 }

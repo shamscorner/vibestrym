@@ -6,6 +6,22 @@
     "confirmDialog": {
       "cancelButton": "Cancel",
       "continueButton": "Continue"
+    },
+    "formatDate": {
+      "months": {
+        "january": "january",
+        "february": "february",
+        "march": "march",
+        "april": "april",
+        "may": "may",
+        "june": "june",
+        "july": "july",
+        "august": "august",
+        "september": "september",
+        "october": "october",
+        "november": "november",
+        "december": "december"
+      }
     }
   },
   "app": {
@@ -405,6 +421,34 @@
         },
         "successMessage": "Notification settings updated successfully",
         "errorMessage": "Error updating notification settings"
+      },
+      "sessions": {
+        "header": {
+          "heading": "Sessions",
+          "description": "Manage your active sessions to keep your account secure. You can view and delete sessions from devices you no longer use."
+        },
+        "info": {
+          "current": "Current session",
+          "active": "Active sessions",
+          "notFound": "No active sessions found"
+        },
+        "sessionItem": {
+          "deleteButton": "Delete",
+          "detailsButton": "Details",
+          "confirmDialog": {
+            "heading": "Delete Session",
+            "message": "Are you sure you want to delete this session? This action cannot be undone. You will be logged out from this session."
+          },
+          "successMessage": "Session deleted successfully",
+          "errorMessage": "Error deleting session"
+        },
+        "sessionModal": {
+          "heading": "Session Information",
+          "device": "Device:",
+          "location": "Location:",
+          "ipAddress": "IP Address:",
+          "createdAt": "Created At:"
+        }
       }
     }
   },
