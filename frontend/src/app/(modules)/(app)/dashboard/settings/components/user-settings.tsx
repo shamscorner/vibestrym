@@ -11,12 +11,12 @@ import { ChangeEmailForm } from './account/change-email/change-email-form';
 import { ChangePasswordForm } from './account/change-password/change-password-form';
 import { DeactivateAccount } from './account/deactivate-account/deactivate-account';
 import { WrapperTotp } from './account/totp/wrapper-totp';
+import { ChangeThemeColorForm } from './appearance/change-color/change-theme-color-form';
+import { ChangeLanguageForm } from './appearance/change-language/change-language-form';
+import { ChangeThemeForm } from './appearance/change-theme/change-theme-form';
 import { ChangeNotificationsSettingsForm } from './notifications/notification-settings-form';
 import { ChangeAvatarForm } from './profile/change-avatar/change-avatar-form';
-import { ChangeThemeColorForm } from './profile/change-color/change-theme-color-form';
 import { ChangeInfoForm } from './profile/change-info/change-info-form';
-import { ChangeLanguageForm } from './profile/change-language/change-language-form';
-import { ChangeThemeForm } from './profile/change-theme/change-theme-form';
 import { SocialLinksForm } from './profile/social-links/social-links-form';
 
 export function UserSettings() {
