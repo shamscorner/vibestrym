@@ -48,7 +48,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
         />
       </div>
       <div>
-        <h2 className="truncate font-semibold text-base text-foreground hover:text-primary">
+        <h2 className="truncate font-semibold text-base text-foreground hover:opacity-80">
           {category.title}
         </h2>
       </div>
