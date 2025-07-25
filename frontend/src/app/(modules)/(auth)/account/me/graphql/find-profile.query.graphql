@@ -12,5 +12,12 @@ query FindProfile {
       siteNotifications
       telegramNotifications
     }
+    stream {
+      serverUrl
+      streamKey
+      isChatEnabled
+      isChatFollowersOnly
+      isChatPremiumFollowersOnly
+    }
   }
 }

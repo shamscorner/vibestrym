@@ -22,6 +22,9 @@
         "november": "november",
         "december": "december"
       }
+    },
+    "copyButton": {
+      "successMessage": "Copied to clipboard"
     }
   },
   "app": {
@@ -449,6 +452,82 @@
           "ipAddress": "IP Address:",
           "createdAt": "Created At:"
         }
+      }
+    },
+    "streamKeys": {
+      "title": "Stream Keys - BDLive",
+      "description": "Manage your stream keys for live streaming. Generate new keys or view existing ones.",
+      "header": {
+        "heading": "Stream Keys",
+        "description": "Generate a URL and key for streaming."
+      },
+      "url": {
+        "heading": "URL"
+      },
+      "key": {
+        "heading": "Stream Key"
+      },
+      "instructionDialog": {
+        "trigger": "Instruction",
+        "heading": "OBS Setup Guide for Live Streaming",
+        "description": "To start sharing your content with your audience, follow this step-by-step guide to connecting OBS Studio. Just a few steps, and you're ready to go live!",
+        "step1": {
+          "title": "🔑 Step 1: Download OBS Studio and Generate Server URL and Stream Key",
+          "description": "To start streaming, you need two key elements: Server URL and Stream Key. Follow these steps:"
+        },
+        "downloadObs": {
+          "title": "Download OBS Studio",
+          "description": "OBS Studio is a free and open-source software for video recording and live streaming. Download it from the official site.",
+          "linkText": "Download OBS Studio"
+        },
+        "copyKeys": {
+          "title": "Generate Server URL and Stream Key",
+          "description": "To generate your Server URL and Stream Key, go to the BDLive dashboard, navigate to the 'Stream Keys' section, and click 'Generate Keys'."
+        },
+        "step2": {
+          "title": "🎛️ Step 2: Set Up OBS Studio",
+          "description": "Now that you have the required data, let’s set up OBS to work with your stream:"
+        },
+        "openObs": {
+          "title": "Open OBS Studio",
+          "description": "If OBS is not installed yet, download it from the official site and install it. Once launched, the main OBS page will open."
+        },
+        "openStreamSettings": {
+          "title": "Open Stream Settings",
+          "description": "In the top menu, click “File” → “Settings.” Go to the “Stream” tab."
+        },
+        "enterDetails": {
+          "title": "Enter Your Details",
+          "description": "In the 'Service' field, select 'Custom...'. Paste the previously copied Server URL into the 'URL' field. In the 'Stream Key' field, enter your Stream Key."
+        },
+        "saveSettings": {
+          "title": "Save Settings",
+          "description": "Click 'Apply' and then 'OK' to save the changes."
+        },
+        "step3": {
+          "title": "🚀 Step 3: Start Streaming",
+          "description": "After successfully setting up OBS, you’re ready to start a live broadcast:"
+        },
+        "startStream": {
+          "title": "Start Streaming",
+          "description": "Return to the main OBS screen and click the 'Start Streaming' button."
+        },
+        "monitorStream": {
+          "title": "Monitor Your Stream",
+          "description": "Your stream will begin in real-time, and you can monitor it both on the platform and in OBS."
+        },
+        "congrats": "✨ Congratulations! You are now ready to share your content with the world through OBS! 🎉",
+        "close": "Close"
+      },
+      "createDialog": {
+        "trigger": "Generate Keys",
+        "heading": "Generate Keys",
+        "ingressTypeLabel": "Connection Type",
+        "ingressTypePlaceholder": "Select connection type",
+        "ingressTypeDescription": "Select RTMP for classic broadcasting or WHIP for WebRTC connections.",
+        "submitButton": "Generate",
+        "successMessage": "Ingress created",
+        "errorMessage": "Error creating ingress"
       }
     }
   },
