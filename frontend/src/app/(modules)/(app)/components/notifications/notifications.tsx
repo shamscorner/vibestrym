@@ -19,8 +19,8 @@ export function Notifications() {
   return (
     <Popover>
       <PopoverTrigger>
-        {count !== 0 && (
-          <div className="absolute top-5 right-[72px] rounded-full bg-primary px-[5px] font-semibold text-background text-xs">
+        {displayCount !== 0 && (
+          <div className="absolute top-5 right-[72px] rounded-full bg-primary px-[5px] font-semibold text-foreground text-xs">
             {displayCount}
           </div>
         )}
