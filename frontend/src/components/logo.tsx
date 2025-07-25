@@ -31,6 +31,7 @@ export function Logo({
         height={height}
         priority
         src="/logo.png"
+        style={{ width, height }}
         title={t('title')}
         width={width}
       />
