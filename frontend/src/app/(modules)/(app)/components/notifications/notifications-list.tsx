@@ -31,7 +31,7 @@ export function NotificationsList({ unreadCount }: Props) {
     <>
       <h2 className="flex items-center justify-between font-medium text-lg">
         {t('heading')}
-        {unreadCount && (
+        {typeof unreadCount === 'number' && unreadCount > 0 && (
           <span className="font-normal text-muted-foreground text-sm">
             {unreadCount} {t('unreadCount', { count: unreadCount })}
           </span>
