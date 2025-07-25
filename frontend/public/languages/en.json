@@ -25,6 +25,9 @@
     },
     "copyButton": {
       "successMessage": "Copied to clipboard"
+    },
+    "dataTable": {
+      "notFound": "No data found"
     }
   },
   "app": {
@@ -551,6 +554,20 @@
       },
       "successMessage": "Chat settings updated successfully",
       "errorMessage": "Error updating chat settings"
+    },
+    "followers": {
+      "title": "Followers - BDLive",
+      "description": "View and manage your followers. You can see who follows you and take actions on their profiles.",
+      "header": {
+        "heading": "Followers",
+        "description": "Manage your followers and view their profiles."
+      },
+      "columns": {
+        "date": "Date",
+        "user": "User",
+        "actions": "Actions",
+        "viewChannel": "View channel"
+      }
     }
   },
   "followers": {
