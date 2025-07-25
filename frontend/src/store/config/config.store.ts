@@ -8,7 +8,7 @@ import type { ConfigStore } from './config.types';
 export const configStore = create(
   persist<ConfigStore>(
     (set) => ({
-      theme: 'red',
+      theme: 'violet',
       setTheme: (theme: TypeBaseColor) => set({ theme }),
     }),
     {

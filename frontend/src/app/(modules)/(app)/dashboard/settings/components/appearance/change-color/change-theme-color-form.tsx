@@ -18,7 +18,7 @@ export function ChangeThemeColorForm() {
       description={t('description')}
       heading={t('heading')}
       rightContent={
-        <div className="mr-8 grid min-w-[100px] grid-cols-4 gap-5 md:grid-cols-8">
+        <div className='grid min-w-[100px] grid-cols-4 gap-5 md:grid-cols-8'>
           {BASE_COLORS.map((theme, index) => {
             const isActive = config.theme === theme.name;
 
@@ -36,9 +36,7 @@ export function ChangeThemeColorForm() {
                 type="button"
               >
                 {isActive && (
-                  <CheckIcon
-                    className='size-5 text-background dark:text-foreground'
-                  />
+                  <CheckIcon className="size-5 text-background dark:text-foreground" />
                 )}
               </button>
             );

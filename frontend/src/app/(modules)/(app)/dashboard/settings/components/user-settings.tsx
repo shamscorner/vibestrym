@@ -18,6 +18,7 @@ import { ChangeNotificationsSettingsForm } from './notifications/notification-se
 import { ChangeAvatarForm } from './profile/change-avatar/change-avatar-form';
 import { ChangeInfoForm } from './profile/change-info/change-info-form';
 import { SocialLinksForm } from './profile/social-links/social-links-form';
+import { SessionsList } from './sessions/sessions-list';
 
 export function UserSettings() {
   const t = useTranslations('dashboard.settings');
@@ -100,7 +101,16 @@ export function UserSettings() {
             <ChangeNotificationsSettingsForm />
           </div>
         </TabsContent>
-        <TabsContent value="sessions">Sessions</TabsContent>
+        <TabsContent value="sessions">
+          <Heading
+            className="mt-5"
+            description={t('sessions.header.description')}
+            title={t('sessions.header.heading')}
+          />
+          <div className="mt-5 flex flex-col gap-y-8">
+            <SessionsList />
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );

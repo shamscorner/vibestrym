@@ -8,7 +8,7 @@ import {
 } from '@hello-pangea/dnd';
 import { captureException } from '@sentry/nextjs';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { Separator } from '@/components/ui/common/separator';
 import {
@@ -21,7 +21,10 @@ export function SocialLinksList() {
   const t = useTranslations('dashboard.settings.profile.socialLinks');
 
   const { data, refetch } = useFindSocialLinksQuery();
-  const items = data?.findSocialLinks ?? [];
+  const items = useMemo(
+    () => data?.findSocialLinks ?? [],
+    [data?.findSocialLinks]
+  );
 
   const [socialLinks, setSocialLinks] = useState(items);
 
