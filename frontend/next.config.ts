@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['@sentry/nextjs'],
   },
+  images: {
+    domains: ['bucketbdlive.s3.ap-south-1.amazonaws.com'],
+  },
 };
 
 export default withSentryConfig(withNextIntl(nextConfig), {

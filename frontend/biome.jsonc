@@ -7,7 +7,8 @@
   "linter": {
     "rules": {
       "nursery": {
-        "noUnknownAtRule": "off"
+        "noUnknownAtRule": "off",
+        "noBitwiseOperators": "off"
       },
       "style": {
         "noNestedTernary": "off",
