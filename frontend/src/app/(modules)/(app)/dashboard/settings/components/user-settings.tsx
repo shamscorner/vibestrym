@@ -24,14 +24,14 @@ export function UserSettings() {
   const t = useTranslations('dashboard.settings');
 
   return (
-    <div className="lg:px-10">
+    <div className='max-w-2xl lg:px-10'>
       <Heading
         description={t('header.description')}
         size="lg"
         title={t('header.heading')}
       />
-      <Tabs className="mt-6 w-full max-w-2xl" defaultValue="profile">
-        <TabsList className="grid max-w-2xl grid-cols-5">
+      <Tabs className="mt-6 w-full" defaultValue="profile">
+        <TabsList className="grid grid-cols-5">
           <TabsTrigger value="profile">{t('header.profile')}</TabsTrigger>
           <TabsTrigger value="account">{t('header.account')}</TabsTrigger>
           <TabsTrigger value="appearance">{t('header.appearance')}</TabsTrigger>

@@ -22,7 +22,7 @@ export function DashboardNav() {
     },
     {
       label: t('streamKeys'),
-      href: '/dashboard/keys',
+      href: '/dashboard/stream-keys',
       icon: KeyRound,
     },
     {

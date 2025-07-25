@@ -81,16 +81,16 @@ export class IngressService {
 
 		const rooms = await this.livekitService.room.listRooms([user.id])
 
-		for (const room of rooms) {
-			await this.livekitService.room.deleteRoom(room.name)
-		}
+		await Promise.all(
+			rooms.map(room => this.livekitService.room.deleteRoom(room.name))
+		)
 
-		for (const ingress of ingresses) {
-			if (ingress.ingressId) {
-				await this.livekitService.ingress.deleteIngress(
-					ingress.ingressId
+		await Promise.all(
+			ingresses
+				.filter(ingress => ingress.ingressId)
+				.map(ingress =>
+					this.livekitService.ingress.deleteIngress(ingress.ingressId)
 				)
-			}
-		}
+		)
 	}
 }
