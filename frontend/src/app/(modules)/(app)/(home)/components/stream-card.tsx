@@ -21,7 +21,7 @@ export function StreamCard({ stream }: StreamCardProps) {
           url={stream.thumbnailUrl}
           user={stream.user}
         />
-        <h2 className='mt-3 truncate font-semibold text-base text-foreground hover:text-primary'>
+        <h2 className='mt-3 truncate font-semibold text-base text-foreground hover:opacity-80'>
           {stream.title}
         </h2>
       </Link>

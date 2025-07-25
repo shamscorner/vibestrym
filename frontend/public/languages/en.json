@@ -90,8 +90,8 @@
   "home": {
     "title": "Welcome to BDLive",
     "description": "Your go-to streaming spot for catching live events, shows, tutorials, funny moments and more easily!",
-    "streamsHeading": "Channels You Might Like",
-    "categoriesHeading": "Categories You Might Like"
+    "streamsHeading": "Recommended channels",
+    "categoriesHeading": "Recommended categories"
   },
   "auth": {
     "common": {
