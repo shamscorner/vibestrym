@@ -634,10 +634,23 @@
           }
         }
       }
+    },
+    "transactions": {
+      "title": "Transactions - BDLive",
+      "description": "View and manage your transactions related to channel sponsorship and premium plans.",
+      "header": {
+        "heading": "Transactions",
+        "description": "Here are the transactions related to channel sponsorship."
+      },
+      "columns": {
+        "date": "Creation Date",
+        "status": "Status",
+        "success": "Successful",
+        "pending": "Pending",
+        "failed": "Failed",
+        "expired": "Expired",
+        "amount": "Amount"
+      }
     }
-  },
-  "followers": {
-    "title": "Followers - BDLive",
-    "description": "View and manage your followers on BDLive."
   }
 }
