@@ -41,6 +41,7 @@ export function StreamThumbnail({ url, user, isLive }: StreamThumbnailProps) {
           alt={user.username}
           className='group-hover:-translate-y-2 rounded-xl object-cover transition-transform group-hover:translate-x-2'
           fill
+          sizes='(100vw - 2rem) / 3'
           src={getMediaSource(url)}
         />
       ) : (
