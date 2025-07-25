@@ -568,6 +568,21 @@
         "actions": "Actions",
         "viewChannel": "View channel"
       }
+    },
+    "sponsors": {
+      "title": "Sponsors - BDLive",
+      "description": "View and manage your sponsors. You can see who sponsors you and take actions on their profiles.",
+      "header": {
+        "heading": "Sponsors",
+        "description": "Here is a list of all your sponsors."
+      },
+      "columns": {
+        "date": "Expiration Date",
+        "user": "User",
+        "plan": "Plan",
+        "actions": "Actions",
+        "viewChannel": "View Channel"
+      }
     }
   },
   "followers": {
