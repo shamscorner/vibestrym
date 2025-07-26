@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Heading } from '@/components/ui/custom/heading';
 import type { FindCategoryBySlugQuery } from '@/graphql/_generated/output';
 import { getMediaSource } from '@/utils/get-media-source';
-import { StreamsList } from '../../../(home)/components/stream-list';
+import { StreamsList } from '../../../streams/components/stream-list';
 
 interface CategoryOverviewProps {
   category: FindCategoryBySlugQuery['findCategoryBySlug'];

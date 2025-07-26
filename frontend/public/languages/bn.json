@@ -101,6 +101,10 @@
       "heading": "এই ক্যাটাগরির স্ট্রিমসমূহ"
     }
   },
+  "streams": {
+    "heading": "স্ট্রিম",
+    "searchHeading": "অনুসন্ধান করুন"
+  },
   "auth": {
     "common": {
       "goBack": "হোমে ফিরে যান"
