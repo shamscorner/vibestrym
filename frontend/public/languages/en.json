@@ -93,6 +93,14 @@
     "streamsHeading": "Recommended channels",
     "categoriesHeading": "Recommended categories"
   },
+  "categories": {
+    "title": "Categories - BDLive",
+    "description": "Explore a wide range of categories on BDLive.",
+    "heading": "Categories",
+    "overview": {
+      "heading": "Streams under this category"
+    }
+  },
   "auth": {
     "common": {
       "goBack": "Go back to home"
