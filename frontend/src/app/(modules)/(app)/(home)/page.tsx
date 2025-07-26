@@ -7,8 +7,8 @@ import {
   FindRandomStreamsDocument,
   type FindRandomStreamsQuery,
 } from '@/graphql/_generated/output';
+import { CategoriesList } from '../categories/components/categories-list';
 import { StreamsList } from '../streams/components/stream-list';
-import { CategoriesList } from './components/categories-list';
 
 async function findRandomStreams() {
   try {
