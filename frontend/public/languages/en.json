@@ -101,6 +101,10 @@
       "heading": "Streams under this category"
     }
   },
+  "streams": {
+    "heading": "Streams",
+    "searchHeading": "Search by query"
+  },
   "auth": {
     "common": {
       "goBack": "Go back to home"
