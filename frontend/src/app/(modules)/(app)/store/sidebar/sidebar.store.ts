@@ -6,7 +6,7 @@ import type { SidebarStore } from './sidebar.types';
 export const sidebarStore = create(
   persist<SidebarStore>(
     (set) => ({
-      isCollapsed: false,
+      isCollapsed: true,
       setIsCollapsed: (value: boolean) => set({ isCollapsed: value }),
     }),
     {

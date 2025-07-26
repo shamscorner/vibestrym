@@ -103,7 +103,95 @@
   },
   "streams": {
     "heading": "স্ট্রিম",
-    "searchHeading": "অনুসন্ধান করুন"
+    "searchHeading": "অনুসন্ধান করুন",
+    "stream": {
+      "aboutChannel": {
+        "heading": "সম্পর্কে",
+        "followersCount": "অনুসরণকারী",
+        "noDescription": "কোনো বিবরণ নেই"
+      },
+      "sponsors": {
+        "heading": "চ্যানেল স্পনসর"
+      },
+      "info": {
+        "viewers": "দর্শক",
+        "offline": "অফলাইনে"
+      },
+      "video": {
+        "offline": "অফলাইনে আছে",
+        "loading": "সংযোগ হচ্ছে...",
+        "player": {
+          "volume": "ভলিউম",
+          "fullscreen": {
+            "open": "পূর্ণস্ক্রীন",
+            "exit": "পূর্ণস্ক্রীন থেকে বের হন"
+          }
+        }
+      },
+      "settings": {
+        "heading": "স্ট্রিমিং সেটিংস",
+        "thumbnail": {
+          "updateButton": "ছবি আপডেট করুন",
+          "confirmDialog": {
+            "heading": "স্ট্রিম থাম্বনেইল সরান",
+            "message": "আপনি কি নিশ্চিত যে আপনি স্ট্রিম থাম্বনেইল সরাতে চান? এই পদক্ষেপটি পূর্বাবস্থায় ফেরানো যাবে না।"
+          },
+          "info": "সমর্থিত ফরম্যাট: JPG, JPEG, PNG, অথবা GIF। সর্বোচ্চ আকার: ১০ MB।",
+          "updateMessage": {
+            "success": "স্ট্রিম ছবি সফলভাবে আপডেট হয়েছে",
+            "error": "স্ট্রিম ছবি আপডেট করতে ত্রুটি"
+          },
+          "removeMessage": {
+            "success": "স্ট্রিম ছবি সফলভাবে সরানো হয়েছে",
+            "error": "স্ট্রিম ছবি সরাতে ত্রুটি"
+          }
+        },
+        "info": {
+          "title": {
+            "label": "শিরোনাম",
+            "placeholder": "God of War খেলছি",
+            "description": "আপনার স্ট্রিমের শিরোনাম লিখুন। এটি সংক্ষিপ্ত ও স্মরণীয় হওয়া উচিত।"
+          },
+          "category": {
+            "label": "ক্যাটাগরি",
+            "placeholder": "একটি ক্যাটাগরি নির্বাচন করুন",
+            "description": "আপনার কনটেন্টের ক্যাটাগরি নির্বাচন করুন। এটি দর্শকদের আপনার স্ট্রিম সহজে খুঁজে পেতে সাহায্য করবে।"
+          },
+          "submitButton": "পরিবর্তন সংরক্ষণ করুন",
+          "successMessage": "স্ট্রিম সেটিংস সফলভাবে আপডেট হয়েছে",
+          "errorMessage": "স্ট্রিম সেটিংস আপডেট করতে ত্রুটি"
+        }
+      },
+      "actions": {
+        "follow": {
+          "unfollowDialog": {
+            "heading": "চ্যানেল আনফলো করুন",
+            "message": "আপনি কি নিশ্চিত যে আপনি এই চ্যানেলটি আনফলো করতে চান? আপনি আর এই চ্যানেল থেকে কোনো নোটিফিকেশন পাবেন না এবং এটি আপনার ফলো করা তালিকা থেকে মুছে যাবে।",
+            "confirmButton": "আনফলো করুন"
+          },
+          "unfollowButton": "আনফলো",
+          "followButton": "ফলো",
+          "followMessage": {
+            "success": "আপনি এখন {channelName} ফলো করছেন",
+            "error": "ফলো করার সময় ত্রুটি"
+          },
+          "unfollowMessage": {
+            "success": "আপনি আর {channelName} ফলো করছেন না",
+            "error": "আনফলো করার সময় ত্রুটি"
+          }
+        },
+        "support": {
+          "alreadySponsor": "আপনি ইতিমধ্যে একজন স্পনসর",
+          "supportAuthor": "লেখককে সমর্থন করুন",
+          "perMonth": "প্রতি মাসে",
+          "choose": "নির্বাচন করুন",
+          "errorMessage": "পেমেন্ট তৈরি করতে ত্রুটি"
+        },
+        "share": {
+          "heading": "শেয়ার করুন"
+        }
+      }
+    }
   },
   "auth": {
     "common": {

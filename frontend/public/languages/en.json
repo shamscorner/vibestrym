@@ -103,7 +103,95 @@
   },
   "streams": {
     "heading": "Streams",
-    "searchHeading": "Search by query"
+    "searchHeading": "Search by query",
+    "stream": {
+      "aboutChannel": {
+        "heading": "About",
+        "followersCount": "followers",
+        "noDescription": "No description available"
+      },
+      "sponsors": {
+        "heading": "Channel Sponsors"
+      },
+      "info": {
+        "viewers": "viewers",
+        "offline": "Offline"
+      },
+      "video": {
+        "offline": "is offline",
+        "loading": "Connecting...",
+        "player": {
+          "volume": "Volume",
+          "fullscreen": {
+            "open": "Fullscreen",
+            "exit": "Exit Fullscreen"
+          }
+        }
+      },
+      "settings": {
+        "heading": "Streaming Settings",
+        "thumbnail": {
+          "updateButton": "Update Image",
+          "confirmDialog": {
+            "heading": "Remove Stream Thumbnail",
+            "message": "Are you sure you want to remove the stream thumbnail? This action cannot be undone."
+          },
+          "info": "Supported formats: JPG, JPEG, PNG, or GIF. Max size: 10 MB.",
+          "updateMessage": {
+            "success": "Stream image successfully updated",
+            "error": "Error updating the stream image"
+          },
+          "removeMessage": {
+            "success": "Stream image successfully removed",
+            "error": "Error removing the stream image"
+          }
+        },
+        "info": {
+          "title": {
+            "label": "Title",
+            "placeholder": "Playing God of War",
+            "description": "Enter the title of your stream. It should be short and memorable."
+          },
+          "category": {
+            "label": "Category",
+            "placeholder": "Select a category",
+            "description": "Select the category your content belongs to. This will help viewers find your streams more easily."
+          },
+          "submitButton": "Save Changes",
+          "successMessage": "Stream settings successfully updated",
+          "errorMessage": "Error updating stream settings"
+        }
+      },
+      "actions": {
+        "follow": {
+          "unfollowDialog": {
+            "heading": "Unfollow Channel",
+            "message": "Are you sure you want to unfollow this channel? You will no longer receive notifications from this channel and it will disappear from your followed list.",
+            "confirmButton": "Unfollow"
+          },
+          "unfollowButton": "Unfollow",
+          "followButton": "Follow",
+          "followMessage": {
+            "success": "You are now following {channelName}",
+            "error": "Error while following"
+          },
+          "unfollowMessage": {
+            "success": "You no longer follow {channelName}",
+            "error": "Error while unfollowing"
+          }
+        },
+        "support": {
+          "alreadySponsor": "You are already a sponsor",
+          "supportAuthor": "Support the author",
+          "perMonth": "per month",
+          "choose": "Choose",
+          "errorMessage": "Error while creating payment"
+        },
+        "share": {
+          "heading": "Share"
+        }
+      }
+    }
   },
   "auth": {
     "common": {

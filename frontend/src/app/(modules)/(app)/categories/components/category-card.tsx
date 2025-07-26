@@ -42,6 +42,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
           alt={category.title}
           className="group-hover:-translate-y-2 rounded-lg object-cover transition-transform group-hover:translate-x-2"
           fill
+          sizes='(100vw - 2rem) / 4'
           src={getMediaSource(category.thumbnailUrl)}
         />
       </div>
