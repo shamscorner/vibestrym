@@ -1,6 +1,6 @@
 import { useTracks } from '@livekit/components-react';
 import { type RemoteParticipant, Track } from 'livekit-client';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useEventListener } from 'usehooks-ts';
 
 import { FullscreenControl } from './full-screen-control';
@@ -55,6 +55,11 @@ export function StreamPlayer({ participant }: StreamPlayerProps) {
     'fullscreenchange' as keyof WindowEventMap,
     handleFullscreenChange
   );
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <it only runs once during the initial render>
+  useEffect(() => {
+    onVolumeChange(0);
+  }, []);
 
   {
     const tracks = useTracks([Track.Source.Camera, Track.Source.Microphone])

@@ -1,9 +1,7 @@
 'use client';
 
 import { type PropsWithChildren, useEffect } from 'react';
-
 import { useMediaQuery } from '@/hooks/media-query';
-
 import { cn } from '@/utils/tw-merge';
 import { useSidebar } from '../hooks/sidebar';
 
@@ -12,11 +10,12 @@ export function LayoutWrapper({ children }: PropsWithChildren<unknown>) {
 
   const { isCollapsed, open, close } = useSidebar();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <it only depends on the isMobile state during the initial render>
   useEffect(() => {
-    if (isMobile) {
-      if (!isCollapsed) close();
-    } else if (isCollapsed) open();
-  }, [isMobile, isCollapsed, open, close]);
+    if (isMobile !== isCollapsed) {
+      isMobile ? close() : open();
+    }
+  }, [isMobile]);
 
   return (
     <main
