@@ -11,7 +11,9 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['@sentry/nextjs'],
   },
   images: {
-    domains: ['bucketbdlive.s3.ap-south-1.amazonaws.com'],
+    remotePatterns: [
+      new URL('https://bucketbdlive.s3.ap-south-1.amazonaws.com/**'),
+    ],
   },
 };
 
