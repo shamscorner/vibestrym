@@ -8,3 +8,7 @@ export function isDev(configService: ConfigService) {
 }
 
 export const IS_DEV_ENV = process.env.NODE_ENV === 'development'
+
+export const isAdmin = (email: string): boolean => {
+	return email === process.env.ADMIN_EMAIL
+}

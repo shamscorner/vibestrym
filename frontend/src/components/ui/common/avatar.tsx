@@ -22,6 +22,7 @@ function AvatarImage({ className, ...props }: ComponentProps<typeof Image>) {
     <Image
       className={cn('aspect-square size-full', className)}
       data-slot="avatar-image"
+      style={{ height: 'auto', width: 'auto' }}
       {...props}
     />
   );
