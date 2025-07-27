@@ -73,15 +73,8 @@ export function StreamPlayer({ participant }: StreamPlayerProps) {
 
   return (
     <div className="relative flex h-full" ref={wrapperRef}>
-      <video ref={videoRef}>
-        <track
-          default
-          kind="captions"
-          label="English captions"
-          src=""
-          srcLang="en"
-        />
-      </video>
+      {/** biome-ignore lint/a11y/useMediaCaption: <no need> */}
+      <video ref={videoRef} />
       <div className="absolute top-0 h-full w-full opacity-0 hover:opacity-100">
         <div className="absolute bottom-0 flex h-16 w-full items-center justify-between px-4">
           <VolumeControl

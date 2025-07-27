@@ -27,7 +27,7 @@ export function ChannelAvatar({ size, channel, isLive }: ChannelAvatarProps) {
   return (
     <div className="relative">
       <Avatar
-        className={cn(avatarSizes({ size }), isLive && 'ring-2 ring-primary')}
+        className={cn(avatarSizes({ size }), isLive && 'ring-2 ring-red-600')}
       >
         <AvatarImage
           className="object-cover"

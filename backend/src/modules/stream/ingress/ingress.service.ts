@@ -16,13 +16,13 @@ import { LivekitService } from '../../libs/livekit/livekit.service'
 
 @Injectable()
 export class IngressService {
-	public constructor(
+	constructor(
 		private readonly prismaService: PrismaService,
 		private readonly livekitService: LivekitService
 	) {}
 
-	public async create(user: User, ingressType: IngressInput) {
-		await this.resetIngresses(user)
+	async create(user: User, ingressType: IngressInput) {
+		await this.reset(user)
 
 		const options: CreateIngressOptions = {
 			name: user.username,
@@ -56,6 +56,8 @@ export class IngressService {
 			options
 		)
 
+		console.log('Ingress created:', ingress)
+
 		if (!ingress || !ingress.url || !ingress.streamKey) {
 			throw new BadRequestException('Failed to create ingress stream')
 		}
@@ -74,7 +76,7 @@ export class IngressService {
 		return true
 	}
 
-	private async resetIngresses(user: User) {
+	async reset(user: User) {
 		const ingresses = await this.livekitService.ingress.listIngress({
 			roomName: user.id
 		})

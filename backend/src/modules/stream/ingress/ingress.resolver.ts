@@ -19,4 +19,10 @@ export class IngressResolver {
 	) {
 		return this.ingressService.create(user, ingressType)
 	}
+
+	@Authorization()
+	@Mutation(() => Boolean, { name: 'resetIngresses' })
+	async reset(@Authorized() user: User) {
+		return this.ingressService.reset(user)
+	}
 }
