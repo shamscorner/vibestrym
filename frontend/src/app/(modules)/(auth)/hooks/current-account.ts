@@ -1,17 +1,15 @@
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import {
-  useClearSessionCookieMutation,
-  useFindProfileQuery,
-} from '@/graphql/_generated/output';
+import { useFindProfileQuery } from '@/graphql/_generated/output';
 import { useAuth } from '.';
 
 export function useCurrentAccount() {
+  const router = useRouter();
   const { isAuthenticated, exit } = useAuth();
 
   const { data, loading, refetch, error } = useFindProfileQuery({
     skip: !isAuthenticated,
   });
-  const [clear] = useClearSessionCookieMutation();
 
   useEffect(() => {
     if (error && process.env.NODE_ENV === 'development') {
@@ -21,10 +19,11 @@ export function useCurrentAccount() {
     }
     if (!error) return;
     if (isAuthenticated) {
-      clear();
+      router.push('/logout');
+      return;
     }
     exit();
-  }, [isAuthenticated, exit, clear, error]);
+  }, [isAuthenticated, exit, error, router.push]);
 
   return {
     user: data?.findProfile,
