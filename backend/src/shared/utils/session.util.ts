@@ -1,11 +1,13 @@
 import { InternalServerErrorException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import type { Request } from 'express'
+import type { CookieOptions, Request } from 'express'
 
 import type { User } from '@/prisma/generated'
 import { RedisService } from '@/src/core/redis/redis.service'
 
 import type { SessionMetadata } from '../types/session-metadata.types'
+
+import { parseBoolean } from './parse-boolean.util'
 
 export const USERS_SESSIONS_KEY = 'user_sessions'
 
@@ -22,6 +24,20 @@ export function getSessionIdWithSessionFolder(
 	sessionId: string
 ): string {
 	return `${getSessionFolder(configService)}${sessionId}`
+}
+
+export function getSessionOptions(configService: ConfigService) {
+	return {
+		domain: configService.getOrThrow<string>('SESSION_DOMAIN'),
+		path: '/', // Important: must match the original
+		httpOnly: parseBoolean(
+			configService.getOrThrow<string>('SESSION_HTTP_ONLY')
+		),
+		secure: parseBoolean(
+			configService.getOrThrow<string>('SESSION_SECURE')
+		),
+		sameSite: 'lax'
+	} as CookieOptions
 }
 
 export function saveSession(
@@ -69,8 +85,10 @@ export function destroySession(
 				)
 			}
 
+			// Clear cookie with the SAME options used when setting it
 			request.res?.clearCookie(
-				configService.getOrThrow<string>('SESSION_NAME')
+				configService.getOrThrow<string>('SESSION_NAME'),
+				getSessionOptions(configService)
 			)
 
 			redisService

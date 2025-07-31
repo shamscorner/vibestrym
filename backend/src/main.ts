@@ -9,7 +9,7 @@ import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs'
 import { CoreModule } from './core/core.module'
 import { RedisService } from './core/redis/redis.service'
 import { ms, StringValue } from './shared/utils/ms.util'
-import { parseBoolean } from './shared/utils/parse-boolean.util'
+import { getSessionOptions } from './shared/utils/session.util'
 
 async function bootstrap() {
 	const app = await NestFactory.create(CoreModule, {
@@ -35,15 +35,8 @@ async function bootstrap() {
 			resave: false,
 			saveUninitialized: false,
 			cookie: {
-				domain: config.getOrThrow<string>('SESSION_DOMAIN'),
-				maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE')),
-				httpOnly: parseBoolean(
-					config.getOrThrow<string>('SESSION_HTTP_ONLY')
-				),
-				secure: parseBoolean(
-					config.getOrThrow<string>('SESSION_SECURE')
-				),
-				sameSite: 'lax'
+				...getSessionOptions(config),
+				maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE'))
 			},
 			store: new RedisStore({
 				client: redis,
