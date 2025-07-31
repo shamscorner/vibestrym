@@ -299,6 +299,7 @@
         "description": "You have been logged out from BDLive successfully. You can log in again anytime."
       },
       "successMessage": "You have been logged out successfully.",
+      "errorMessage": "Error logging out. Please try again.",
       "loginAgain": "Log in again"
     },
     "deactivate": {

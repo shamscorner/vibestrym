@@ -59,3 +59,20 @@ export const USERNAMES = [
 	'scarletSovereign',
 	'violetVindicator'
 ]
+
+export const TEST_CHANNEL = 'crystalCrusader'
+
+export const TEST_FOLLOWERS = [
+	'streamwave',
+	'pixelpulse',
+	'neonflux',
+	'gamegeist',
+	'cyberstorm',
+	'audiovortex',
+	'chromazone',
+	'datadrifter',
+	'codecruiser',
+	'bitblazer',
+	'signalspark',
+	'keyframeking'
+]

@@ -1,11 +1,11 @@
-import { BadRequestException, Logger } from '@nestjs/common'
+import { Logger } from '@nestjs/common'
 import { hash } from 'argon2'
 
 import { Prisma, PrismaClient } from '../../../prisma/generated'
 
 import { CATEGORIES } from './data/categories.data'
 import { STREAMS } from './data/streams.data'
-import { USERNAMES } from './data/users.data'
+import { TEST_CHANNEL, TEST_FOLLOWERS, USERNAMES } from './data/users.data'
 
 const prisma = new PrismaClient({
 	transactionOptions: {
@@ -38,6 +38,7 @@ async function main() {
 			categories.map(category => [category.slug, category])
 		)
 
+		Logger.log('Creating users and their streams...')
 		await prisma.$transaction(async tx => {
 			for (const username of USERNAMES) {
 				const userExists = await tx.user.findUnique({
@@ -120,10 +121,71 @@ async function main() {
 			}
 		})
 
+		Logger.log(
+			`Creating follow relationships for channel "${TEST_CHANNEL}"`
+		)
+		await prisma.$transaction(async tx => {
+			const channel = await tx.user.findUnique({
+				where: {
+					username: TEST_CHANNEL
+				}
+			})
+
+			if (!channel) {
+				throw new Error('Channel not found')
+			}
+
+			const users = await tx.user.findMany({
+				where: {
+					username: {
+						in: TEST_FOLLOWERS
+					}
+				}
+			})
+
+			if (!users) {
+				throw new Error('Users not found')
+			}
+
+			// more than 10 followers
+			for (const user of users) {
+				await tx.follow.create({
+					data: {
+						followerId: user.id,
+						followingId: channel.id
+					},
+					include: {
+						follower: true,
+						following: {
+							include: {
+								notificationSettings: true
+							}
+						}
+					}
+				})
+				Logger.log(
+					`User "${user.username}" followed channel "${channel.username}" successfully`
+				)
+			}
+
+			// veryfy the channel
+			await tx.user.update({
+				where: {
+					username: TEST_CHANNEL
+				},
+				data: {
+					isVerified: true
+				}
+			})
+			Logger.log(
+				`Channel "${TEST_CHANNEL}" has been verified successfully`
+			)
+		})
+
 		Logger.log('Database seeding completed successfully')
 	} catch (error) {
 		Logger.error(error)
-		throw new BadRequestException('Error during database seeding')
+		throw new Error('Error during database seeding')
 	} finally {
 		Logger.log('Closing database connection...')
 		await prisma.$disconnect()

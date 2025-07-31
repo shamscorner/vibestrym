@@ -1,6 +1,5 @@
 'use client';
 
-import { captureException } from '@sentry/nextjs';
 import { CircleCheckIcon, Loader2Icon } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -12,31 +11,29 @@ import {
   AlertTitle,
 } from '@/components/ui/common/alert';
 import { Button } from '@/components/ui/common/button';
-import { useLogoutUserMutation } from '@/graphql/_generated/output';
+import { useClearSessionCookieMutation, useLogoutUserMutation } from '@/graphql/_generated/output';
 import { useAuth } from '../../hooks';
 
 export function LogoutForm() {
   const t = useTranslations('auth.logout');
 
   const { exit } = useAuth();
+  const [clear] = useClearSessionCookieMutation();
 
   const [isFinished, setIsFinished] = useState(false);
 
   const [logoutUser, { loading: isLoggingOut }] = useLogoutUserMutation({
-    onCompleted() {
+    async onCompleted() {
+      await clear();
       exit();
       toast.success(t('successMessage'));
       setIsFinished(true);
     },
     onError(error) {
+      clear();
       const errMessage = error.message || t('errorMessage');
       toast.error(errMessage);
       setIsFinished(true);
-      captureException(error, {
-        extra: {
-          action: 'logout-user',
-        },
-      });
     },
   });
 
