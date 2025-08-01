@@ -13,7 +13,7 @@ export function FormWrapper({
   return (
     <Card>
       <CardHeader className="pl-5">
-        <CardTitle className="text-lg">{heading}</CardTitle>
+        <CardTitle>{heading}</CardTitle>
       </CardHeader>
       <CardContent className="p-0">{children}</CardContent>
     </Card>

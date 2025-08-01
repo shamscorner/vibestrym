@@ -22,7 +22,7 @@ export function AboutChannel({ channel }: AboutChannelProps) {
   return (
     <Card className="mt-6">
       <CardHeader className="px-4 pt-0">
-        <CardTitle className="text-xl">
+        <CardTitle>
           {t('heading')} {channel.displayName}
         </CardTitle>
       </CardHeader>
