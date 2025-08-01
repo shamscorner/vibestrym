@@ -19,15 +19,15 @@ export function MessageItem({ message, isSponsor }: MessageItemProps) {
 
   return (
     <div className="flex gap-2 rounded-md p-2 hover:bg-accent">
-      <p className='text-muted-foreground text-sm'>{formattedTime}</p>
+      <p className='text-muted-foreground'>{formattedTime}</p>
       <div className="flex grow flex-wrap items-baseline gap-1">
-        <p className='flex items-center whitespace-nowrap font-semibold text-sm'>
+        <p className='flex items-center whitespace-nowrap font-semibold'>
           <span className="truncate" style={{ color }}>
             {message.user.username}
           </span>
           {isSponsor && <Medal className="ml-1 size-3.5" style={{ color }} />}
         </p>
-        <p className="break-all text-sm">{message.text}</p>
+        <p className="break-all">{message.text}</p>
       </div>
     </div>
   );

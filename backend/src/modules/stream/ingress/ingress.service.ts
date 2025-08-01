@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable, Logger } from '@nestjs/common'
 import {
 	CreateIngressOptions,
 	IngressAudioEncodingPreset,
@@ -16,6 +16,8 @@ import { LivekitService } from '../../libs/livekit/livekit.service'
 
 @Injectable()
 export class IngressService {
+	private readonly logger = new Logger(IngressService.name)
+
 	constructor(
 		private readonly prismaService: PrismaService,
 		private readonly livekitService: LivekitService
@@ -56,7 +58,9 @@ export class IngressService {
 			options
 		)
 
-		console.log('Ingress created:', ingress)
+		this.logger.log(
+			`Ingress created for user: ${user.username} - ingressId: ${ingress.ingressId}`
+		)
 
 		if (!ingress || !ingress.url || !ingress.streamKey) {
 			throw new BadRequestException('Failed to create ingress stream')
@@ -87,8 +91,6 @@ export class IngressService {
 		})
 
 		const rooms = await this.livekitService.room.listRooms([roomName])
-
-		console.log('rooms', rooms)
 
 		await Promise.all(
 			rooms.map(room => this.livekitService.room.deleteRoom(room.name))

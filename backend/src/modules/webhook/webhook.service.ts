@@ -30,6 +30,8 @@ export class WebhookService {
 			true
 		)
 
+		this.logger.log(`Received Livekit event: ${event.event}`)
+
 		if (event.event === 'ingress_started') {
 			const stream = await this.prismaService.stream.update({
 				where: {

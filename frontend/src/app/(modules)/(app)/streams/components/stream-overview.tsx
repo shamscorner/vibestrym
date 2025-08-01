@@ -33,7 +33,7 @@ export function StreamOverview({ channel }: StreamOverviewProps) {
         <AboutChannel channel={channel} />
         <ChannelSponsors channel={channel} />
       </div>
-      <div className="order-2 col-span-1 flex h-80 flex-col gap-y-6 lg:col-span-2">
+      <div className="order-2 col-span-1 flex h-[500px] flex-col gap-y-6 lg:col-span-2">
         <LiveChat
           channel={channel}
           isChatEnabled={channel.stream.isChatEnabled}
@@ -53,7 +53,7 @@ export function StreamOverviewSkeleton() {
         <StreamInfoSkeleton />
         <AboutChannelSkeleton />
       </div>
-      <div className="order-2 col-span-1 flex h-80 flex-col gap-y-6 lg:col-span-2">
+      <div className="order-2 col-span-1 flex h-[500px] flex-col gap-y-6 lg:col-span-2">
         <LiveChatSkeleton />
       </div>
     </div>

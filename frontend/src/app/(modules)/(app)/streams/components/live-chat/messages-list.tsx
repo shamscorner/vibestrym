@@ -55,7 +55,7 @@ export function MessagesList({ channel }: MessagesListProps) {
   }, [newMessageData]);
 
   return (
-    <div className="flex h-full flex-1 flex-col-reverse overflow-y-auto">
+    <div className="flex h-full flex-1 flex-col-reverse overflow-y-auto text-sm">
       {messages.map((message, index) => (
         <MessageItem
           isSponsor={sponsorIds.has(message.user.id)}
