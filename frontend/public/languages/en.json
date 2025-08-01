@@ -160,6 +160,18 @@
           "submitButton": "Save Changes",
           "successMessage": "Stream settings successfully updated",
           "errorMessage": "Error updating stream settings"
+        },
+        "terminate": {
+          "heading": "Terminate Stream?",
+          "description": "By terminating streams, all your viewers will be disconnected. This action cannot be undone. You can start a new stream later.",
+          "buttonText": "Terminate streams",
+          "confirmDialog": {
+            "heading": "Terminate Stream?",
+            "message": "Are you sure you want to terminate all streams? This action cannot be undone. Your viewers will be disconnected immediately.",
+            "confirmButton": "Terminate"
+          },
+          "successMessage": "Streams terminated successfully",
+          "errorMessage": "Error terminating streams"
         }
       },
       "actions": {

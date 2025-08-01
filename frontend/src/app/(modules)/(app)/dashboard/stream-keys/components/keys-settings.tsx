@@ -8,6 +8,7 @@ import { CreateIngressForm } from './create-ingress-form';
 import { InstructionModal } from './instruction-dialog';
 import { StreamKey } from './stream-key';
 import { StreamURL } from './stream-url';
+import { TerminateStream } from './terminate-stream';
 
 export function KeysSettings() {
   const t = useTranslations('dashboard.streamKeys.header');
@@ -36,6 +37,7 @@ export function KeysSettings() {
           <>
             <StreamURL value={user?.stream.serverUrl} />
             <StreamKey value={user?.stream.streamKey} />
+            <TerminateStream />
           </>
         )}
       </div>

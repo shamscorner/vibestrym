@@ -1,10 +1,8 @@
 import { ConfigService } from '@nestjs/config'
 
-import { TypeLiveKitOptions } from '@/src/modules/libs/livekit/types/livekit.types'
+import { LiveKitOptions } from '@/src/modules/libs/livekit/types/livekit.types'
 
-export function getLiveKitConfig(
-	configService: ConfigService
-): TypeLiveKitOptions {
+export function getLiveKitConfig(configService: ConfigService): LiveKitOptions {
 	return {
 		apiUrl: configService.getOrThrow<string>('LIVEKIT_API_URL'),
 		apiKey: configService.getOrThrow<string>('LIVEKIT_API_KEY'),

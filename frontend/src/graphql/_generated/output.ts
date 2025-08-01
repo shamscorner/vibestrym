@@ -797,6 +797,11 @@ export type CreateIngressMutationVariables = Exact<{
 
 export type CreateIngressMutation = { __typename?: 'Mutation', createIngress: boolean };
 
+export type ResetIngressesMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ResetIngressesMutation = { __typename?: 'Mutation', resetIngresses: boolean };
+
 export type FindMyTransactionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2116,6 +2121,36 @@ export function useCreateIngressMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateIngressMutationHookResult = ReturnType<typeof useCreateIngressMutation>;
 export type CreateIngressMutationResult = Apollo.MutationResult<CreateIngressMutation>;
 export type CreateIngressMutationOptions = Apollo.BaseMutationOptions<CreateIngressMutation, CreateIngressMutationVariables>;
+export const ResetIngressesDocument = gql`
+    mutation ResetIngresses {
+  resetIngresses
+}
+    `;
+export type ResetIngressesMutationFn = Apollo.MutationFunction<ResetIngressesMutation, ResetIngressesMutationVariables>;
+
+/**
+ * __useResetIngressesMutation__
+ *
+ * To run a mutation, you first call `useResetIngressesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResetIngressesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [resetIngressesMutation, { data, loading, error }] = useResetIngressesMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useResetIngressesMutation(baseOptions?: Apollo.MutationHookOptions<ResetIngressesMutation, ResetIngressesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ResetIngressesMutation, ResetIngressesMutationVariables>(ResetIngressesDocument, options);
+      }
+export type ResetIngressesMutationHookResult = ReturnType<typeof useResetIngressesMutation>;
+export type ResetIngressesMutationResult = Apollo.MutationResult<ResetIngressesMutation>;
+export type ResetIngressesMutationOptions = Apollo.BaseMutationOptions<ResetIngressesMutation, ResetIngressesMutationVariables>;
 export const FindMyTransactionsDocument = gql`
     query FindMyTransactions {
   findMyTransactions {

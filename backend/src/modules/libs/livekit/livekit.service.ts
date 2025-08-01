@@ -5,7 +5,7 @@ import {
 	WebhookReceiver
 } from 'livekit-server-sdk'
 
-import { LiveKitOptionsSymbol, TypeLiveKitOptions } from './types/livekit.types'
+import { LiveKitOptions, LiveKitOptionsSymbol } from './types/livekit.types'
 
 @Injectable()
 export class LivekitService {
@@ -15,7 +15,7 @@ export class LivekitService {
 
 	constructor(
 		@Inject(LiveKitOptionsSymbol)
-		private readonly options: TypeLiveKitOptions
+		private readonly options: LiveKitOptions
 	) {
 		this.roomService = new RoomServiceClient(
 			this.options.apiUrl,

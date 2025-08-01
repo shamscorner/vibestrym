@@ -90,7 +90,7 @@ export class IngressService {
 			roomName
 		})
 
-		const rooms = await this.livekitService.room.listRooms([roomName])
+		const rooms = await this.livekitService.room.listRooms()
 
 		await Promise.all(
 			rooms.map(room => this.livekitService.room.deleteRoom(room.name))
