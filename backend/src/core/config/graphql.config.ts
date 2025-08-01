@@ -8,10 +8,12 @@ import { isDev } from '@/src/shared/utils/is-dev.util'
 export function getGraphQLConfig(
 	configService: ConfigService
 ): ApolloDriverConfig {
+	const graphqlPath = configService.getOrThrow<string>('GRAPHQL_PREFIX')
+
 	return {
 		// graphiql: isDev(configService),
 		playground: false,
-		path: configService.getOrThrow<string>('GRAPHQL_PREFIX'),
+		path: graphqlPath,
 		autoSchemaFile: join(process.cwd(), 'src/core/graphql/schema.gql'),
 		sortSchema: true,
 		plugins: [
@@ -23,7 +25,12 @@ export function getGraphQLConfig(
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		context: ({ req, res }) => ({ req, res }),
 		subscriptions: {
-			'graphql-ws': true
-		}
+			'graphql-ws': {
+				path: graphqlPath
+			},
+			'subscriptions-transport-ws': false // Disable legacy transport
+		},
+		// Add this to ensure WebSocket server starts
+		installSubscriptionHandlers: true
 	}
 }

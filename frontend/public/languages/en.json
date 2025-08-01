@@ -198,8 +198,8 @@
       "unavailableMessage": "Chat is unavailable while there is no stream on the channel. Please check back later!",
       "loading": "Connecting...",
       "info": {
-        "authRequired": "Authorization required",
-        "chatDisabled": "Chat disabled",
+        "authRequired": "You need to log in to send messages",
+        "chatDisabled": "Chat disabled for this stream",
         "premiumFollowersOnly": "For sponsors only",
         "followersOnly": "For followers only"
       },

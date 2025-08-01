@@ -85,7 +85,7 @@ export function LiveChat({
       <CardHeader className='border-b pb-0'>
         <CardTitle>{t('heading')}</CardTitle>
       </CardHeader>
-      <CardContent className="flex h-full flex-col overflow-y-auto p-4">
+      <CardContent className="flex h-full flex-col overflow-y-auto px-4">
         {isOnline ? (
           <>
             <MessagesList channel={channel} />

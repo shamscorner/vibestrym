@@ -197,6 +197,7 @@ export type Mutation = {
   removeStreamThumbnail: Scalars['Boolean']['output'];
   reorderSocialLinks: Scalars['Boolean']['output'];
   resetIngresses: Scalars['Boolean']['output'];
+  resetIngressesByRoomname: Scalars['Boolean']['output'];
   resetPassword: Scalars['Boolean']['output'];
   sendChatMessage: ChatMessageModel;
   unfollowChannel: Scalars['Boolean']['output'];
@@ -322,6 +323,11 @@ export type MutationRemoveSponsorshipPlanArgs = {
 
 export type MutationReorderSocialLinksArgs = {
   list: Array<SocialLinkOrderInput>;
+};
+
+
+export type MutationResetIngressesByRoomnameArgs = {
+  roomName: Scalars['String']['input'];
 };
 
 
