@@ -42,14 +42,14 @@ export default async function CancelPage(props: {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className='flex min-h-dvh items-center justify-center'>
       <Card className="w-full max-w-2xl">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+          <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10">
             <XCircleIcon className="h-10 w-10 text-red-500" />
           </div>
           <CardTitle className="font-bold text-2xl">{t('heading')}</CardTitle>
-          <p className='mx-auto max-w-sm text-balance'>{t('subHeading')}</p>
+          <p className="mx-auto max-w-sm text-balance">{t('subHeading')}</p>
         </CardHeader>
         <CardContent className="flex flex-col gap-y-4">
           <div className="rounded-lg bg-muted p-4">

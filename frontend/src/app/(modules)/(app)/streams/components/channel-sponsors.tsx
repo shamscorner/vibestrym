@@ -32,12 +32,12 @@ export function ChannelSponsors({ channel }: ChannelSponsorsProps) {
 
   return (
     <Card className="mt-6">
-      <CardHeader className="p-4">
-        <CardTitle className="text-xl">
+      <CardHeader className="px-4">
+        <CardTitle>
           {t('heading')} {channel.displayName}
         </CardTitle>
       </CardHeader>
-      <CardContent className="grid grid-cols-12 px-4">
+      <CardContent className="flex flex-wrap gap-3 px-4">
         {sponsors.map((sponsor, index) => (
           <Link href={`/${sponsor.user.username}`} key={index}>
             <ChannelAvatar channel={sponsor.user} size="lg" />
