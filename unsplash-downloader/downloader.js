@@ -9,13 +9,13 @@ const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
 const IMAGE_WIDTH = parseInt(process.env.IMAGE_WIDTH) || 285;
 const IMAGE_HEIGHT = parseInt(process.env.IMAGE_HEIGHT) || 380;
 const DOWNLOAD_DELAY = parseInt(process.env.DOWNLOAD_DELAY) || 2000;
-const DEFAULT_CATEGORIES_FILE = process.env.CATEGORIES_FILE || './categories.json';
+const DEFAULT_FILE_LOCATION = process.env.FILE_LOCATION || './categories.json';
 const OUTPUT_FOLDER = process.env.OUTPUT_FOLDER || 'downloads';
 
 /**
  * Load categories from a JSON file
  */
-function loadCategories(filePath = DEFAULT_CATEGORIES_FILE) {
+function loadCategories(filePath = DEFAULT_FILE_LOCATION) {
     try {
         const fullPath = path.resolve(filePath);
         if (!fs.existsSync(fullPath)) {
@@ -96,7 +96,7 @@ async function searchImage(query) {
 /**
  * Download thumbnails for all categories
  */
-async function downloadAllCategoryThumbnails(categories, categoriesFile = DEFAULT_CATEGORIES_FILE) {
+async function downloadAllCategoryThumbnails(categories, categoriesFile = DEFAULT_FILE_LOCATION) {
     if (!UNSPLASH_ACCESS_KEY) {
         console.error('❌ Unsplash Access Key not found!');
         console.log('📝 Please check your .env file and make sure UNSPLASH_ACCESS_KEY is set');

@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/common/dialog';
 import type { FindChannelByUsernameQuery } from '@/graphql/_generated/output';
-import { ChangeInfoForm } from './change-info-form';
+import { ChangeStreamInfoForm } from './change-stream-info-form';
 import { ChangeThumbnailForm } from './change-thumbnail-form';
 
 interface StreamSettingsProps {
@@ -40,7 +40,7 @@ export function StreamSettings({ channel }: StreamSettingsProps) {
           <DialogTitle>{t('heading')}</DialogTitle>
         </DialogHeader>
         <ChangeThumbnailForm stream={channel.stream} />
-        <ChangeInfoForm stream={channel.stream} />
+        <ChangeStreamInfoForm stream={channel.stream} />
       </DialogContent>
     </Dialog>
   );
