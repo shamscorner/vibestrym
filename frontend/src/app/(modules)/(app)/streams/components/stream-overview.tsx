@@ -6,6 +6,7 @@ import type { FindChannelByUsernameQuery } from '@/graphql/_generated/output';
 import { useStreamToken } from '../hooks/stream-token';
 import { AboutChannel, AboutChannelSkeleton } from './about-channel';
 import { ChannelSponsors } from './channel-sponsors';
+import { LiveChat, LiveChatSkeleton } from './live-chat/LiveChat';
 import { StreamVideo, StreamVideoSkeleton } from './player/stream-video';
 import { StreamInfo, StreamInfoSkeleton } from './stream-info';
 
@@ -22,7 +23,7 @@ export function StreamOverview({ channel }: StreamOverviewProps) {
 
   return (
     <LiveKitRoom
-      className="mx-auto grid max-w-screen-xl grid-cols-1 gap-6 lg:grid-cols-7"
+      className='mx-auto grid max-w-screen-xl grid-cols-1 gap-6 pr-4 lg:grid-cols-7'
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
       token={token}
     >
@@ -32,14 +33,14 @@ export function StreamOverview({ channel }: StreamOverviewProps) {
         <AboutChannel channel={channel} />
         <ChannelSponsors channel={channel} />
       </div>
-      {/* <div className="order-2 col-span-1 flex h-80 flex-col gap-y-6 lg:col-span-2">
+      <div className="order-2 col-span-1 flex h-80 flex-col gap-y-6 lg:col-span-2">
         <LiveChat
           channel={channel}
           isChatEnabled={channel.stream.isChatEnabled}
           isChatFollowersOnly={channel.stream.isChatFollowersOnly}
           isChatPremiumFollowersOnly={channel.stream.isChatPremiumFollowersOnly}
         />
-      </div> */}
+      </div>
     </LiveKitRoom>
   );
 }
@@ -52,9 +53,9 @@ export function StreamOverviewSkeleton() {
         <StreamInfoSkeleton />
         <AboutChannelSkeleton />
       </div>
-      {/* <div className="order-2 col-span-1 flex h-80 flex-col gap-y-6 lg:col-span-2">
+      <div className="order-2 col-span-1 flex h-80 flex-col gap-y-6 lg:col-span-2">
         <LiveChatSkeleton />
-      </div> */}
+      </div>
     </div>
   );
 }

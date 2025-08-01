@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import type { IngressInput } from 'livekit-server-sdk'
 
@@ -24,5 +25,16 @@ export class IngressResolver {
 	@Mutation(() => Boolean, { name: 'resetIngresses' })
 	async reset(@Authorized() user: User) {
 		return this.ingressService.reset(user)
+	}
+
+	// public method to reset ingresses by room name in development only
+	@Mutation(() => Boolean, { name: 'resetIngressesByRoomname' })
+	async resetByRoomname(@Args('roomName') roomName: string) {
+		if (process.env.NODE_ENV !== 'development') {
+			throw new BadRequestException(
+				'This action is not allowed in production environment.'
+			)
+		}
+		return this.ingressService.resetByRoomname(roomName)
 	}
 }

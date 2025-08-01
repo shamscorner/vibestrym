@@ -77,11 +77,18 @@ export class IngressService {
 	}
 
 	async reset(user: User) {
+		await this.resetByRoomname(user.id)
+		return true
+	}
+
+	async resetByRoomname(roomName: string) {
 		const ingresses = await this.livekitService.ingress.listIngress({
-			roomName: user.id
+			roomName
 		})
 
-		const rooms = await this.livekitService.room.listRooms([user.id])
+		const rooms = await this.livekitService.room.listRooms([roomName])
+
+		console.log('rooms', rooms)
 
 		await Promise.all(
 			rooms.map(room => this.livekitService.room.deleteRoom(room.name))
@@ -94,5 +101,7 @@ export class IngressService {
 					this.livekitService.ingress.deleteIngress(ingress.ingressId)
 				)
 		)
+
+		return true
 	}
 }
