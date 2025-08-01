@@ -191,6 +191,23 @@
           "heading": "Share"
         }
       }
+    },
+    "chat": {
+      "heading": "Chat",
+      "unavailable": "Chat unavailable",
+      "unavailableMessage": "Chat is unavailable while there is no stream on the channel. Please check back later!",
+      "loading": "Connecting...",
+      "info": {
+        "authRequired": "Authorization required",
+        "chatDisabled": "Chat disabled",
+        "premiumFollowersOnly": "For sponsors only",
+        "followersOnly": "For followers only"
+      },
+      "sendMessage": {
+        "placeholder": "Send a message",
+        "emojiPlaceholder": "Search",
+        "errorMessage": "Error while sending message."
+      }
     }
   },
   "auth": {

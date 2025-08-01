@@ -175,6 +175,7 @@ type Mutation {
   removeStreamThumbnail: Boolean!
   reorderSocialLinks(list: [SocialLinkOrderInput!]!): Boolean!
   resetIngresses: Boolean!
+  resetIngressesByRoomname(roomName: String!): Boolean!
   resetPassword(data: ResetPasswordInput!): Boolean!
   sendChatMessage(data: SendMessageInput!): ChatMessageModel!
   unfollowChannel(channelId: String!): Boolean!
