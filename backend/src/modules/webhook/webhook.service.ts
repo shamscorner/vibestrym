@@ -9,6 +9,7 @@ import { LivekitService } from '../libs/livekit/livekit.service'
 import { StripeService } from '../libs/stripe/stripe.service'
 import { TelegramService } from '../libs/telegram/telegram.service'
 import { NotificationService } from '../notification/notification.service'
+import { KEEP_LAST_N_CHAT_MESSAGES } from '../stream/chat/constants'
 
 @Injectable()
 export class WebhookService {
@@ -66,11 +67,7 @@ export class WebhookService {
 				`Stream ingress ended for user: ${event.ingressInfo?.url} - ingressId: ${event.ingressInfo?.ingressId}`
 			)
 
-			await this.prismaService.chatMessage.deleteMany({
-				where: {
-					streamId: stream.id
-				}
-			})
+			await this.cleanupOldMessages(stream.id)
 		}
 	}
 
@@ -234,5 +231,19 @@ export class WebhookService {
 		if (telegramPromises.length > 0) {
 			await Promise.all(telegramPromises)
 		}
+	}
+
+	private async cleanupOldMessages(streamId: string) {
+		const recentMessages = await this.prismaService.chatMessage.findMany({
+			where: { streamId },
+			orderBy: { createdAt: 'desc' },
+			take: KEEP_LAST_N_CHAT_MESSAGES
+		})
+		await this.prismaService.chatMessage.deleteMany({
+			where: {
+				streamId,
+				id: { notIn: recentMessages.map(msg => msg.id) }
+			}
+		})
 	}
 }

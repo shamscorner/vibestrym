@@ -23,7 +23,8 @@ async function main() {
 			prisma.user.deleteMany(),
 			prisma.socialLink.deleteMany(),
 			prisma.stream.deleteMany(),
-			prisma.category.deleteMany()
+			prisma.category.deleteMany(),
+			prisma.follow.deleteMany()
 		])
 
 		await prisma.category.createMany({

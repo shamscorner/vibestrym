@@ -12,6 +12,7 @@ interface CardContainerProps {
   Icon?: LucideIcon | IconType;
   isRightContentFull?: boolean;
   rightContent?: ReactNode;
+  className?: string;
 }
 
 export function CardContainer({
@@ -21,9 +22,10 @@ export function CardContainer({
   isRightContentFull,
   rightContent,
   children,
+  className,
 }: PropsWithChildren<CardContainerProps>) {
   return (
-    <Card className="p-4">
+    <Card className={cn("p-4", className)}>
       <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:items-center">
         <div className="flex flex-row items-center gap-x-4">
           {Icon && (
