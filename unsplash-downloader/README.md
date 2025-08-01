@@ -52,11 +52,11 @@ This guide will walk you through setting up the Unsplash image downloader as a c
      IMAGE_WIDTH=285
      IMAGE_HEIGHT=380
      DOWNLOAD_DELAY=2000
-     CATEGORIES_FILE=./categories.json
+     FILE_LOCATION=./categories.json
      ```
 
    - Replace `your_actual_access_key_here` with the access key you copied earlier
-   - The `CATEGORIES_FILE` variable specifies which categories file to use (optional)
+   - The `FILE_LOCATION` variable specifies which categories file to use (optional)
 
 ## Step 4: Run the Script
 
@@ -137,10 +137,10 @@ You can create your own categories file:
 
 ### Environment Variable
 
-Set `CATEGORIES_FILE` in your `.env` to change the default categories file:
+Set `FILE_LOCATION` in your `.env` to change the default categories file:
 
 ```
-CATEGORIES_FILE=./my-custom-categories.json
+FILE_LOCATION=./my-custom-categories.json
 ```
 
 ## Troubleshooting
@@ -201,4 +201,4 @@ CATEGORIES_FILE=./my-custom-categories.json
 | `IMAGE_WIDTH`         | 285               | Width of downloaded images in pixels    |
 | `IMAGE_HEIGHT`        | 380               | Height of downloaded images in pixels   |
 | `DOWNLOAD_DELAY`      | 2000              | Delay between downloads in milliseconds |
-| `CATEGORIES_FILE`     | ./categories.json | Path to the categories JSON file        |
+| `FILE_LOCATION`       | ./categories.json | Path to the categories JSON file        |

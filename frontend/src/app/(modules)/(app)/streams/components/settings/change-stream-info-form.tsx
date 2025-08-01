@@ -30,13 +30,13 @@ import {
 import {
   type ChangeStreamInfoSchema,
   changeStreamInfoSchema,
-} from './change-info.schema';
+} from './change-stream-info.schema';
 
-interface ChangeInfoFormProps {
+interface Props {
   stream: FindChannelByUsernameQuery['findChannelByUsername']['stream'];
 }
 
-export function ChangeInfoForm({ stream }: ChangeInfoFormProps) {
+export function ChangeStreamInfoForm({ stream }: Props) {
   const t = useTranslations('streams.stream.settings.info');
 
   const { data } = useFindAllCategoriesQuery();
