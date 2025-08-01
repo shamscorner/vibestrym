@@ -15,7 +15,7 @@ import {
 import { convertPrice } from '@/utils/convert-price';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('streams.payment.cancel');
+  const t = await getTranslations('payment.cancel');
 
   return {
     title: t('title'),
@@ -33,7 +33,7 @@ export default async function CancelPage(props: {
     username: string;
   }>;
 }) {
-  const t = await getTranslations('streams.payment.cancel');
+  const t = await getTranslations('payment.cancel');
 
   const searchParams = await props.searchParams;
 

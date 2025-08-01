@@ -191,39 +191,6 @@
           "heading": "Share"
         }
       }
-    },
-    "payment": {
-      "success": {
-        "title": "Payment Successful - BDLive",
-        "description": "Your payment was successful. You can now access the channel's premium content.",
-        "heading": "Payment Successful!",
-        "details": {
-          "heading": "Sponsorship Details:",
-          "price": "Price:",
-          "duration": "Duration:",
-          "channel": "Channel:"
-        },
-        "congratulations": "You now have access to the channel's premium content!",
-        "backToHome": "Back to Home",
-        "backToChannel": "Back to Channel",
-        "support": "If you have any questions, ask contact@bdlive.com"
-      },
-      "cancel": {
-        "title": "Payment Cancelled - BDLive",
-        "description": "Your payment was cancelled. You can try again later.",
-        "heading": "Payment Cancelled!",
-        "subHeading": "Your payment was not successful. Please try again or contact support if you need any assistance.",
-        "details": {
-          "heading": "Sponsorship Details:",
-          "price": "Price:",
-          "duration": "Duration:",
-          "channel": "Channel:"
-        },
-        "message": "You can try subscribing again later.",
-        "backToHome": "Back to Home",
-        "backToChannel": "Back to Channel",
-        "support": "If you have any questions, ask contact@bdlive.com"
-      }
     }
   },
   "auth": {
@@ -791,6 +758,39 @@
         "expired": "Expired",
         "amount": "Amount"
       }
+    }
+  },
+  "payment": {
+    "success": {
+      "title": "Payment Successful - BDLive",
+      "description": "Your payment was successful. You can now access the channel's premium content.",
+      "heading": "Payment Successful!",
+      "details": {
+        "heading": "Sponsorship Details:",
+        "price": "Price:",
+        "duration": "Duration:",
+        "channel": "Channel:"
+      },
+      "congratulations": "You now have access to the channel's premium content!",
+      "backToHome": "Back to Home",
+      "backToChannel": "Back to Channel",
+      "support": "If you have any questions, ask contact@bdlive.com"
+    },
+    "cancel": {
+      "title": "Payment Cancelled - BDLive",
+      "description": "Your payment was cancelled. You can try again later.",
+      "heading": "Payment Cancelled!",
+      "subHeading": "Your payment was not successful. Please try again or contact support if you need any assistance.",
+      "details": {
+        "heading": "Sponsorship Details:",
+        "price": "Price:",
+        "duration": "Duration:",
+        "channel": "Channel:"
+      },
+      "message": "You can try subscribing again later.",
+      "backToHome": "Back to Home",
+      "backToChannel": "Back to Channel",
+      "support": "If you have any questions, ask contact@bdlive.com"
     }
   }
 }
