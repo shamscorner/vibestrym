@@ -27,7 +27,7 @@ export function StreamInfo({ channel }: StreamInfoProps) {
         {channel.stream.title}{' '}
         {channel.stream.category && ` | ${channel.stream.category.title}`}
       </h1>
-      <div className='flex flex-col items-start justify-between sm:flex-row'>
+      <div className='flex flex-col items-start justify-between md:flex-row'>
         <div className="flex items-center gap-x-3 px-1">
           <ChannelAvatar
             channel={channel}
