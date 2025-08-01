@@ -1,4 +1,4 @@
-import { Medal } from 'lucide-react';
+import { MedalIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
@@ -63,7 +63,7 @@ export function SupportButton({ channel }: SupportButtonProps) {
   if (isSponsor) {
     return (
       <Button disabled variant="secondary">
-        <Medal className="size-4" />
+        <MedalIcon className="size-4" />
         {t('alreadySponsor')}
       </Button>
     );
@@ -73,7 +73,7 @@ export function SupportButton({ channel }: SupportButtonProps) {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="secondary">
-          <Medal className="size-4" />
+          <MedalIcon className="size-4" />
           {t('supportAuthor')}
         </Button>
       </DialogTrigger>
@@ -114,7 +114,7 @@ export function SupportButton({ channel }: SupportButtonProps) {
     </Dialog>
   ) : (
     <Button onClick={() => router.push('/account/login')} variant="secondary">
-      <Medal className="size-4" />
+      <MedalIcon className="size-4" />
       {t('supportAuthor')}
     </Button>
   );

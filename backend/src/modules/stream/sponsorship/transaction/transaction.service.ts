@@ -75,8 +75,8 @@ export class TransactionService {
 		const allowedOrigin =
 			this.configService.getOrThrow<string>('ALLOWED_ORIGIN')
 
-		const successUrl = `${allowedOrigin}/success?price=${encodeURIComponent(plan.price)}&username=${encodeURIComponent(plan.channel.username)}`
-		const cancelUrl = `${allowedOrigin}/cancel`
+		const successUrl = `${allowedOrigin}/streams/success?price=${encodeURIComponent(plan.price)}&username=${encodeURIComponent(plan.channel.username)}`
+		const cancelUrl = `${allowedOrigin}/streams/cancel?price=${encodeURIComponent(plan.price)}&username=${encodeURIComponent(plan.channel.username)}`
 
 		const session = await this.stripeService.checkout.sessions.create({
 			payment_method_types: ['card'],
