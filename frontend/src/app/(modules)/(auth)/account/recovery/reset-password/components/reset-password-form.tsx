@@ -99,7 +99,7 @@ export function ResetPasswordForm({
                 <FormControl>
                   <Input
                     disabled={isSubmitting || isLoadingResetPassword}
-                    placeholder="mail@livestrym.com"
+                    placeholder="mail@vibestrym.com"
                     {...field}
                   />
                 </FormControl>

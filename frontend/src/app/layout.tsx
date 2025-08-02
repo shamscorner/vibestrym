@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     type: 'website',
-    emails: ['contact@livestrym.com'],
+    emails: ['contact@vibestrym.com'],
     locale: 'en_US',
     images: [
       {

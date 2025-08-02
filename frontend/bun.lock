@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "livestrym-frontend",
+      "name": "vibestrym-frontend",
       "dependencies": {
         "@apollo/client": "^3.13.8",
         "@graphql-codegen/typescript": "^4.1.6",
