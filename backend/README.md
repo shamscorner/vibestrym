@@ -1,98 +1,180 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Vibestrym Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend for Vibestrym, built with [NestJS](https://nestjs.com/) and TypeScript. This project provides a scalable server-side application with GraphQL, Prisma ORM, Redis, and more.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Setup](#setup)
+- [Docker](#docker)
+- [Database & Prisma](#database--prisma)
+- [Running the App](#running-the-app)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Resources](#resources)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features
 
-## Project setup
+- NestJS framework (TypeScript)
+- GraphQL API
+- Prisma ORM (PostgreSQL)
+- Redis integration
+- Authentication & Authorization
+- Cron jobs
+- Notification system
+- Streaming & chat modules
+- Webhooks
 
-```bash
-$ yarn install
+## Project Structure
+
+```
+src/
+  main.ts                # App entry point
+  core/                  # Core modules (config, prisma, redis)
+  modules/               # Feature modules (auth, cron, follow, notification, stream, webhook)
+  shared/                # Shared utilities, decorators, guards, types
+test/                    # E2E and unit tests
+prisma/                  # Prisma schema and generated client
+docker-compose.yml       # Docker setup for Postgres and Redis
+package.json             # Project scripts and dependencies
 ```
 
-## Compile and run the project
+## Setup
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/download/)
+- [Yarn](https://yarnpkg.com/) (or npm)
+- [Docker & Docker Compose](https://docs.docker.com/get-docker/)
+
+### 1. Clone the repository
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+git clone <repo-url>
+cd vibestrym/backend
 ```
 
-## Run tests
+### 2. Start Docker containers
+
+This will start PostgreSQL (on port 5433) and Redis (on port 6379):
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+docker-compose up -d
 ```
+
+### 3. Install dependencies
+
+```bash
+yarn install
+# or
+npm install
+```
+
+## Docker
+
+The `docker-compose.yml` sets up:
+
+- **Postgres** (with environment variables for user, password, database)
+- **Redis** (with password from env)
+
+You can customize environment variables in a `.env` file (not included by default).
+
+## Database & Prisma
+
+### Format and push schema
+
+```bash
+yarn run db:format      # Format Prisma schema
+yarn run db:push        # Format and push schema to database
+yarn run generate-schemas # Generate Prisma client and format schema
+```
+
+### Seed database
+
+```bash
+yarn run db:seed
+```
+
+### Open Prisma Studio
+
+```bash
+yarn run db:studio
+```
+
+## Running the App
+
+### Development
+
+```bash
+yarn run start
+```
+
+### Watch mode (auto-reload)
+
+```bash
+yarn run start:dev
+```
+
+### Debug mode
+
+```bash
+yarn run start:debug
+```
+
+### Production
+
+```bash
+yarn run build
+yarn run start:prod
+```
+
+## Testing
+
+### Unit tests
+
+```bash
+yarn run test
+```
+
+### E2E tests
+
+```bash
+yarn run test:e2e
+```
+
+### Test coverage
+
+```bash
+yarn run test:cov
+```
+
+## Other Useful Scripts
+
+- **Lint:**
+    ```bash
+    yarn run lint
+    ```
+- **Format code:**
+    ```bash
+    yarn run format
+    ```
+- **Ngrok tunnel (for webhooks):**
+    ```bash
+    yarn run ngrok:start
+    ```
 
 ## Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+See [NestJS deployment docs](https://docs.nestjs.com/deployment) for best practices.
 
 ## Resources
 
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- [NestJS Documentation](https://docs.nestjs.com)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [Docker Documentation](https://docs.docker.com/)
+- [Discord Support](https://discord.gg/G7Qnnhy)
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License. See the LICENSE file for details.
