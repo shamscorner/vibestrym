@@ -37,8 +37,8 @@
   "app": {
     "header": {
       "logo": {
-        "alt": "BDLive Logo",
-        "title": "BDLive - Stream your life with joy! Your go-to platform for live events, shows, tutorials, and more.",
+        "alt": "Vibestrym Logo",
+        "title": "Vibestrym - Stream your life with joy! Your go-to platform for live events, shows, tutorials, and more.",
         "slogan": "Stream your life with joy!"
       },
       "search": {
@@ -88,14 +88,14 @@
     }
   },
   "home": {
-    "title": "Welcome to BDLive",
+    "title": "Welcome to Vibestrym",
     "description": "Your go-to streaming spot for catching live events, shows, tutorials, funny moments and more easily!",
     "streamsHeading": "Recommended channels",
     "categoriesHeading": "Categories you might like"
   },
   "categories": {
-    "title": "Categories - BDLive",
-    "description": "Explore a wide range of categories on BDLive.",
+    "title": "Categories - Vibestrym",
+    "description": "Explore a wide range of categories on Vibestrym.",
     "heading": "Categories",
     "overview": {
       "heading": "Streams under this category"
@@ -227,9 +227,9 @@
       "goBack": "Go back to home"
     },
     "register": {
-      "title": "Create your BDLive account",
+      "title": "Create your Vibestrym account",
       "description": "Join our community to start streaming and sharing your favorite moments.",
-      "heading": "Sign up on BDLive",
+      "heading": "Sign up on Vibestrym",
       "backButtonLabel": "Already got an account? Sign in",
       "username": {
         "label": "Username",
@@ -255,7 +255,7 @@
       "loginLink": "Log in"
     },
     "verify": {
-      "title": "Verify your BDLive account",
+      "title": "Verify your Vibestrym account",
       "description": "Almost there! Just verify your email to start streaming.",
       "errorAlert": {
         "title": "Verification failed",
@@ -266,9 +266,9 @@
       "loginAgain": "Log in again"
     },
     "login": {
-      "title": "Log in to BDLive",
+      "title": "Log in to Vibestrym",
       "description": "Welcome back! Log in to continue.",
-      "heading": "Log in to your BDLive account",
+      "heading": "Log in to your Vibestrym account",
       "login": {
         "label": "Username or Email",
         "description": "Enter your username or email to log in."
@@ -290,7 +290,7 @@
       "errorMessage": "Invalid username or password. Please try again."
     },
     "resetPassword": {
-      "title": "Reset your BDLive password",
+      "title": "Reset your Vibestrym password",
       "heading": "Forgot your password?",
       "description": "Enter your email to receive a password reset link.",
       "email": {
@@ -305,7 +305,7 @@
       "errorMessage": "Error sending reset link. Please try again."
     },
     "updatePassword": {
-      "title": "Update your BDLive password",
+      "title": "Update your Vibestrym password",
       "heading": "Set a new password",
       "description": "Enter your new password to continue.",
       "password": {
@@ -321,11 +321,11 @@
       "errorMessage": "Error updating password. Please try again."
     },
     "logout": {
-      "title": "Log out from BDLive",
+      "title": "Log out from Vibestrym",
       "description": "By logging out, you will be signed out of your account. If you want to log back in, you will need to enter your credentials again on the login page.",
       "successAlert": {
         "title": "Logged out successfully",
-        "description": "You have been logged out from BDLive successfully. You can log in again anytime."
+        "description": "You have been logged out from Vibestrym successfully. You can log in again anytime."
       },
       "successMessage": "You have been logged out successfully.",
       "errorMessage": "Error logging out. Please try again.",
@@ -354,14 +354,14 @@
     }
   },
   "dashboard": {
-    "title": "Dashboard - BDLive",
+    "title": "Dashboard - Vibestrym",
     "description": "Manage your streams, check analytics, and customize your profile.",
     "settings": {
-      "title": "Settings - BDLive",
+      "title": "Settings - Vibestrym",
       "description": "Manage your account settings, profile, and preferences.",
       "header": {
         "heading": "Settings",
-        "description": "Customize your BDLive experience by adjusting your account settings, profile information, and preferences.",
+        "description": "Customize your Vibestrym experience by adjusting your account settings, profile information, and preferences.",
         "profile": "Profile",
         "account": "Account",
         "appearance": "Appearance",
@@ -396,7 +396,7 @@
           "username": {
             "label": "Username",
             "placeholder": "johndoe",
-            "description": "This is how others will find you on BDLive."
+            "description": "This is how others will find you on Vibestrym."
           },
           "displayName": {
             "label": "Display Name",
@@ -530,7 +530,7 @@
       "appearance": {
         "header": {
           "heading": "Appearance",
-          "description": "Customize the look and feel of your BDLive experience. You can change the theme, language, and accent color of the website."
+          "description": "Customize the look and feel of your Vibestrym experience. You can change the theme, language, and accent color of the website."
         },
         "theme": {
           "heading": "Change Theme",
@@ -594,7 +594,7 @@
       }
     },
     "streamKeys": {
-      "title": "Stream Keys - BDLive",
+      "title": "Stream Keys - Vibestrym",
       "description": "Manage your stream keys for live streaming. Generate new keys or view existing ones.",
       "header": {
         "heading": "Stream Keys",
@@ -621,7 +621,7 @@
         },
         "copyKeys": {
           "title": "Generate Server URL and Stream Key",
-          "description": "To generate your Server URL and Stream Key, go to the BDLive dashboard, navigate to the 'Stream Keys' section, and click 'Generate Keys'."
+          "description": "To generate your Server URL and Stream Key, go to the Vibestrym dashboard, navigate to the 'Stream Keys' section, and click 'Generate Keys'."
         },
         "step2": {
           "title": "🎛️ Step 2: Set Up OBS Studio",
@@ -670,7 +670,7 @@
       }
     },
     "chatSettings": {
-      "title": "Chat Settings - BDLive",
+      "title": "Chat Settings - Vibestrym",
       "description": "Manage your chat settings to control who can send messages during your streams.",
       "header": {
         "heading": "Chat Settings",
@@ -692,7 +692,7 @@
       "errorMessage": "Error updating chat settings"
     },
     "followers": {
-      "title": "Followers - BDLive",
+      "title": "Followers - Vibestrym",
       "description": "View and manage your followers. You can see who follows you and take actions on their profiles.",
       "header": {
         "heading": "Followers",
@@ -706,7 +706,7 @@
       }
     },
     "sponsors": {
-      "title": "Sponsors - BDLive",
+      "title": "Sponsors - Vibestrym",
       "description": "View and manage your sponsors. You can see who sponsors you and take actions on their profiles.",
       "header": {
         "heading": "Sponsors",
@@ -721,7 +721,7 @@
       }
     },
     "plans": {
-      "title": "Premium Plans - BDLive",
+      "title": "Premium Plans - Vibestrym",
       "description": "Create and manage your premium plans to offer exclusive content to your subscribers.",
       "header": {
         "heading": "Premium Plans",
@@ -772,7 +772,7 @@
       }
     },
     "transactions": {
-      "title": "Transactions - BDLive",
+      "title": "Transactions - Vibestrym",
       "description": "View and manage your transactions related to channel sponsorship and premium plans.",
       "header": {
         "heading": "Transactions",
@@ -791,7 +791,7 @@
   },
   "payment": {
     "success": {
-      "title": "Payment Successful - BDLive",
+      "title": "Payment Successful - Vibestrym",
       "description": "Your payment was successful. You can now access the channel's premium content.",
       "heading": "Payment Successful!",
       "details": {
@@ -803,10 +803,10 @@
       "congratulations": "You now have access to the channel's premium content!",
       "backToHome": "Back to Home",
       "backToChannel": "Back to Channel",
-      "support": "If you have any questions, ask contact@bdlive.com"
+      "support": "If you have any questions, ask contact@livestrym.com"
     },
     "cancel": {
-      "title": "Payment Cancelled - BDLive",
+      "title": "Payment Cancelled - Vibestrym",
       "description": "Your payment was cancelled. You can try again later.",
       "heading": "Payment Cancelled!",
       "subHeading": "Your payment was not successful. Please try again or contact support if you need any assistance.",
@@ -819,7 +819,7 @@
       "message": "You can try subscribing again later.",
       "backToHome": "Back to Home",
       "backToChannel": "Back to Channel",
-      "support": "If you have any questions, ask contact@bdlive.com"
+      "support": "If you have any questions, ask contact@livestrym.com"
     }
   },
   "notFound": {

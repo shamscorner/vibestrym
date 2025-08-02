@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 export default function middleware(request: NextRequest) {
   const { url, cookies, nextUrl } = request;
 
-  const session = cookies.get('bdlive-session')?.value;
+  const session = cookies.get('livestrym-session')?.value;
 
   const isAuthRoute = nextUrl.pathname.startsWith('/account');
   const isDeactivateRoute = nextUrl.pathname === '/account/deactivate';

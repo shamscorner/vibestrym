@@ -102,7 +102,7 @@ export function CreateAccountForm({
                 <FormControl>
                   <Input
                     disabled={isSubmitting || isLoadingCreate}
-                    placeholder="bdlive"
+                    placeholder="livestrym"
                     {...field}
                   />
                 </FormControl>
@@ -120,7 +120,7 @@ export function CreateAccountForm({
                 <FormControl>
                   <Input
                     disabled={isSubmitting || isLoadingCreate}
-                    placeholder="mail@bdlive.com"
+                    placeholder="mail@livestrym.com"
                     {...field}
                   />
                 </FormControl>
