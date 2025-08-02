@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+# Vibestrym Frontend
+
+>This is a modern [Next.js](https://nextjs.org) application built for real-world streaming and dashboard experiences. It features strict type safety, accessibility, and code quality standards enforced by [Ultracite](https://github.com/ultracite/ultracite) and [Biome](https://biomejs.dev/).
+
+## Features
+- **Next.js 15+** with App Router and Turbopack
+- **TypeScript** throughout
+- **Apollo Client** for GraphQL
+- **Radix UI** and custom UI components
+- **LiveKit** for real-time streaming
+- **Zod** for schema validation
+- **Sentry** for error monitoring
+- **Tailwind CSS** for styling
+- **Internationalization** with `next-intl`
+- **State management** with Zustand
+- **Accessibility-first**: All UI follows strict a11y rules
+- **Automated codegen** for GraphQL types
+- **Ultracite** and **Biome** for formatting, linting, and code quality
+
+## Project Structure
+
+- `src/app/` — Next.js app router, layouts, pages, and modules
+- `src/components/` — UI components (Radix, custom, icons)
+- `src/constants/` — Shared constants
+- `src/graphql/` — GraphQL codegen output
+- `src/hooks/` — Custom React hooks
+- `src/libs/` — Apollo client, i18n, etc.
+- `src/providers/` — Context providers
+- `src/schemas/` — Zod schemas
+- `src/store/` — Zustand stores
+- `src/utils/` — Utility functions
+- `public/` — Static assets and language files
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install # or npm, yarn, bun
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run the development server (includes GraphQL codegen):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+bun run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Code Quality & Accessibility
+
+- **Format:** `bun run format` (uses Ultracite)
+- **Lint:** `bun run lint` (Next.js + Biome)
+- **Accessibility:** Strict a11y rules enforced by Ultracite (see `.github/copilot-instructions.md`)
+- **Type Safety:** No `any`, strict types everywhere
+
+## GraphQL Codegen
+
+Generate types and hooks from your GraphQL schema:
+
+```bash
+bun run codegen
+```
+
+## Deployment
+
+Deploy easily on [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
+
+See [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for details.
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Ultracite](https://github.com/ultracite/ultracite)
+- [Biome](https://biomejs.dev/)
+- [Radix UI](https://www.radix-ui.com/)
+- [LiveKit](https://livekit.io/)
+- [Apollo Client](https://www.apollographql.com/docs/react/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+_See `.github/copilot-instructions.md` for enforced coding standards and accessibility rules._
