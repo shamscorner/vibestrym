@@ -6,13 +6,13 @@ export const BUTTONS = {
 			Markup.button.callback('🎯 My Subscriptions', 'follows'),
 			Markup.button.callback('👤 View Profile', 'me')
 		],
-		[Markup.button.url('🌐 Go to Website', 'https://bdlive.com')]
+		[Markup.button.url('🌐 Go to Website', 'https://vibestrym.com')]
 	]),
 
 	profile: Markup.inlineKeyboard([
 		Markup.button.url(
 			'⚙️ Account Settings',
-			'https://bdlive.com/dashboard/settings'
+			'https://vibestrym.com/dashboard/settings'
 		)
 	])
 }

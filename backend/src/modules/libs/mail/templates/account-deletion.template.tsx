@@ -25,7 +25,7 @@ export function AccountDeletionTemplate({ domain }: AccountDeletionTemplateProps
 
       <Section className='px-8 py-12'>
         <Text className='text-gray-700 text-base leading-relaxed mb-8 text-center'>
-          Your account has been completely erased from the BDLive database. All your data and information have been permanently deleted.
+          Your account has been completely erased from the Vibestrym database. All your data and information have been permanently deleted.
         </Text>
 
         <Section className="bg-gray-50 rounded-xl p-6 text-center mb-8">
@@ -39,7 +39,7 @@ export function AccountDeletionTemplate({ domain }: AccountDeletionTemplateProps
             href={registerLink}
             className="inline-flex justify-center items-center rounded-md mt-2 text-sm font-medium text-white bg-[#18B9AE] px-5 py-2 rounded-full"
           >
-            Register on BDLive
+            Register on Vibestrym
           </Link>
         </Section>
 

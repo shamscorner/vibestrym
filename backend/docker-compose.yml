@@ -12,7 +12,7 @@ services:
         volumes:
             - postgres_data:/var/lib/postgresql/data
         networks:
-            - bdlive-backend
+            - vibestrym-backend
 
     redis:
         container_name: redis
@@ -24,11 +24,11 @@ services:
         volumes:
             - redis_data:/data
         networks:
-            - bdlive-backend
+            - vibestrym-backend
 
 volumes:
     postgres_data:
     redis_data:
 
 networks:
-    bdlive-backend:
+    vibestrym-backend:

@@ -7,14 +7,14 @@ export const EmailFooter = () => {
       <Text className='text-xs text-gray-600 text-center leading-relaxed'>
         Need help? Contact our support team at{' '}
         <Link
-          href="mailto:support@bdlive.com"
+          href="mailto:support@vibestrym.com"
           className="text-[#18B9AE] transition-colors duration-200 no-underline font-medium"
         >
-          support@bdlive.com
+          support@vibestrym.com
         </Link>
       </Text>
       <Text className='text-xs text-gray-500 text-center mt-3'>
-        © {new Date().getFullYear()} BDLive. All rights reserved.
+        © {new Date().getFullYear()} Vibestrym. All rights reserved.
       </Text>
     </Section>
   )

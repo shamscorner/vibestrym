@@ -22,7 +22,7 @@ export const VerificationTemplate = ({ domain, token }: VerificationTemplateProp
 
       <Section className='px-8 py-12'>
         <Text className='text-gray-700 text-base leading-relaxed mb-8 text-center'>
-          Thank you for signing up for <span className='font-semibold text-[#18B9AE]'>BDLive</span>!
+          Thank you for signing up for <span className='font-semibold text-[#18B9AE]'>Vibestrym</span>!
           Please verify your email address before you can start exploring our platform.
         </Text>
 

@@ -22,7 +22,7 @@ export function EnableTwoFactorTemplate({ domain }: EnableTwoFactorTemplateProps
 
       <Section className='px-8 py-12'>
         <Text className='text-gray-700 text-base leading-relaxed mb-8 text-center'>
-          Protect your <span className='font-semibold text-red-600'>BDLive</span> account
+          Protect your <span className='font-semibold text-red-600'>Vibestrym</span> account
           by enabling two-factor authentication. This additional security measure requires
           a verification code that only you can access.
         </Text>

@@ -24,7 +24,7 @@ export function PasswordRecoveryTemplate({ domain, token, metadata }: PasswordRe
 
       <Section className='px-8 py-12'>
         <Text className='text-gray-700 text-base leading-relaxed mb-8 text-center'>
-          You have requested a password reset for your <span className='font-semibold text-[#18B9AE]'>BDLive</span> account.
+          You have requested a password reset for your <span className='font-semibold text-[#18B9AE]'>Vibestrym</span> account.
           Click the button below to create a new password.
         </Text>
 
