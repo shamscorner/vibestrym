@@ -18,13 +18,13 @@ export function LayoutWrapper({ children }: PropsWithChildren<unknown>) {
   }, [isMobile]);
 
   return (
-    <main
+    <div
       className={cn(
-        'mt-[75px] flex-1 p-8',
+        'mt-[75px] h-full p-8',
         isCollapsed ? 'ml-16' : 'ml-16 lg:ml-64'
       )}
     >
       {children}
-    </main>
+    </div>
   );
 }
