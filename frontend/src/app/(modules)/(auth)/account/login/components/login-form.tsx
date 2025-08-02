@@ -122,7 +122,7 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
                     <FormControl>
                       <Input
                         disabled={isSubmitting || isLoadingLogin}
-                        placeholder="bdlive"
+                        placeholder="livestrym"
                         {...field}
                       />
                     </FormControl>
