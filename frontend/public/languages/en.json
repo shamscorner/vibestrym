@@ -821,5 +821,9 @@
       "backToChannel": "Back to Channel",
       "support": "If you have any questions, ask contact@bdlive.com"
     }
+  },
+  "notFound": {
+    "description": "Oops, we couldn't find the page you were looking for.",
+    "backToHome": "Back to Home"
   }
 }

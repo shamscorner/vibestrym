@@ -1,5 +1,9 @@
 import { captureException } from '@sentry/nextjs';
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import {
+  SITE_TITLE,
+} from '@/constants/seo.constants';
 import { SERVER_URL } from '@/constants/url.constants';
 import {
   FindRandomCategoriesDocument,
@@ -70,6 +74,12 @@ async function findRandomCategories() {
     });
     throw new Error('Error fetching categories');
   }
+}
+
+export function generateMetadata(): Metadata {
+  return {
+    title: SITE_TITLE,
+  };
 }
 
 export default async function HomePage() {
