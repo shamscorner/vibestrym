@@ -51,7 +51,7 @@ async function main() {
 				if (!userExists) {
 					const createdUser = await tx.user.create({
 						data: {
-							email: `${username}@bdlive.com`,
+							email: `${username}@vibestrym.com`,
 							password: await hash('password'),
 							username,
 							displayName: username,

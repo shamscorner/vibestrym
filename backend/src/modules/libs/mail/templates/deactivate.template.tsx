@@ -22,7 +22,7 @@ export function DeactivateTemplate({ token, metadata }: DeactivateTemplateProps)
 
       <Section className='px-8 py-12'>
         <Text className='text-gray-700 text-base leading-relaxed mb-8 text-center'>
-          You have initiated the process of deactivating your account on the <span className='font-semibold text-red-600'>BDLive</span> platform.
+          You have initiated the process of deactivating your account on the <span className='font-semibold text-red-600'>Vibestrym</span> platform.
         </Text>
 
         <Section className='bg-gray-50 rounded-xl p-6 text-center mb-8'>
