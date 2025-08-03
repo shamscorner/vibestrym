@@ -115,6 +115,6 @@ export function LiveChat({
 
 export function LiveChatSkeleton() {
   return (
-    <Skeleton className="fixed my-8 flex h-[82%] w-[21.5%] flex-col xl:mt-0" />
+    <Skeleton className="flex h-[82%] w-full flex-col overflow-y-auto lg:fixed lg:w-[21.5%] xl:mt-0" />
   );
 }
