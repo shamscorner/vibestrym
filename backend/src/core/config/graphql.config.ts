@@ -3,6 +3,7 @@ import type { ApolloDriverConfig } from '@nestjs/apollo'
 import { ConfigService } from '@nestjs/config'
 import { join } from 'path'
 
+import { GqlLoggingPlugin } from '@/src/modules/libs/logger/gql-logger.plugin'
 import { isDev } from '@/src/shared/utils/is-dev.util'
 
 export function getGraphQLConfig(
@@ -19,7 +20,8 @@ export function getGraphQLConfig(
 		plugins: [
 			...(isDev(configService)
 				? [ApolloServerPluginLandingPageLocalDefault()]
-				: [])
+				: []),
+			new GqlLoggingPlugin()
 			// more plugins can be added here
 		],
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

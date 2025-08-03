@@ -1,10 +1,11 @@
-import { Logger, ValidationPipe } from '@nestjs/common'
+import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { RedisStore } from 'connect-redis'
 import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session'
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs'
+import { Logger } from 'nestjs-pino'
 
 import { CoreModule } from './core/core.module'
 import { RedisService } from './core/redis/redis.service'
@@ -13,11 +14,14 @@ import { getSessionOptions } from './shared/utils/session.util'
 
 async function bootstrap() {
 	const app = await NestFactory.create(CoreModule, {
-		rawBody: true
+		rawBody: true,
+		bufferLogs: true
 	})
 
 	const config = app.get(ConfigService)
 	const redis = app.get(RedisService)
+
+	app.useLogger(app.get(Logger))
 
 	app.use(cookieParser(config.get<string>('COOKIES_SECRET')))
 	app.use(config.getOrThrow<string>('GRAPHQL_PREFIX'), graphqlUploadExpress())
@@ -51,8 +55,12 @@ async function bootstrap() {
 		exposedHeaders: ['set-cookie']
 	})
 
-	await app.listen(config.getOrThrow<number>('APPLICATION_PORT'))
+	const port = config.getOrThrow<number>('APPLICATION_PORT')
 
-	Logger.log(`Application is running on: ${await app.getUrl()}`)
+	await app.listen(port)
+
+	app.get(Logger).log(
+		`🚀 Application is running on: http://localhost:${port}`
+	)
 }
 void bootstrap()

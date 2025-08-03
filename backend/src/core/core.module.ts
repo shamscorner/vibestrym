@@ -7,6 +7,7 @@ import { AuthModule } from '../modules/auth/auth.module'
 import { CronModule } from '../modules/cron/cron.module'
 import { FollowModule } from '../modules/follow/follow.module'
 import { LivekitModule } from '../modules/libs/livekit/livekit.module'
+import { LoggerModule } from '../modules/libs/logger/logger.module'
 import { MailModule } from '../modules/libs/mail/mail.module'
 import { StorageModule } from '../modules/libs/storage/storage.module'
 import { StripeModule } from '../modules/libs/stripe/stripe.module'
@@ -24,6 +25,7 @@ import { RedisModule } from './redis/redis.module'
 
 @Module({
 	imports: [
+		LoggerModule,
 		ConfigModule.forRoot({
 			ignoreEnvFile: !IS_DEV_ENV,
 			isGlobal: true
