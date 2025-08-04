@@ -5,6 +5,7 @@ import { RedisStore } from 'connect-redis'
 import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session'
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs'
+import helmet from 'helmet'
 import { Logger } from 'nestjs-pino'
 
 import { CoreModule } from './core/core.module'
@@ -54,6 +55,27 @@ async function bootstrap() {
 		credentials: true,
 		exposedHeaders: ['set-cookie']
 	})
+
+	app.use(
+		helmet({
+			crossOriginEmbedderPolicy: false,
+			contentSecurityPolicy: {
+				directives: {
+					imgSrc: [
+						`'self'`,
+						'data:',
+						'apollo-server-landing-page.cdn.apollographql.com'
+					],
+					scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
+					manifestSrc: [
+						`'self'`,
+						'apollo-server-landing-page.cdn.apollographql.com'
+					],
+					frameSrc: [`'self'`, 'sandbox.embed.apollographql.com']
+				}
+			}
+		})
+	)
 
 	const port = config.getOrThrow<number>('APPLICATION_PORT')
 
