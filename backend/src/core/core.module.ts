@@ -2,6 +2,8 @@ import { ApolloDriver } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import { join } from 'path'
 
 import { AuthModule } from '../modules/auth/auth.module'
 import { CronModule } from '../modules/cron/cron.module'
@@ -35,6 +37,13 @@ import { RedisModule } from './redis/redis.module'
 			imports: [ConfigModule],
 			useFactory: getGraphQLConfig,
 			inject: [ConfigService]
+		}),
+		ServeStaticModule.forRoot({
+			rootPath: join(__dirname, '..', '..', 'client'),
+			exclude: ['/api/{*test}'],
+			serveStaticOptions: {
+				fallthrough: false
+			}
 		}),
 		LivekitModule.registerAsync({
 			imports: [ConfigModule],
