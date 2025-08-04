@@ -11,21 +11,26 @@ import { GqlLoggingPlugin } from '@/src/modules/libs/logger/gql-logger.plugin'
 export function getGraphQLConfig(
 	configService: ConfigService
 ): ApolloDriverConfig {
+	const isDevelopment = process.env.NODE_ENV === 'development'
 	const graphqlPath = configService.getOrThrow<string>('GRAPHQL_PREFIX')
+	const graphqlVersion = configService.get<string>('GRAPHQL_VERSION')
 
 	return {
-		// graphiql: process.env.NODE_ENV === 'development',
+		// graphiql: isDevelopment,
 		playground: false,
 		path: graphqlPath,
-		autoSchemaFile: join(process.cwd(), 'src/core/graphql/schema.gql'),
+		autoSchemaFile: join(
+			process.cwd(),
+			`src/core/graphql/schema${graphqlVersion ? `.${graphqlVersion}` : ''}.gql`
+		),
 		sortSchema: true,
 		plugins: [
-			process.env.NODE_ENV === 'production'
-				? ApolloServerPluginLandingPageProductionDefault({
-						graphRef: 'bdlive@current',
+			isDevelopment
+				? ApolloServerPluginLandingPageLocalDefault({ footer: false })
+				: ApolloServerPluginLandingPageProductionDefault({
+						graphRef: process.env.APOLLO_GRAPH_REF,
 						footer: false
-					})
-				: ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+					}),
 			new GqlLoggingPlugin()
 			// more plugins can be added here
 		],
