@@ -1,5 +1,6 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql'
 
+import { RateLimit } from '@/src/modules/libs/rate-limiter/decorator/rate-limiter.decorator'
 import { UserAgent } from '@/src/shared/decorators/user-agent.decorator'
 import type { GqlContext } from '@/src/shared/types/gql-context.types'
 
@@ -12,6 +13,13 @@ import { VerificationService } from './verification.service'
 export class VerificationResolver {
 	constructor(private readonly verificationService: VerificationService) {}
 
+	@RateLimit({
+		keyPrefix: 'verifyAccount',
+		points: 3,
+		duration: 60,
+		errorMessage:
+			'Too many requests to verify account, please try again after one minute.'
+	})
 	@Mutation(() => AuthModel, { name: 'verifyAccount' })
 	async verify(
 		@Context() { req }: GqlContext,

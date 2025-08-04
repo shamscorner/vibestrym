@@ -6,6 +6,8 @@ import type { User } from '@/prisma/generated'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 
+import { RateLimit } from '../../libs/rate-limiter/decorator/rate-limiter.decorator'
+
 import { ChatService } from './chat.service'
 import { CHAT_MESSAGE_ADDED } from './constants'
 import { ChangeChatSettingsInput } from './inputs/change-chat-settings.input'
@@ -31,6 +33,13 @@ export class ChatResolver {
 	}
 
 	@Authorization()
+	@RateLimit({
+		keyPrefix: 'sendChatMessage',
+		points: 40,
+		duration: 60,
+		errorMessage:
+			'Too many chat messages sent, please try after one minute later.'
+	})
 	@Mutation(() => ChatMessageModel, { name: 'sendChatMessage' })
 	public async sendMessage(
 		@Authorized('id') userId: string,
@@ -58,6 +67,13 @@ export class ChatResolver {
 	}
 
 	@Authorization()
+	@RateLimit({
+		keyPrefix: 'changeChatSettings',
+		points: 20,
+		duration: 60,
+		errorMessage:
+			'Too many requests to change chat settings, please try after one minute later.'
+	})
 	@Mutation(() => Boolean, { name: 'changeChatSettings' })
 	public async changeSettings(
 		@Authorized() user: User,

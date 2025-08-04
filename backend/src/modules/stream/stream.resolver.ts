@@ -3,6 +3,7 @@ import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs'
 import GqlUpload from 'graphql-upload/Upload.mjs'
 
 import { User } from '@/prisma/generated'
+import { RateLimit } from '@/src/modules/libs/rate-limiter/decorator/rate-limiter.decorator'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 import { FileValidationPipe } from '@/src/shared/pipes/file-validation.pipe'
@@ -31,6 +32,13 @@ export class StreamResolver {
 	}
 
 	@Authorization()
+	@RateLimit({
+		keyPrefix: 'changeStreamInfo',
+		points: 5,
+		duration: 60,
+		errorMessage:
+			'Too many requests to change stream information, please try after one minute later.'
+	})
 	@Mutation(() => Boolean, { name: 'changeStreamInfo' })
 	async changeInfo(
 		@Authorized() user: User,
@@ -40,6 +48,13 @@ export class StreamResolver {
 	}
 
 	@Authorization()
+	@RateLimit({
+		keyPrefix: 'changeStreamThumbnail',
+		points: 5,
+		duration: 60,
+		errorMessage:
+			'Too many requests to change stream thumbnail, please try after one minute later.'
+	})
 	@Mutation(() => Boolean, { name: 'changeStreamThumbnail' })
 	async changeThumbnail(
 		@Authorized() user: User,
@@ -50,6 +65,13 @@ export class StreamResolver {
 	}
 
 	@Authorization()
+	@RateLimit({
+		keyPrefix: 'removeStreamThumbnail',
+		points: 5,
+		duration: 60,
+		errorMessage:
+			'Too many requests to remove stream thumbnail, please try after one minute later.'
+	})
 	@Mutation(() => Boolean, { name: 'removeStreamThumbnail' })
 	public async removeThumbnail(@Authorized() user: User) {
 		return this.streamService.removeThumbnail(user)

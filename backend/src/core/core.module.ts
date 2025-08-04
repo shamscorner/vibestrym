@@ -1,6 +1,7 @@
 import { ApolloDriver } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { APP_GUARD } from '@nestjs/core'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
@@ -11,6 +12,8 @@ import { FollowModule } from '../modules/follow/follow.module'
 import { LivekitModule } from '../modules/libs/livekit/livekit.module'
 import { LoggerModule } from '../modules/libs/logger/logger.module'
 import { MailModule } from '../modules/libs/mail/mail.module'
+import { RateLimiterGuard } from '../modules/libs/rate-limiter/guards/rate-limiter.guard'
+import { RateLimiterModule } from '../modules/libs/rate-limiter/rate-limiter.module'
 import { StorageModule } from '../modules/libs/storage/storage.module'
 import { StripeModule } from '../modules/libs/stripe/stripe.module'
 import { TelegramModule } from '../modules/libs/telegram/telegram.module'
@@ -24,6 +27,7 @@ import { getLiveKitConfig } from './config/livekit.config'
 import { getStripeConfig } from './config/stripe.config'
 import { PrismaModule } from './prisma/prisma.module'
 import { RedisModule } from './redis/redis.module'
+import { RedisService } from './redis/redis.service'
 
 @Module({
 	imports: [
@@ -44,6 +48,13 @@ import { RedisModule } from './redis/redis.module'
 			serveStaticOptions: {
 				fallthrough: false
 			}
+		}),
+		RateLimiterModule.registerAsync({
+			useFactory: () => ({
+				for: 'ExpressGraphql',
+				type: 'Redis',
+				storeClient: RedisService.getClient()
+			})
 		}),
 		LivekitModule.registerAsync({
 			imports: [ConfigModule],
@@ -68,7 +79,11 @@ import { RedisModule } from './redis/redis.module'
 		NotificationModule,
 		TelegramModule
 	],
-	controllers: [],
-	providers: []
+	providers: [
+		{
+			provide: APP_GUARD,
+			useClass: RateLimiterGuard
+		}
+	]
 })
 export class CoreModule {}
