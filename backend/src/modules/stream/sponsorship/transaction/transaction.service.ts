@@ -6,6 +6,7 @@ import {
 import { ConfigService } from '@nestjs/config'
 
 import type { User } from '@/prisma/generated'
+import { AppConfig } from '@/src/core/config/app.config'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { StripeService } from '@/src/modules/libs/stripe/stripe.service'
 
@@ -73,7 +74,9 @@ export class TransactionService {
 		})
 
 		const allowedOrigin =
-			this.configService.getOrThrow<string>('ALLOWED_ORIGIN')
+			this.configService.getOrThrow<AppConfig['allowedOrigin']>(
+				'allowedOrigin'
+			)
 
 		const successUrl = `${allowedOrigin}/streams/success?price=${encodeURIComponent(plan.price)}&username=${encodeURIComponent(plan.channel.username)}`
 		const cancelUrl = `${allowedOrigin}/streams/cancel?price=${encodeURIComponent(plan.price)}&username=${encodeURIComponent(plan.channel.username)}`

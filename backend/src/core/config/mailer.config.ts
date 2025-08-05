@@ -1,19 +1,23 @@
 import type { MailerOptions } from '@nestjs-modules/mailer'
 import { ConfigService } from '@nestjs/config'
 
+import { AppConfig } from './app.config'
+
 export function getMailerConfig(configService: ConfigService): MailerOptions {
+	const mailConfig = configService.getOrThrow<AppConfig['mail']>('mail')
+
 	return {
 		transport: {
-			host: configService.getOrThrow<string>('MAIL_HOST'),
-			port: configService.getOrThrow<number>('MAIL_PORT'),
+			host: mailConfig.host,
+			port: mailConfig.port,
 			secure: false,
 			auth: {
-				user: configService.getOrThrow<string>('MAIL_LOGIN'),
-				pass: configService.getOrThrow<string>('MAIL_PASSWORD')
+				user: mailConfig.login,
+				pass: mailConfig.password
 			}
 		},
 		defaults: {
-			from: `"Vibestrym" ${configService.getOrThrow<string>('MAIL_FROM')}`
+			from: `"Vibestrym" ${mailConfig.from}`
 		}
 	}
 }

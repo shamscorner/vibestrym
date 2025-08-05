@@ -4,6 +4,7 @@ import GqlUpload from 'graphql-upload/Upload.mjs'
 import { AccessToken } from 'livekit-server-sdk'
 
 import type { Prisma, User } from '@/prisma/generated'
+import { AppConfig } from '@/src/core/config/app.config'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { uploadImage } from '@/src/shared/utils/upload.util'
 
@@ -189,9 +190,12 @@ export class StreamService {
 
 		const isHost = self.id === channel.id
 
+		const liveKitConfig =
+			this.configService.getOrThrow<AppConfig['livekit']>('livekit')
+
 		const token = new AccessToken(
-			this.configService.getOrThrow<string>('LIVEKIT_API_KEY'),
-			this.configService.getOrThrow<string>('LIVEKIT_API_SECRET'),
+			liveKitConfig.apiKey,
+			liveKitConfig.apiSecret,
 			{
 				identity: isHost ? `Host-${self.id}` : self.id.toString(),
 				name: self.username

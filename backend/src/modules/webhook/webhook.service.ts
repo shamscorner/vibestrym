@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import Stripe from 'stripe'
 
 import { Stream, TransactionStatus, User } from '@/prisma/generated'
+import { AppConfig } from '@/src/core/config/app.config'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 
 import { LivekitService } from '../libs/livekit/livekit.service'
@@ -75,10 +76,13 @@ export class WebhookService {
 		payload: string | Buffer,
 		signature: string | Buffer | Array<string>
 	) {
+		const stripeConfig =
+			this.configService.getOrThrow<AppConfig['stripe']>('stripe')
+
 		return this.stripeService.webhooks.constructEvent(
 			payload,
 			signature,
-			this.configService.getOrThrow<string>('STRIPE_WEBHOOK_SECRET')
+			stripeConfig.webhookSecret
 		)
 	}
 

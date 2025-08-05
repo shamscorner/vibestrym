@@ -2,12 +2,15 @@ import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { LoggerModule as PinoLoggerModule } from 'nestjs-pino'
 
+import { AppConfig } from '@/src/core/config/app.config'
+
 @Module({
 	imports: [
 		PinoLoggerModule.forRootAsync({
 			useFactory: (configService: ConfigService) => {
 				const isProduction =
-					configService.get('NODE_ENV') === 'production'
+					configService.get<AppConfig['env']['type']>('env.type') ===
+					'production'
 
 				return {
 					pinoHttp: {

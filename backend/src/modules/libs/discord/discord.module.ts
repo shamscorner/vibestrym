@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { IntentsBitField } from 'discord.js'
 import { NecordModule } from 'necord'
 
+import { AppConfig } from '@/src/core/config/app.config'
+
 import { ChannelService } from '../../stream/channel/channel.service'
 
 import { DiscordCommands } from './discord.commands'
@@ -13,13 +15,16 @@ import { DiscordService } from './discord.service'
 		ConfigModule,
 		NecordModule.forRootAsync({
 			imports: [ConfigModule],
-			useFactory: (configService: ConfigService) => ({
-				token: configService.getOrThrow<string>('DISCORD_BOT_TOKEN'),
-				intents: [IntentsBitField.Flags.Guilds],
-				development: [
-					configService.getOrThrow<string>('DISCORD_GUILD_ID')
-				]
-			}),
+			useFactory: (configService: ConfigService) => {
+				const discordConfig =
+					configService.getOrThrow<AppConfig['discord']>('discord')
+
+				return {
+					token: discordConfig.botToken,
+					intents: [IntentsBitField.Flags.Guilds],
+					development: [discordConfig.guildId]
+				}
+			},
 			inject: [ConfigService]
 		})
 	],

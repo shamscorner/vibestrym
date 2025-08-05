@@ -5,6 +5,7 @@ import { encode } from 'hi-base32'
 import * as QRCode from 'qrcode'
 
 import type { User } from '@/prisma/generated'
+import { AppConfig } from '@/src/core/config/app.config'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { generateTotp } from '@/src/shared/utils/generate-totp.util'
 
@@ -84,6 +85,8 @@ export class TotpService {
 	}
 
 	private getTotpIssuer(): string {
-		return this.configService.getOrThrow<string>('TOTP_ISSUER')
+		return this.configService.getOrThrow<AppConfig['totp']['issuer']>(
+			'totp.issuer'
+		)
 	}
 }

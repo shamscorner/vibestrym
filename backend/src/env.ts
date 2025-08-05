@@ -1,3 +1,5 @@
+import { StringValue } from './shared/utils/ms.util'
+
 export interface Environment {
 	NODE_ENV: 'development' | 'production' | 'test'
 	LOG_LEVEL: 'info' | 'warn' | 'error' | 'debug'
@@ -14,7 +16,7 @@ export interface Environment {
 	SESSION_SECRET: string
 	SESSION_NAME: string
 	SESSION_DOMAIN: string
-	SESSION_MAX_AGE: string
+	SESSION_MAX_AGE: StringValue
 	SESSION_HTTP_ONLY: boolean
 	SESSION_SECURE: boolean
 	SESSION_FOLDER: string

@@ -3,11 +3,10 @@ import { ConfigService } from '@nestjs/config'
 import type { CookieOptions, Request } from 'express'
 
 import type { User } from '@/prisma/generated'
+import { AppConfig } from '@/src/core/config/app.config'
 import { RedisService } from '@/src/core/redis/redis.service'
 
 import type { SessionMetadata } from '../types/session-metadata.types'
-
-import { parseBoolean } from './parse-boolean.util'
 
 export const USERS_SESSIONS_KEY = 'user_sessions'
 
@@ -16,7 +15,9 @@ export function getUserSessionsKey(userId: string): string {
 }
 
 export function getSessionFolder(configService: ConfigService): string {
-	return configService.getOrThrow<string>('SESSION_FOLDER')
+	return configService.getOrThrow<AppConfig['session']['folder']>(
+		'session.folder'
+	)
 }
 
 export function getSessionIdWithSessionFolder(
@@ -27,15 +28,14 @@ export function getSessionIdWithSessionFolder(
 }
 
 export function getSessionOptions(configService: ConfigService) {
+	const sessionConfig =
+		configService.getOrThrow<AppConfig['session']>('session')
+
 	return {
-		domain: configService.getOrThrow<string>('SESSION_DOMAIN'),
+		domain: sessionConfig.domain,
 		path: '/', // Important: must match the original
-		httpOnly: parseBoolean(
-			configService.getOrThrow<string>('SESSION_HTTP_ONLY')
-		),
-		secure: parseBoolean(
-			configService.getOrThrow<string>('SESSION_SECURE')
-		),
+		httpOnly: sessionConfig.httpOnly,
+		secure: sessionConfig.secure,
 		sameSite: 'lax'
 	} as CookieOptions
 }
@@ -87,7 +87,9 @@ export function destroySession(
 
 			// Clear cookie with the SAME options used when setting it
 			request.res?.clearCookie(
-				configService.getOrThrow<string>('SESSION_NAME'),
+				configService.getOrThrow<AppConfig['session']['name']>(
+					'session.name'
+				),
 				getSessionOptions(configService)
 			)
 

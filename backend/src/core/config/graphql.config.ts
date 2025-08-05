@@ -8,12 +8,17 @@ import { join } from 'path'
 
 import { GqlLoggingPlugin } from '@/src/modules/libs/logger/gql-logger.plugin'
 
+import { AppConfig } from './app.config'
+
 export function getGraphQLConfig(
 	configService: ConfigService
 ): ApolloDriverConfig {
 	const isDevelopment = process.env.NODE_ENV === 'development'
-	const graphqlPath = configService.getOrThrow<string>('GRAPHQL_PREFIX')
-	const graphqlVersion = configService.get<string>('GRAPHQL_VERSION')
+
+	const gqlConfig = configService.get<AppConfig['graphql']>('graphql')
+
+	const graphqlPath = gqlConfig?.prefix || '/graphql'
+	const graphqlVersion = gqlConfig?.version
 
 	return {
 		// graphiql: isDevelopment,

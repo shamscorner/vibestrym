@@ -2,6 +2,8 @@ import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Context, Options, SlashCommand, SlashCommandContext } from 'necord'
 
+import { AppConfig } from '@/src/core/config/app.config'
+
 import { ChannelService } from '../../stream/channel/channel.service'
 
 import { DiscordService } from './discord.service'
@@ -46,7 +48,9 @@ export class DiscordCommands {
 		}
 
 		const appOrigin =
-			this.configService.getOrThrow<string>('ALLOWED_ORIGIN')
+			this.configService.getOrThrow<AppConfig['allowedOrigin']>(
+				'allowedOrigin'
+			)
 
 		return interaction.reply({
 			content: channel

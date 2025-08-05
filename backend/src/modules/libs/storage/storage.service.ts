@@ -8,6 +8,8 @@ import {
 import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 
+import { AppConfig } from '@/src/core/config/app.config'
+
 @Injectable()
 export class StorageService {
 	private readonly logger = new Logger(StorageService.name)
@@ -16,18 +18,17 @@ export class StorageService {
 	private readonly bucket: string
 
 	constructor(private readonly configService: ConfigService) {
+		const s3Config = this.configService.getOrThrow<AppConfig['s3']>('s3')
+
 		this.client = new S3Client({
-			region: this.configService.getOrThrow<string>('S3_REGION'),
+			region: s3Config.region,
 			credentials: {
-				accessKeyId:
-					this.configService.getOrThrow<string>('S3_ACCESS_KEY_ID'),
-				secretAccessKey: this.configService.getOrThrow<string>(
-					'S3_SECRET_ACCESS_KEY'
-				)
+				accessKeyId: s3Config.accessKeyId,
+				secretAccessKey: s3Config.secretAccessKey
 			}
 		})
 
-		this.bucket = this.configService.getOrThrow<string>('S3_BUCKET_NAME')
+		this.bucket = s3Config.bucketName
 	}
 
 	async upload(buffer: Buffer, key: string, mimetype: string) {

@@ -7,7 +7,6 @@ import { ServeStaticModule } from '@nestjs/serve-static'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { join } from 'path'
 
-import { validate } from '../env.validation'
 import { AuthModule } from '../modules/auth/auth.module'
 import { CronModule } from '../modules/cron/cron.module'
 import { FollowModule } from '../modules/follow/follow.module'
@@ -23,8 +22,8 @@ import { NotificationModule } from '../modules/notification/notification.module'
 import { StreamModule } from '../modules/stream/stream.module'
 import { WebhookModule } from '../modules/webhook/webhook.module'
 import { GqlThrottlerGuard } from '../shared/guards/gql-throttler.guard'
-import { IS_DEV_ENV } from '../shared/utils/is-dev.util'
 
+import { loadAppConfig } from './config/app.config'
 import { getGraphQLConfig } from './config/graphql.config'
 import { getLiveKitConfig } from './config/livekit.config'
 import { getStripeConfig } from './config/stripe.config'
@@ -36,9 +35,9 @@ import { RedisService } from './redis/redis.service'
 	imports: [
 		LoggerModule,
 		ConfigModule.forRoot({
-			ignoreEnvFile: !IS_DEV_ENV,
+			ignoreEnvFile: true,
 			isGlobal: true,
-			validate
+			load: [loadAppConfig]
 		}),
 		GraphQLModule.forRootAsync({
 			driver: ApolloDriver,

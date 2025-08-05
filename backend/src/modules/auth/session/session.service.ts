@@ -10,6 +10,7 @@ import { verify } from 'argon2'
 import type { Request } from 'express'
 import type { SessionData } from 'express-session'
 
+import { AppConfig } from '@/src/core/config/app.config'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { RedisService } from '@/src/core/redis/redis.service'
 import { generateTotp } from '@/src/shared/utils/generate-totp.util'
@@ -176,7 +177,9 @@ export class SessionService {
 
 	clearSession(req: Request) {
 		req.res?.clearCookie(
-			this.configService.getOrThrow<string>('SESSION_NAME')
+			this.configService.getOrThrow<AppConfig['session']['name']>(
+				'session.name'
+			)
 		)
 		return true
 	}

@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config'
 import { render } from '@react-email/components'
 import type { SentMessageInfo } from 'nodemailer'
 
+import { AppConfig } from '@/src/core/config/app.config'
 import { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 
 import { AccountDeletionTemplate } from './templates/account-deletion.template'
@@ -24,7 +25,10 @@ export class MailService {
 		email: string,
 		token: string
 	): Promise<SentMessageInfo> {
-		const domain = this.configService.getOrThrow<string>('ALLOWED_ORIGIN')
+		const domain =
+			this.configService.getOrThrow<AppConfig['allowedOrigin']>(
+				'allowedOrigin'
+			)
 		const html = await render(VerificationTemplate({ domain, token }))
 		return this.sendMail(email, 'Account Verification', html)
 	}
@@ -34,7 +38,10 @@ export class MailService {
 		token: string,
 		metadata: SessionMetadata
 	): Promise<SentMessageInfo> {
-		const domain = this.configService.getOrThrow<string>('ALLOWED_ORIGIN')
+		const domain =
+			this.configService.getOrThrow<AppConfig['allowedOrigin']>(
+				'allowedOrigin'
+			)
 		const html = await render(
 			PasswordRecoveryTemplate({ domain, token, metadata })
 		)
@@ -51,13 +58,19 @@ export class MailService {
 	}
 
 	async sendAccountDeletion(email: string): Promise<SentMessageInfo> {
-		const domain = this.configService.getOrThrow<string>('ALLOWED_ORIGIN')
+		const domain =
+			this.configService.getOrThrow<AppConfig['allowedOrigin']>(
+				'allowedOrigin'
+			)
 		const html = await render(AccountDeletionTemplate({ domain }))
 		return this.sendMail(email, 'Account Deleted', html)
 	}
 
 	async sendEnableTwoFactor(email: string): Promise<SentMessageInfo> {
-		const domain = this.configService.getOrThrow<string>('ALLOWED_ORIGIN')
+		const domain =
+			this.configService.getOrThrow<AppConfig['allowedOrigin']>(
+				'allowedOrigin'
+			)
 		const html = await render(EnableTwoFactorTemplate({ domain }))
 		return this.sendMail(email, 'Secure Your Account', html)
 	}
