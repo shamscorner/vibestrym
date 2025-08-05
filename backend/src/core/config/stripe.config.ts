@@ -6,7 +6,7 @@ export function getStripeConfig(configService: ConfigService): StripeOptions {
 	return {
 		apiKey: configService.getOrThrow<string>('STRIPE_SECRET_KEY'),
 		config: {
-			apiVersion: '2025-06-30.basil'
+			apiVersion: '2025-07-30.basil'
 		}
 	}
 }
