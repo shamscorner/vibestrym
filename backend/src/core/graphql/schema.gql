@@ -128,6 +128,16 @@ type GenerateStreamTokenModel {
   token: String!
 }
 
+enum IngressInput {
+  RTMP_INPUT
+  URL_INPUT
+  WHIP_INPUT
+}
+
+input IngressInputType {
+  type: IngressInput!
+}
+
 type LocationModel {
   city: String!
   country: String!
@@ -155,7 +165,7 @@ type Mutation {
   changeStreamInfo(data: ChangeStreamInfoInput!): Boolean!
   changeStreamThumbnail(thumbnail: Upload!): Boolean!
   clearSessionCookie: Boolean!
-  createIngress(ingressType: Float!): Boolean!
+  createIngress(ingressType: IngressInputType!): Boolean!
   createSocialLink(data: SocialLinkInput!): Boolean!
   createSponsorshipPlan(data: CreatePlanInput!): Boolean!
   createUser(data: CreateUserInput!): Boolean!
