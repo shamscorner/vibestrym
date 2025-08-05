@@ -9,11 +9,12 @@ import { join } from 'path'
 import { AuthModule } from '../modules/auth/auth.module'
 import { CronModule } from '../modules/cron/cron.module'
 import { FollowModule } from '../modules/follow/follow.module'
+import { DiscordModule } from '../modules/libs/discord/discord.module'
 import { LivekitModule } from '../modules/libs/livekit/livekit.module'
 import { LoggerModule } from '../modules/libs/logger/logger.module'
 import { MailModule } from '../modules/libs/mail/mail.module'
 import { RateLimiterGuard } from '../modules/libs/rate-limiter/guards/rate-limiter.guard'
-import { RateLimiterModule } from '../modules/libs/rate-limiter/rate-limiter.module'
+// import { RateLimiterModule } from '../modules/libs/rate-limiter/rate-limiter.module'
 import { StorageModule } from '../modules/libs/storage/storage.module'
 import { StripeModule } from '../modules/libs/stripe/stripe.module'
 import { TelegramModule } from '../modules/libs/telegram/telegram.module'
@@ -49,13 +50,13 @@ import { RedisService } from './redis/redis.service'
 				fallthrough: false
 			}
 		}),
-		RateLimiterModule.registerAsync({
-			useFactory: () => ({
-				for: 'ExpressGraphql',
-				type: 'Redis',
-				storeClient: RedisService.getClient()
-			})
-		}),
+		// RateLimiterModule.registerAsync({
+		// 	useFactory: () => ({
+		// 		for: 'ExpressGraphql',
+		// 		type: 'Redis',
+		// 		storeClient: RedisService.getClient()
+		// 	})
+		// }),
 		LivekitModule.registerAsync({
 			imports: [ConfigModule],
 			useFactory: getLiveKitConfig,
@@ -77,13 +78,14 @@ import { RedisService } from './redis/redis.service'
 		StripeModule,
 		FollowModule,
 		NotificationModule,
-		TelegramModule
-	],
-	providers: [
-		{
-			provide: APP_GUARD,
-			useClass: RateLimiterGuard
-		}
+		TelegramModule,
+		DiscordModule
 	]
+	// providers: [
+	// 	{
+	// 		provide: APP_GUARD,
+	// 		useClass: RateLimiterGuard
+	// 	}
+	// ]
 })
 export class CoreModule {}
