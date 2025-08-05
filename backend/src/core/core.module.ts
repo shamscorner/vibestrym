@@ -7,6 +7,7 @@ import { ServeStaticModule } from '@nestjs/serve-static'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { join } from 'path'
 
+import { validate } from '../env.validation'
 import { AuthModule } from '../modules/auth/auth.module'
 import { CronModule } from '../modules/cron/cron.module'
 import { FollowModule } from '../modules/follow/follow.module'
@@ -36,7 +37,8 @@ import { RedisService } from './redis/redis.service'
 		LoggerModule,
 		ConfigModule.forRoot({
 			ignoreEnvFile: !IS_DEV_ENV,
-			isGlobal: true
+			isGlobal: true,
+			validate
 		}),
 		GraphQLModule.forRootAsync({
 			driver: ApolloDriver,
