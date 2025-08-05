@@ -6,7 +6,6 @@ import { NecordModule } from 'necord'
 import { ChannelService } from '../../stream/channel/channel.service'
 
 import { DiscordCommands } from './discord.commands'
-import { DiscordEvents } from './discord.events'
 import { DiscordService } from './discord.service'
 
 @Module({
@@ -24,6 +23,6 @@ import { DiscordService } from './discord.service'
 			inject: [ConfigService]
 		})
 	],
-	providers: [DiscordService, DiscordCommands, DiscordEvents, ChannelService]
+	providers: [DiscordService, DiscordCommands, ChannelService]
 })
 export class DiscordModule {}

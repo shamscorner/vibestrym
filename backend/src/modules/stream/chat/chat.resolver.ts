@@ -1,12 +1,11 @@
 import { Logger } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql'
+import { Throttle } from '@nestjs/throttler'
 import { PubSub } from 'graphql-subscriptions'
 
 import type { User } from '@/prisma/generated'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
-
-import { RateLimit } from '../../libs/rate-limiter/decorator/rate-limiter.decorator'
 
 import { ChatService } from './chat.service'
 import { CHAT_MESSAGE_ADDED } from './constants'
@@ -33,12 +32,11 @@ export class ChatResolver {
 	}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'sendChatMessage',
-		points: 40,
-		duration: 60,
-		errorMessage:
-			'Too many chat messages sent, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 40,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => ChatMessageModel, { name: 'sendChatMessage' })
 	public async sendMessage(
@@ -67,12 +65,11 @@ export class ChatResolver {
 	}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'changeChatSettings',
-		points: 20,
-		duration: 60,
-		errorMessage:
-			'Too many requests to change chat settings, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 20,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'changeChatSettings' })
 	public async changeSettings(

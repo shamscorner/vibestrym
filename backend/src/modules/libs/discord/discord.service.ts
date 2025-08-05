@@ -1,9 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common'
+import { SkipThrottle } from '@nestjs/throttler'
 import { Client, EmbedBuilder, TextChannel } from 'discord.js'
 import { Context, ContextOf, On, Once } from 'necord'
 
 import { NotificationData } from './notification.interface'
 
+@SkipThrottle()
 @Injectable()
 export class DiscordService {
 	private readonly logger = new Logger(DiscordService.name)
@@ -106,6 +108,7 @@ export class DiscordService {
 
 			await channel.send(message)
 			this.logger.log(`Simple message sent to channel ${channelId}`)
+
 			return true
 		} catch (error) {
 			this.logger.error(

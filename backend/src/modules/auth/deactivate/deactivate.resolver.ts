@@ -1,7 +1,7 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql'
+import { Throttle } from '@nestjs/throttler'
 
 import { User } from '@/prisma/generated'
-import { RateLimit } from '@/src/modules/libs/rate-limiter/decorator/rate-limiter.decorator'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 import { UserAgent } from '@/src/shared/decorators/user-agent.decorator'
@@ -17,12 +17,11 @@ export class DeactivateResolver {
 	constructor(private readonly deactivateService: DeactivateService) {}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'deactivateAccount',
-		points: 5,
-		duration: 60,
-		errorMessage:
-			'Too many requests to deactivate account, please try again after one minute.'
+	@Throttle({
+		default: {
+			limit: 5,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => AuthModel, { name: 'deactivateAccount' })
 	async deactivate(

@@ -1,9 +1,9 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Throttle } from '@nestjs/throttler'
 import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs'
 import GqlUpload from 'graphql-upload/Upload.mjs'
 
 import { User } from '@/prisma/generated'
-import { RateLimit } from '@/src/modules/libs/rate-limiter/decorator/rate-limiter.decorator'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 import { FileValidationPipe } from '@/src/shared/pipes/file-validation.pipe'
@@ -21,12 +21,11 @@ export class ProfileResolver {
 	constructor(private readonly profileService: ProfileService) {}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'changeProfileAvatar',
-		points: 10,
-		duration: 60,
-		errorMessage:
-			'Too many requests to change profile avatar, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 10,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'changeProfileAvatar' })
 	async changeAvatar(
@@ -38,12 +37,11 @@ export class ProfileResolver {
 	}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'removeProfileAvatar',
-		points: 10,
-		duration: 60,
-		errorMessage:
-			'Too many requests to remove profile avatar, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 10,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'removeProfileAvatar' })
 	async removeAvatar(@Authorized() user: User) {
@@ -51,12 +49,11 @@ export class ProfileResolver {
 	}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'changeProfileInfo',
-		points: 20,
-		duration: 60,
-		errorMessage:
-			'Too many requests to change profile info, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 20,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'changeProfileInfo' })
 	async changeInfo(
@@ -73,12 +70,11 @@ export class ProfileResolver {
 	}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'createSocialLink',
-		points: 30,
-		duration: 60,
-		errorMessage:
-			'Too many requests to create social links, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 30,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'createSocialLink' })
 	async createSocialLink(
@@ -89,12 +85,11 @@ export class ProfileResolver {
 	}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'reorderSocialLinks',
-		points: 30,
-		duration: 60,
-		errorMessage:
-			'Too many requests to reorder social links, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 30,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'reorderSocialLinks' })
 	async reorderSocialLinks(
@@ -105,12 +100,11 @@ export class ProfileResolver {
 	}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'updateSocialLink',
-		points: 30,
-		duration: 60,
-		errorMessage:
-			'Too many requests to update social links, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 30,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'updateSocialLink' })
 	async updateSocialLink(
@@ -121,12 +115,11 @@ export class ProfileResolver {
 	}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'removeSocialLink',
-		points: 40,
-		duration: 60,
-		errorMessage:
-			'Too many requests to remove social links, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 40,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'removeSocialLink' })
 	async removeSocialLink(@Args('id') id: string) {

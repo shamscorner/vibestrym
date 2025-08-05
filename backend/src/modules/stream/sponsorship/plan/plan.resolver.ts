@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Throttle } from '@nestjs/throttler'
 
 import type { User } from '@/prisma/generated'
-import { RateLimit } from '@/src/modules/libs/rate-limiter/decorator/rate-limiter.decorator'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 
@@ -20,12 +20,11 @@ export class PlanResolver {
 	}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'createSponsorshipPlan',
-		points: 5,
-		duration: 60,
-		errorMessage:
-			'Too many requests to create sponsorship plans, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 5,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'createSponsorshipPlan' })
 	async create(
@@ -36,12 +35,11 @@ export class PlanResolver {
 	}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'removeSponsorshipPlan',
-		points: 5,
-		duration: 60,
-		errorMessage:
-			'Too many requests to remove sponsorship plans, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 5,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'removeSponsorshipPlan' })
 	async remove(@Args('planId') planId: string) {

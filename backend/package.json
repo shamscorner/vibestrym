@@ -81,7 +81,6 @@
 		"pino-http": "^10.5.0",
 		"prisma": "^6.13.0",
 		"qrcode": "^1.5.4",
-		"rate-limiter-flexible": "^7.2.0",
 		"raw-body": "^3.0.0",
 		"react": "^19.1.1",
 		"react-dom": "^19.1.1",

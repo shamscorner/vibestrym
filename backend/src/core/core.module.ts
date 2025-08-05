@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_GUARD } from '@nestjs/core'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ServeStaticModule } from '@nestjs/serve-static'
+import { ThrottlerModule } from '@nestjs/throttler'
 import { join } from 'path'
 
 import { AuthModule } from '../modules/auth/auth.module'
@@ -13,14 +14,14 @@ import { DiscordModule } from '../modules/libs/discord/discord.module'
 import { LivekitModule } from '../modules/libs/livekit/livekit.module'
 import { LoggerModule } from '../modules/libs/logger/logger.module'
 import { MailModule } from '../modules/libs/mail/mail.module'
-import { RateLimiterGuard } from '../modules/libs/rate-limiter/guards/rate-limiter.guard'
-// import { RateLimiterModule } from '../modules/libs/rate-limiter/rate-limiter.module'
 import { StorageModule } from '../modules/libs/storage/storage.module'
 import { StripeModule } from '../modules/libs/stripe/stripe.module'
 import { TelegramModule } from '../modules/libs/telegram/telegram.module'
+import { ThrottlerStorageRedisService } from '../modules/libs/throttler/throttler-storage.service'
 import { NotificationModule } from '../modules/notification/notification.module'
 import { StreamModule } from '../modules/stream/stream.module'
 import { WebhookModule } from '../modules/webhook/webhook.module'
+import { GqlThrottlerGuard } from '../shared/guards/gql-throttler.guard'
 import { IS_DEV_ENV } from '../shared/utils/is-dev.util'
 
 import { getGraphQLConfig } from './config/graphql.config'
@@ -50,13 +51,21 @@ import { RedisService } from './redis/redis.service'
 				fallthrough: false
 			}
 		}),
-		// RateLimiterModule.registerAsync({
-		// 	useFactory: () => ({
-		// 		for: 'ExpressGraphql',
-		// 		type: 'Redis',
-		// 		storeClient: RedisService.getClient()
-		// 	})
-		// }),
+		ThrottlerModule.forRootAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: (config: ConfigService) => ({
+				throttlers: [
+					{
+						ttl: config.getOrThrow<number>('THROTTLE_TTL'),
+						limit: config.getOrThrow<number>('THROTTLE_LIMIT')
+					}
+				],
+				storage: new ThrottlerStorageRedisService(
+					RedisService.getClient()
+				)
+			})
+		}),
 		LivekitModule.registerAsync({
 			imports: [ConfigModule],
 			useFactory: getLiveKitConfig,
@@ -80,12 +89,12 @@ import { RedisService } from './redis/redis.service'
 		NotificationModule,
 		TelegramModule,
 		DiscordModule
+	],
+	providers: [
+		{
+			provide: APP_GUARD,
+			useClass: GqlThrottlerGuard
+		}
 	]
-	// providers: [
-	// 	{
-	// 		provide: APP_GUARD,
-	// 		useClass: RateLimiterGuard
-	// 	}
-	// ]
 })
 export class CoreModule {}

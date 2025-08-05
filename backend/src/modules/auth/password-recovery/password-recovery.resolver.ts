@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql'
+import { Throttle } from '@nestjs/throttler'
 
-import { RateLimit } from '@/src/modules/libs/rate-limiter/decorator/rate-limiter.decorator'
 import { UserAgent } from '@/src/shared/decorators/user-agent.decorator'
 import { GqlContext } from '@/src/shared/types/gql-context.types'
 
@@ -14,12 +14,11 @@ export class PasswordRecoveryResolver {
 		private readonly passwordRecoveryService: PasswordRecoveryService
 	) {}
 
-	@RateLimit({
-		keyPrefix: 'resetPassword',
-		points: 5,
-		duration: 60,
-		errorMessage:
-			'Too many requests to reset password, please try again after one minute.'
+	@Throttle({
+		default: {
+			limit: 5,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'resetPassword' })
 	async resetPassword(
@@ -30,12 +29,11 @@ export class PasswordRecoveryResolver {
 		return this.passwordRecoveryService.resetPassword(req, input, userAgent)
 	}
 
-	@RateLimit({
-		keyPrefix: 'newPassword',
-		points: 5,
-		duration: 60,
-		errorMessage:
-			'Too many requests to set a new password, please try again after one minute.'
+	@Throttle({
+		default: {
+			limit: 5,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => Boolean, { name: 'newPassword' })
 	public async newPassword(@Args('data') input: NewPasswordInput) {

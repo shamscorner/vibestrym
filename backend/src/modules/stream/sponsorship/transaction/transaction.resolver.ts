@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Throttle } from '@nestjs/throttler'
 
 import type { User } from '@/prisma/generated'
-import { RateLimit } from '@/src/modules/libs/rate-limiter/decorator/rate-limiter.decorator'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 
@@ -20,12 +20,11 @@ export class TransactionResolver {
 	}
 
 	@Authorization()
-	@RateLimit({
-		keyPrefix: 'makePayment',
-		points: 10,
-		duration: 60,
-		errorMessage:
-			'Too many requests to make a payment, please try again after one minute.'
+	@Throttle({
+		default: {
+			limit: 10,
+			ttl: 60000
+		}
 	})
 	@Mutation(() => MakePaymentModel, { name: 'makePayment' })
 	async makePayment(

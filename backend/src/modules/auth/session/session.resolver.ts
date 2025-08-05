@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Throttle } from '@nestjs/throttler'
 
-import { RateLimit } from '@/src/modules/libs/rate-limiter/decorator/rate-limiter.decorator'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { UserAgent } from '@/src/shared/decorators/user-agent.decorator'
 import type { GqlContext } from '@/src/shared/types/gql-context.types'
@@ -28,12 +28,11 @@ export class SessionResolver {
 	}
 
 	@Mutation(() => AuthModel, { name: 'loginUser' })
-	@RateLimit({
-		keyPrefix: 'loginUser',
-		points: 10,
-		duration: 60,
-		errorMessage:
-			'Too many login attempts, please try again after one minute.'
+	@Throttle({
+		default: {
+			limit: 10,
+			ttl: 60000
+		}
 	})
 	async login(
 		@Context() { req }: GqlContext,
@@ -45,24 +44,22 @@ export class SessionResolver {
 
 	@Authorization()
 	@Mutation(() => Boolean, { name: 'logoutUser' })
-	@RateLimit({
-		keyPrefix: 'logoutUser',
-		points: 10,
-		duration: 60,
-		errorMessage:
-			'Too many logout attempts, please try again after one minute.'
+	@Throttle({
+		default: {
+			limit: 10,
+			ttl: 60000
+		}
 	})
 	async logout(@Context() { req }: GqlContext) {
 		return this.sessionService.logout(req)
 	}
 
 	@Mutation(() => Boolean, { name: 'clearSessionCookie' })
-	@RateLimit({
-		keyPrefix: 'clearSessionCookie',
-		points: 10,
-		duration: 60,
-		errorMessage:
-			'Too many requests to clear session cookie, please try again after one minute.'
+	@Throttle({
+		default: {
+			limit: 10,
+			ttl: 60000
+		}
 	})
 	clearSession(@Context() { req }: GqlContext) {
 		return this.sessionService.clearSession(req)
@@ -70,12 +67,11 @@ export class SessionResolver {
 
 	@Authorization()
 	@Mutation(() => Boolean, { name: 'removeSession' })
-	@RateLimit({
-		keyPrefix: 'removeSession',
-		points: 10,
-		duration: 60,
-		errorMessage:
-			'Too many requests to remove session, please try again after one minute.'
+	@Throttle({
+		default: {
+			limit: 10,
+			ttl: 60000
+		}
 	})
 	async remove(@Context() { req }: GqlContext, @Args('id') id: string) {
 		return this.sessionService.remove(req, id)

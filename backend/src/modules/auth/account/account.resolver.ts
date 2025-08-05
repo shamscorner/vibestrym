@@ -1,10 +1,9 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Throttle } from '@nestjs/throttler'
 
 import { User } from '@/prisma/generated'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
-
-import { RateLimit } from '../../libs/rate-limiter/decorator/rate-limiter.decorator'
 
 import { AccountService } from './account.service'
 import { ChangeEmailInput } from './inputs/change-email.input'
@@ -23,12 +22,11 @@ export class AccountResolver {
 	}
 
 	@Mutation(() => Boolean, { name: 'createUser' })
-	@RateLimit({
-		keyPrefix: 'createUser',
-		points: 2,
-		duration: 60,
-		errorMessage:
-			'Too many users are creating accounts, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 2,
+			ttl: 60000
+		}
 	})
 	async createUser(@Args('data') input: CreateUserInput) {
 		return this.accountService.create(input)
@@ -36,12 +34,11 @@ export class AccountResolver {
 
 	@Authorization()
 	@Mutation(() => Boolean, { name: 'changeEmail' })
-	@RateLimit({
-		keyPrefix: 'changeEmail',
-		points: 5,
-		duration: 60,
-		errorMessage:
-			'Too many email change attempts, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 5,
+			ttl: 60000
+		}
 	})
 	public async changeEmail(
 		@Authorized() user: User,
@@ -52,12 +49,11 @@ export class AccountResolver {
 
 	@Authorization()
 	@Mutation(() => Boolean, { name: 'changePassword' })
-	@RateLimit({
-		keyPrefix: 'changePassword',
-		points: 5,
-		duration: 60,
-		errorMessage:
-			'Too many password change attempts, please try after one minute later.'
+	@Throttle({
+		default: {
+			limit: 5,
+			ttl: 60000
+		}
 	})
 	public async changePassword(
 		@Authorized() user: User,
