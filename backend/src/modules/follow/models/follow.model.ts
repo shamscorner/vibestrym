@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 
 import type { Follow } from '@/prisma/generated'
+import { Relation } from '@/src/shared/types/swc.types'
 
 import { UserModel } from '../../auth/account/models/user.model'
 
@@ -10,13 +11,13 @@ export class FollowModel implements Follow {
 	public id: string
 
 	@Field(() => UserModel)
-	public follower: UserModel
+	public follower: Relation<UserModel>
 
 	@Field(() => String)
 	public followerId: string
 
 	@Field(() => UserModel)
-	public following: UserModel
+	public following: Relation<UserModel>
 
 	@Field(() => String)
 	public followingId: string

@@ -1,6 +1,7 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql'
 
 import { type Notification, NotificationType } from '@/prisma/generated'
+import { Relation } from '@/src/shared/types/swc.types'
 
 import { UserModel } from '../../auth/account/models/user.model'
 
@@ -24,7 +25,7 @@ export class NotificationModel implements Notification {
 	public isRead: boolean
 
 	@Field(() => UserModel)
-	public user: UserModel
+	public user: Relation<UserModel>
 
 	@Field(() => String)
 	public userId: string

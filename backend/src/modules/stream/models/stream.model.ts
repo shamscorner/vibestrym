@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 
 import type { Stream } from '@/prisma/generated'
+import { Relation } from '@/src/shared/types/swc.types'
 
 import { UserModel } from '../../auth/account/models/user.model'
 import { CategoryModel } from '../category/models/category.model'
@@ -39,7 +40,7 @@ export class StreamModel implements Stream {
 	public isChatPremiumFollowersOnly: boolean
 
 	@Field(() => UserModel)
-	public user: UserModel
+	public user: Relation<UserModel>
 
 	@Field(() => String)
 	public userId: string
