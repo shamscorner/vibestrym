@@ -27,12 +27,14 @@ import { loadAppConfig } from './config/app.config'
 import { getGraphQLConfig } from './config/graphql.config'
 import { getLiveKitConfig } from './config/livekit.config'
 import { getStripeConfig } from './config/stripe.config'
+import { HealthModule } from './health/health.module'
 import { PrismaModule } from './prisma/prisma.module'
 import { RedisModule } from './redis/redis.module'
 import { RedisService } from './redis/redis.service'
 
 @Module({
 	imports: [
+		HealthModule,
 		LoggerModule,
 		ConfigModule.forRoot({
 			ignoreEnvFile: true,

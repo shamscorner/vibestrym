@@ -117,8 +117,9 @@ h1 {
 
 .cta-container {
 	display: flex;
-	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
 	gap: 1rem;
 }
 
@@ -175,6 +176,68 @@ h1 {
 	color: white;
 	transform: translateY(-2px);
 	box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+}
+
+.cta-link {
+	color: #667eea;
+	text-decoration: none;
+	font-weight: 500;
+	transition: color 0.3s ease;
+	padding: 0.5rem 0.75rem;
+}
+
+.cta-link:hover {
+	color: #4a5568;
+	text-decoration: underline;
+}
+
+.health-checks {
+	margin-top: 2rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.health-checks h3 {
+	font-size: 1rem;
+	font-weight: 600;
+	color: #4a5568;
+	margin-bottom: 1rem;
+}
+
+.health-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	justify-content: center;
+}
+
+.health-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: rgba(255, 255, 255, 0.8);
+	color: #4a5568;
+	text-decoration: none;
+	padding: 0.5rem 1rem;
+	border-radius: 12px;
+	font-size: 0.85rem;
+	font-weight: 500;
+	transition: all 0.3s ease;
+	border: 1px solid rgba(102, 126, 234, 0.1);
+	backdrop-filter: blur(10px);
+}
+
+.health-link:hover {
+	background: rgba(102, 126, 234, 0.1);
+	color: #5a67d8;
+	border-color: rgba(102, 126, 234, 0.3);
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.health-icon {
+	font-size: 1rem;
+	line-height: 1;
 }
 
 .footer {
@@ -239,6 +302,15 @@ h1 {
 		font-size: 0.9rem;
 		padding: 0.75rem 1.5rem;
 	}
+
+	.health-links {
+		gap: 0.5rem;
+	}
+
+	.health-link {
+		font-size: 0.8rem;
+		padding: 0.45rem 0.85rem;
+	}
 }
 
 @media (max-width: 480px) {
@@ -263,5 +335,18 @@ h1 {
 
 	.logo {
 		width: 50px;
+	}
+
+	.health-checks h3 {
+		font-size: 0.9rem;
+	}
+
+	.health-link {
+		font-size: 0.75rem;
+		padding: 0.4rem 0.75rem;
+	}
+
+	.health-icon {
+		font-size: 0.9rem;
 	}
 }
