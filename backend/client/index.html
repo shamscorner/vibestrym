@@ -10,6 +10,7 @@
 		/>
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 		<link rel="stylesheet" href="styles.css" />
+		<script src="script.js" defer></script>
 	</head>
 	<body>
 		<div class="container">
@@ -52,34 +53,46 @@
 			<div class="health-checks">
 				<h3>Health Monitoring</h3>
 				<div class="health-links">
-					<a href="/health" target="_blank" class="health-link">
+					<button
+						class="health-button"
+						data-endpoint="/health"
+						data-name="GraphQL"
+					>
 						<span class="health-icon">🔥</span>
 						GraphQL
-					</a>
-					<a href="/health/http" target="_blank" class="health-link">
+					</button>
+					<button
+						class="health-button"
+						data-endpoint="/health/http"
+						data-name="HTTP"
+					>
 						<span class="health-icon">🌐</span>
 						HTTP
-					</a>
-					<a
-						href="/health/prisma"
-						target="_blank"
-						class="health-link"
+					</button>
+					<button
+						class="health-button"
+						data-endpoint="/health/prisma"
+						data-name="Database"
 					>
 						<span class="health-icon">🗃️</span>
 						Database
-					</a>
-					<a
-						href="/health/memory"
-						target="_blank"
-						class="health-link"
+					</button>
+					<button
+						class="health-button"
+						data-endpoint="/health/memory"
+						data-name="Memory"
 					>
 						<span class="health-icon">🧠</span>
 						Memory
-					</a>
-					<a href="/health/disk" target="_blank" class="health-link">
+					</button>
+					<button
+						class="health-button"
+						data-endpoint="/health/disk"
+						data-name="Disk"
+					>
 						<span class="health-icon">💾</span>
 						Disk
-					</a>
+					</button>
 				</div>
 			</div>
 
@@ -94,6 +107,18 @@
 					<span class="tech-item">Docker Ready</span>
 				</div>
 			</div>
+		</div>
+
+		<!-- Terminal Display -->
+		<div id="terminal" class="terminal">
+			<div class="terminal-header">
+				<div class="terminal-title">
+					<span class="terminal-icon">⚡</span>
+					Health Monitor Terminal
+				</div>
+				<button id="close-terminal" class="terminal-close">×</button>
+			</div>
+			<div id="terminal-content" class="terminal-content"></div>
 		</div>
 	</body>
 </html>
