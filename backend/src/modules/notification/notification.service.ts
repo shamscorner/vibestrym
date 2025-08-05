@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 
 import {
+	Notification,
+	NotificationSettings,
 	NotificationType,
 	SponsorshipPlan,
 	TokenType,
@@ -9,11 +11,22 @@ import {
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { generateToken } from '@/src/shared/utils/generate-token.util'
 
+import { TelegramService } from '../libs/telegram/telegram.service'
+
 import { ChangeNotificationsSettingsInput } from './inputs/change-notifications-settings.input'
+
+type UserWithNotificationSettings = User & {
+	notificationSettings: NotificationSettings | null
+}
 
 @Injectable()
 export class NotificationService {
-	constructor(private readonly prismaService: PrismaService) {}
+	private readonly logger = new Logger(NotificationService.name)
+
+	constructor(
+		private readonly prismaService: PrismaService,
+		private readonly telegramService: TelegramService
+	) {}
 
 	async findUnreadCount(user: User) {
 		const count = await this.prismaService.notification.count({
@@ -129,19 +142,40 @@ export class NotificationService {
 		return notification
 	}
 
-	async createNewFollowing(userId: string, follower: User) {
-		const notification = await this.prismaService.notification.create({
-			data: {
-				message: `<b className='font-medium'>You have a new follower!</b>
+	async createNewFollowing(
+		followingUser: UserWithNotificationSettings,
+		follower: User
+	) {
+		let notification: Notification | null = null
+
+		if (followingUser.notificationSettings?.siteNotifications) {
+			notification = await this.prismaService.notification.create({
+				data: {
+					message: `<b className='font-medium'>You have a new follower!</b>
 				<p>with this user <a href='/${follower.username}' className='font-semibold'>${follower.displayName}</a>.</p>`,
-				type: NotificationType.NEW_FOLLOWER,
-				user: {
-					connect: {
-						id: userId
+					type: NotificationType.NEW_FOLLOWER,
+					user: {
+						connect: {
+							id: followingUser.id
+						}
 					}
 				}
-			}
-		})
+			})
+		}
+
+		if (
+			followingUser.notificationSettings?.telegramNotifications &&
+			followingUser.telegramId
+		) {
+			void this.telegramService.sendNewFollowing(
+				followingUser.telegramId,
+				follower
+			)
+			this.logger.log(
+				`Sent new following Telegram message to ${followingUser.telegramId}`
+			)
+		}
+
 		return notification
 	}
 
@@ -165,27 +199,63 @@ export class NotificationService {
 		return notification
 	}
 
-	async createEnableTwoFactor(userId: string) {
-		const notification = await this.prismaService.notification.create({
-			data: {
-				message: `<b className='font-medium'>Secure your account!</b>
+	async createEnableTwoFactor(user: UserWithNotificationSettings) {
+		let notification: Notification | null = null
+
+		if (user.notificationSettings?.siteNotifications) {
+			notification = await this.prismaService.notification.create({
+				data: {
+					message: `<b className='font-medium'>Secure your account!</b>
 				<p>Enable two-factor authentication in your account settings to enhance security.</p>`,
-				type: NotificationType.ENABLE_TWO_FACTOR,
-				userId
-			}
-		})
+					type: NotificationType.ENABLE_TWO_FACTOR,
+					userId: user.id
+				}
+			})
+			this.logger.log(
+				`Sent enable two-factor site notification to ${user.id}`
+			)
+		}
+
+		if (
+			user.notificationSettings?.telegramNotifications &&
+			user.telegramId
+		) {
+			void this.telegramService.sendEnableTwoFactor(user.telegramId)
+			this.logger.log(
+				`Sent enable two-factor Telegram message to ${user.telegramId}`
+			)
+		}
+
 		return notification
 	}
 
-	async createVerifyChannel(userId: string) {
-		const notification = await this.prismaService.notification.create({
-			data: {
-				message: `<b className='font-medium'>Congratulations!</b>
+	async createVerifyChannel(user: UserWithNotificationSettings) {
+		let notification: Notification | null = null
+
+		if (user.notificationSettings?.siteNotifications) {
+			notification = await this.prismaService.notification.create({
+				data: {
+					message: `<b className='font-medium'>Congratulations!</b>
 			  <p>Your channel has been verified, and you will now see a checkmark next to your channel.</p>`,
-				type: NotificationType.VERIFIED_CHANNEL,
-				userId
-			}
-		})
+					type: NotificationType.VERIFIED_CHANNEL,
+					userId: user.id
+				}
+			})
+			this.logger.log(
+				`Sent channel verification site notification to ${user.id}`
+			)
+		}
+
+		if (
+			user.notificationSettings?.telegramNotifications &&
+			user.telegramId
+		) {
+			void this.telegramService.sendVerifyChannel(user.telegramId)
+			this.logger.log(
+				`Sent channel verification Telegram message to ${user.telegramId}`
+			)
+		}
+
 		return notification
 	}
 }

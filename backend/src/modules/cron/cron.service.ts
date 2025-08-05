@@ -47,6 +47,7 @@ export class CronService {
 			await this.mailService.sendAccountDeletion(user.email)
 
 			// Send Telegram notification if enabled
+			// Site notification is not needed here cause the user is deactivated
 			if (
 				user.notificationSettings?.telegramNotifications &&
 				user.telegramId
@@ -95,25 +96,9 @@ export class CronService {
 
 		for (const user of users) {
 			await this.mailService.sendEnableTwoFactor(user.email)
-
-			if (user.notificationSettings?.siteNotifications) {
-				await this.notificationService.createEnableTwoFactor(user.id)
-				this.logger.log(
-					`Sent enable two-factor site notification to ${user.id}`
-				)
-			}
-
-			if (
-				user.notificationSettings?.telegramNotifications &&
-				user.telegramId
-			) {
-				await this.telegramService.sendEnableTwoFactor(user.telegramId)
-				this.logger.log(
-					`Sent enable two-factor Telegram message to ${user.telegramId}`
-				)
-			}
-
 			this.logger.log(`Sent enable two-factor email to ${user.email}`)
+
+			await this.notificationService.createEnableTwoFactor(user)
 
 			await this.throttleExecution()
 		}
@@ -148,29 +133,11 @@ export class CronService {
 				})
 
 				await this.mailService.sendVerifyChannel(user.email)
-
-				if (user.notificationSettings?.siteNotifications) {
-					await this.notificationService.createVerifyChannel(user.id)
-					this.logger.log(
-						`Sent channel verification site notification to ${user.id}`
-					)
-				}
-
-				if (
-					user.notificationSettings?.telegramNotifications &&
-					user.telegramId
-				) {
-					await this.telegramService.sendVerifyChannel(
-						user.telegramId
-					)
-					this.logger.log(
-						`Sent channel verification Telegram message to ${user.telegramId}`
-					)
-				}
-
 				this.logger.log(
 					`Sent channel verification email to ${user.email}`
 				)
+
+				await this.notificationService.createVerifyChannel(user)
 
 				await this.throttleExecution()
 			}
