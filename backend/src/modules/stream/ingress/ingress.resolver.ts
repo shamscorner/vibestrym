@@ -1,6 +1,5 @@
 import { BadRequestException } from '@nestjs/common'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
-import type { IngressInput } from 'livekit-server-sdk'
 
 import type { User } from '@/prisma/generated'
 import { RateLimit } from '@/src/modules/libs/rate-limiter/decorator/rate-limiter.decorator'
@@ -8,6 +7,7 @@ import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 
 import { IngressService } from './ingress.service'
+import { IngressInputType } from './inputs/ingress.input'
 
 @Resolver('Ingress')
 export class IngressResolver {
@@ -24,9 +24,9 @@ export class IngressResolver {
 	})
 	async create(
 		@Authorized() user: User,
-		@Args('ingressType') ingressType: IngressInput
+		@Args('ingressType') ingressType: IngressInputType
 	) {
-		return this.ingressService.create(user, ingressType)
+		return this.ingressService.create(user, ingressType.type)
 	}
 
 	@Authorization()

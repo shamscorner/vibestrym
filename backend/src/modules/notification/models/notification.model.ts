@@ -16,7 +16,6 @@ export class NotificationModel implements Notification {
 	@Field(() => String)
 	public message: string
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	@Field(() => NotificationType)
 	public type: NotificationType
 

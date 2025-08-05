@@ -13,6 +13,10 @@ import { RedisService } from './core/redis/redis.service'
 import { ms, StringValue } from './shared/utils/ms.util'
 import { getSessionOptions } from './shared/utils/session.util'
 
+declare const module: {
+	hot: { accept: () => void; dispose: (cb: () => void) => void }
+}
+
 async function bootstrap() {
 	const app = await NestFactory.create(CoreModule, {
 		rawBody: true,
@@ -84,5 +88,10 @@ async function bootstrap() {
 	app.get(Logger).log(
 		`🚀 Application is running on: http://localhost:${port}`
 	)
+
+	if (module.hot) {
+		module.hot.accept()
+		module.hot.dispose(() => void app.close())
+	}
 }
 void bootstrap()
