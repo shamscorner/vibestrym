@@ -2,6 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql'
 
 import type { NotificationSettings } from '@/prisma/generated'
 import { UserModel } from '@/src/modules/auth/account/models/user.model'
+import { Relation } from '@/src/shared/types/swc.types'
 
 @ObjectType()
 export class NotificationSettingsModel implements NotificationSettings {
@@ -15,7 +16,7 @@ export class NotificationSettingsModel implements NotificationSettings {
 	public telegramNotifications: boolean
 
 	@Field(() => UserModel)
-	public user: UserModel
+	public user: Relation<UserModel>
 
 	@Field(() => String)
 	public userId: string
