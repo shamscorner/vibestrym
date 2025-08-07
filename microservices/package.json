@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_OPTIONS='--max-old-space-size=8192' nx run-many -t serve -p auth --parallel 1"
+    "start": "NODE_OPTIONS='--max-old-space-size=8192' nx run-many -t serve -p auth --parallel 1",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -35,9 +36,11 @@
     "@types/node": "~18.16.9",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
+    "husky": "^9.1.7",
     "jest": "^30.0.2",
     "jest-environment-node": "^30.0.2",
     "jest-util": "^30.0.2",
+    "lint-staged": "^16.1.4",
     "nx": "21.3.11",
     "prettier": "^2.6.2",
     "ts-jest": "^29.4.0",
