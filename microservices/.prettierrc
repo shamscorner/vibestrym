@@ -1,3 +1,19 @@
 {
-  "singleQuote": true
+  "trailingComma": "none",
+  "tabWidth": 4,
+  "useTabs": true,
+  "semi": true,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "arrowParens": "avoid",
+  "importOrderCaseSensitive": false,
+  "importOrderParserPlugins": [
+    "classProperties",
+    "decorators-legacy",
+    "typescript",
+    "jsx",
+    "tsx"
+  ],
+  "importOrder": ["<THIRD_PARTY_MODULES>", "", "^@/(.*)$", "", "^../(.*)", "", "^./(.*)"],
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"]
 }
