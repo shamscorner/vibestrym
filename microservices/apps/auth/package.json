@@ -7,7 +7,7 @@
 			"build": {
 				"executor": "nx:run-commands",
 				"dependsOn": [
-					"generate-prisma"
+					"prisma-generate"
 				],
 				"options": {
 					"command": "webpack-cli build",
@@ -45,14 +45,17 @@
 			},
 			"test": {
 				"dependsOn": [
-					"generate-prisma"
+					"prisma-generate"
 				],
 				"options": {
 					"passWithNoTests": true
 				}
 			},
-			"generate-prisma": {
+			"prisma-generate": {
 				"command": "prisma generate",
+				"dependsOn": [
+					"prisma-format"
+				],
 				"options": {
 					"cwd": "{projectRoot}",
 					"input": [
@@ -61,7 +64,13 @@
 				},
 				"cache": true
 			},
-			"migrate-prisma": {
+			"prisma-format": {
+				"command": "prisma format",
+				"options": {
+					"cwd": "{projectRoot}"
+				}
+			},
+			"prisma-migrate": {
 				"command": "prisma migrate dev",
 				"options": {
 					"cwd": "{projectRoot}"
