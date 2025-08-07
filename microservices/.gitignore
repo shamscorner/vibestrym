@@ -44,3 +44,8 @@ Thumbs.db
 .github/instructions/nx.instructions.md
 
 test-output
+
+# dotenv environment variable files
+.env
+.env.*
+!.env.example
