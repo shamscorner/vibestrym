@@ -67,8 +67,12 @@
 			"prisma-format": {
 				"command": "prisma format",
 				"options": {
-					"cwd": "{projectRoot}"
-				}
+					"cwd": "{projectRoot}",
+					"input": [
+						"prisma/schema.prisma"
+					]
+				},
+				"cache": true
 			},
 			"prisma-migrate": {
 				"command": "prisma migrate dev",
