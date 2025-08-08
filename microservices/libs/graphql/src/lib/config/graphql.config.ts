@@ -1,4 +1,8 @@
 import { GqlConfig } from '.';
+import {
+	ApolloServerPluginLandingPageLocalDefault,
+	ApolloServerPluginLandingPageProductionDefault
+} from '@apollo/server/plugin/landingPage/default';
 import { CoreAppConfig } from '@microservices/core';
 import type { ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigService } from '@nestjs/config';
@@ -12,14 +16,21 @@ export function getGraphQLConfig(
 
 	const gqlConfig = configService.get<GqlConfig['graphql']>('graphql');
 
-	const graphqlPath = gqlConfig?.prefix || '/graphql';
-
 	return {
-		graphiql: isDevelopment,
+		// graphiql: isDevelopment,
 		playground: false,
-		path: graphqlPath,
+		path: gqlConfig?.prefix || '/graphql',
 		autoSchemaFile: true,
 		sortSchema: true,
+		plugins: [
+			isDevelopment
+				? ApolloServerPluginLandingPageLocalDefault({ footer: false })
+				: ApolloServerPluginLandingPageProductionDefault({
+						graphRef: gqlConfig?.apolloGraphRef,
+						footer: false
+				  })
+			// more plugins can be added here
+		],
 		context: ({ req, res }: { req: unknown; res: unknown }) => ({ req, res })
 	};
 }
