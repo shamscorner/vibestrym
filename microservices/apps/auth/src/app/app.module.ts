@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 
+import { AccountModule } from './account/account.module';
 import { appConfig } from './config/app.config';
 import { PrismaModule } from './prisma/prisma.module';
 
@@ -20,7 +21,8 @@ import { PrismaModule } from './prisma/prisma.module';
 			imports: [ConfigModule],
 			useFactory: getGraphQLConfig,
 			inject: [ConfigService]
-		})
+		}),
+		AccountModule
 	],
 	controllers: [],
 	providers: []
