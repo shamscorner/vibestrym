@@ -32,7 +32,7 @@
 				],
 				"options": {
 					"buildTarget": "@microservices/auth:build",
-					"runBuildTargetDependencies": false
+					"runBuildTargetDependencies": true
 				},
 				"configurations": {
 					"development": {
