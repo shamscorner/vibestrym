@@ -29,7 +29,7 @@
 					"watchDepsName": "watch-deps"
 				}
 			},
-			"exclude": ["libs/core/*"]
+			"exclude": ["libs/core/*", "libs/graphql/*"]
 		},
 		{
 			"plugin": "@nx/webpack/plugin",
@@ -56,7 +56,7 @@
 		},
 		{
 			"plugin": "@nx/js/typescript",
-			"include": ["libs/core/*"],
+			"include": ["libs/core/*", "libs/graphql/*"],
 			"options": {
 				"typecheck": {
 					"targetName": "typecheck"

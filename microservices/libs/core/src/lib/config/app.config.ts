@@ -16,17 +16,12 @@ export type CoreAppConfig = {
 	};
 };
 
-export const coreAppConfig = (): CoreAppConfig => {
-	return {
-		env: {
-			type: getEnv<CoreEnvironment, 'NODE_ENV'>('NODE_ENV', 'development')
-		},
-		application: {
-			port: getEnv<CoreEnvironment, 'APPLICATION_PORT'>(
-				'APPLICATION_PORT',
-				4000
-			),
-			url: getEnv<CoreEnvironment, 'APPLICATION_URL'>('APPLICATION_URL')
-		}
-	};
-};
+export const coreAppConfig = (): CoreAppConfig => ({
+	env: {
+		type: getEnv<CoreEnvironment, 'NODE_ENV'>('NODE_ENV', 'development')
+	},
+	application: {
+		port: getEnv<CoreEnvironment, 'APPLICATION_PORT'>('APPLICATION_PORT', 4000),
+		url: getEnv<CoreEnvironment, 'APPLICATION_URL'>('APPLICATION_URL')
+	}
+});

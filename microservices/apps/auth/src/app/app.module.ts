@@ -1,5 +1,8 @@
+import { getGraphQLConfig } from '@microservices/graphql';
+import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
 
 import { appConfig } from './config/app.config';
 import { PrismaModule } from './prisma/prisma.module';
@@ -11,7 +14,13 @@ import { PrismaModule } from './prisma/prisma.module';
 			isGlobal: true,
 			load: [appConfig]
 		}),
-		PrismaModule
+		PrismaModule,
+		GraphQLModule.forRootAsync({
+			driver: ApolloDriver,
+			imports: [ConfigModule],
+			useFactory: getGraphQLConfig,
+			inject: [ConfigService]
+		})
 	],
 	controllers: [],
 	providers: []

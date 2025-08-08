@@ -7,6 +7,9 @@
 			"path": "../../libs/core"
 		},
 		{
+			"path": "../../libs/graphql"
+		},
+		{
 			"path": "./tsconfig.app.json"
 		},
 		{
