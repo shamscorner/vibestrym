@@ -17,6 +17,12 @@ async function bootstrap() {
 		})
 	);
 
+	app.enableCors({
+		origin: config.get('allowedOrigin', { infer: true }) || '*',
+		credentials: true,
+		exposedHeaders: ['set-cookie']
+	});
+
 	const port = config.get('application.port', { infer: true }) || 3000;
 	await app.listen(port);
 

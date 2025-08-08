@@ -4,6 +4,7 @@ export interface CoreEnvironment {
 	NODE_ENV: 'development' | 'production' | 'test';
 	APPLICATION_PORT: number;
 	APPLICATION_URL: string;
+	ALLOWED_ORIGIN: string;
 }
 
 export type CoreAppConfig = {
@@ -14,6 +15,7 @@ export type CoreAppConfig = {
 		port: number;
 		url: string;
 	};
+	allowedOrigin: string;
 };
 
 export const coreAppConfig = (): CoreAppConfig => ({
@@ -23,5 +25,9 @@ export const coreAppConfig = (): CoreAppConfig => ({
 	application: {
 		port: getEnv<CoreEnvironment, 'APPLICATION_PORT'>('APPLICATION_PORT', 4000),
 		url: getEnv<CoreEnvironment, 'APPLICATION_URL'>('APPLICATION_URL')
-	}
+	},
+	allowedOrigin: getEnv<CoreEnvironment, 'ALLOWED_ORIGIN'>(
+		'ALLOWED_ORIGIN',
+		'http://localhost:3000'
+	)
 });
