@@ -106,6 +106,8 @@ async function run() {
 }
 
 run().catch((error: Error) => {
-	console.error('Failed to start Cal Platform API', { error: error.stack })
+	console.error('Failed to start Vibestrym Platform API', {
+		error: error.stack
+	})
 	process.exit(1)
 })
