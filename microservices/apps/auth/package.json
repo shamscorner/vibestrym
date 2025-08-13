@@ -1,91 +1,95 @@
 {
-	"name": "@microservices/auth",
-	"version": "0.0.1",
-	"private": true,
-	"nx": {
-		"targets": {
-			"build": {
-				"executor": "nx:run-commands",
-				"dependsOn": [
-					"prisma-generate"
-				],
-				"options": {
-					"command": "webpack-cli build",
-					"args": [
-						"--node-env=production"
-					]
-				},
-				"configurations": {
-					"development": {
-						"args": [
-							"--node-env=development"
-						]
-					}
-				}
-			},
-			"serve": {
-				"continuous": true,
-				"executor": "@nx/js:node",
-				"defaultConfiguration": "development",
-				"dependsOn": [
-					"build"
-				],
-				"options": {
-					"buildTarget": "@microservices/auth:build",
-					"runBuildTargetDependencies": true
-				},
-				"configurations": {
-					"development": {
-						"buildTarget": "@microservices/auth:build:development"
-					},
-					"production": {
-						"buildTarget": "@microservices/auth:build:production"
-					}
-				}
-			},
-			"test": {
-				"dependsOn": [
-					"prisma-generate"
-				],
-				"options": {
-					"passWithNoTests": true
-				}
-			},
-			"prisma-generate": {
-				"command": "prisma generate",
-				"dependsOn": [
-					"prisma-format"
-				],
-				"options": {
-					"cwd": "{projectRoot}",
-					"input": [
-						"prisma/schema.prisma"
-					]
-				},
-				"cache": true
-			},
-			"prisma-format": {
-				"command": "prisma format",
-				"options": {
-					"cwd": "{projectRoot}",
-					"input": [
-						"prisma/schema.prisma"
-					]
-				},
-				"cache": true
-			},
-			"prisma-migrate": {
-				"command": "prisma migrate dev",
-				"options": {
-					"cwd": "{projectRoot}"
-				}
-			},
-			"prisma-studio": {
-				"command": "prisma studio",
-				"options": {
-					"cwd": "{projectRoot}"
-				}
-			}
-		}
-	}
+  "name": "@microservices/auth",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "dependsOn": [
+          "prisma-generate",
+          "^build"
+        ],
+        "options": {
+          "command": "webpack-cli build",
+          "args": [
+            "--node-env=production"
+          ]
+        },
+        "configurations": {
+          "development": {
+            "args": [
+              "--node-env=development"
+            ]
+          }
+        }
+      },
+      "serve": {
+        "continuous": true,
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "@microservices/auth:build",
+          "runBuildTargetDependencies": true
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "@microservices/auth:build:development"
+          },
+          "production": {
+            "buildTarget": "@microservices/auth:build:production"
+          }
+        }
+      },
+      "test": {
+        "dependsOn": [
+          "prisma-generate"
+        ],
+        "options": {
+          "passWithNoTests": true
+        }
+      },
+      "prisma-generate": {
+        "command": "prisma generate",
+        "dependsOn": [
+          "prisma-format"
+        ],
+        "options": {
+          "cwd": "{projectRoot}",
+          "input": [
+            "prisma/schema.prisma"
+          ]
+        },
+        "cache": true
+      },
+      "prisma-format": {
+        "command": "prisma format",
+        "options": {
+          "cwd": "{projectRoot}",
+          "input": [
+            "prisma/schema.prisma"
+          ]
+        },
+        "cache": true
+      },
+      "prisma-migrate": {
+        "command": "prisma migrate dev",
+        "options": {
+          "cwd": "{projectRoot}"
+        }
+      },
+      "prisma-studio": {
+        "command": "prisma studio",
+        "options": {
+          "cwd": "{projectRoot}"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "argon2": "^0.43.1"
+  }
 }
