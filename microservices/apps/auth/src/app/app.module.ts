@@ -1,3 +1,4 @@
+import { LoggerModule } from '@microservices/core';
 import { getGraphQLConfig } from '@microservices/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
@@ -10,23 +11,24 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
-	imports: [
-		ConfigModule.forRoot({
-			ignoreEnvFile: true,
-			isGlobal: true,
-			load: [appConfig]
-		}),
-		PrismaModule,
-		GraphQLModule.forRootAsync({
-			driver: ApolloDriver,
-			imports: [ConfigModule],
-			useFactory: getGraphQLConfig,
-			inject: [ConfigService]
-		}),
-		AccountModule,
-		UsersModule
-	],
-	controllers: [],
-	providers: []
+  imports: [
+    LoggerModule,
+    ConfigModule.forRoot({
+      ignoreEnvFile: true,
+      isGlobal: true,
+      load: [appConfig]
+    }),
+    PrismaModule,
+    GraphQLModule.forRootAsync({
+      driver: ApolloDriver,
+      imports: [ConfigModule],
+      useFactory: getGraphQLConfig,
+      inject: [ConfigService]
+    }),
+    AccountModule,
+    UsersModule
+  ],
+  controllers: [],
+  providers: []
 })
 export class AppModule {}

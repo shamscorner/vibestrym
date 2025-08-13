@@ -1,12 +1,14 @@
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
+import { Logger as PinoLogger } from 'nestjs-pino';
 
 import { CoreAppConfig } from './config';
 
 export async function init(app: NestExpressApplication, globalPrefix = 'api') {
   app.enableShutdownHooks();
+  app.useLogger(app.get(PinoLogger));
 
   const config = app.get(ConfigService<CoreAppConfig, true>);
 
@@ -52,7 +54,9 @@ export async function init(app: NestExpressApplication, globalPrefix = 'api') {
       .get('application.port', { infer: true }) || 4000;
   await app.listen(port);
 
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-  );
+  app
+    .get(PinoLogger)
+    .log(
+      `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    );
 }
