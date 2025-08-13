@@ -3,15 +3,14 @@ const { join } = require('path');
 
 module.exports = {
   output: {
-    path: join(__dirname, '../../dist/apps/auth')
+    path: join(__dirname, '../../dist/libs/core')
   },
   plugins: [
     new NxAppWebpackPlugin({
       target: 'node',
       compiler: 'tsc',
-      main: './src/main.ts',
-      tsConfig: './tsconfig.app.json',
-      assets: ['./src/assets'],
+      main: './src/index.ts',
+      tsConfig: './tsconfig.lib.json',
       optimization: false,
       outputHashing: 'none',
       generatePackageJson: true
