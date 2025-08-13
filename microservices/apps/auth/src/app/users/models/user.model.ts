@@ -1,6 +1,6 @@
 import { AbstractModel } from '@microservices/graphql';
 import { Field, ObjectType } from '@nestjs/graphql';
-import type { User } from '@prisma-client/auth';
+import type { User } from '@prisma-clients/auth';
 
 @ObjectType()
 export class UserModel extends AbstractModel implements User {
