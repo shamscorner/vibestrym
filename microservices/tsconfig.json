@@ -14,6 +14,9 @@
     },
     {
       "path": "./libs/prisma"
+    },
+    {
+      "path": "./libs/redis"
     }
   ]
 }
