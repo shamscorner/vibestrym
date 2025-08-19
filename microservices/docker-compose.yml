@@ -1,34 +1,34 @@
 services:
-    db:
-        container_name: vibestrym-auth-postgres
-        image: postgres:latest
-        restart: always
-        environment:
-            - POSTGRES_USER=${POSTGRES_USER}
-            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-            - POSTGRES_DATABASE=${POSTGRES_DATABASE}
-        ports:
-            - 5433:5432
-        volumes:
-            - postgres_data:/var/lib/postgresql/data
-        networks:
-            - vibestrym-backend
+  db:
+    container_name: vibestrym-auth-postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - vibestrym-backend
 
-    redis:
-        container_name: vibestrym-auth-redis
-        image: redis:8.0
-        restart: always
-        ports:
-            - 6379:6379
-        command: redis-server --requirepass ${REDIS_PASSWORD}
-        volumes:
-            - redis_data:/data
-        networks:
-            - vibestrym-backend
+  redis:
+    container_name: vibestrym-auth-redis
+    image: redis:8.0
+    restart: always
+    ports:
+      - 6379:6379
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    networks:
+      - vibestrym-backend
 
 volumes:
-    postgres_data:
-    redis_data:
+  postgres_data:
+  redis_data:
 
 networks:
-    vibestrym-backend:
+  vibestrym-backend:

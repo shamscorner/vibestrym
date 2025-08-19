@@ -96,6 +96,11 @@
     }
   },
   "dependencies": {
-    "argon2": "^0.43.1"
+    "argon2": "^0.43.1",
+    "connect-redis": "^8.1.0",
+    "express-session": "^1.18.2"
+  },
+  "devDependencies": {
+    "@types/express-session": "^1.18.2"
   }
 }
