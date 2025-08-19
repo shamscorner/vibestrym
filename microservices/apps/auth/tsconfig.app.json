@@ -9,7 +9,11 @@
     "emitDecoratorMetadata": true,
     "target": "es2021"
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "../../libs/redis/src/lib/redis.module.ts",
+    "../../libs/redis/src/lib/redis.service.ts"
+  ],
   "exclude": [
     "out-tsc",
     "dist",
@@ -21,6 +25,9 @@
     "eslint.config.mjs"
   ],
   "references": [
+    {
+      "path": "../../libs/redis/tsconfig.lib.json"
+    },
     {
       "path": "../../libs/graphql/tsconfig.lib.json"
     },

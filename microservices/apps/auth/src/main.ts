@@ -1,4 +1,5 @@
 import { init, ms } from '@microservices/core';
+import { RedisService } from '@microservices/redis';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -7,7 +8,6 @@ import session from 'express-session';
 
 import { AppModule } from './app/app.module';
 import { AppConfig } from './app/config/app.config';
-import { RedisService } from './app/redis/redis.service';
 import { getSessionOptions } from './app/session/utils/session.util';
 
 async function run() {

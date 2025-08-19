@@ -1,10 +1,10 @@
+import { RedisService } from '@microservices/redis';
 import { InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { User } from '@prisma-clients/auth';
 import type { CookieOptions, Request } from 'express';
 
 import { AppConfig } from '../../config/app.config';
-import { RedisService } from '../../redis/redis.service';
 
 export const USERS_SESSIONS_KEY = 'user_sessions';
 
@@ -31,7 +31,6 @@ export function saveSession(
     request.session.userId = user.id;
 
     request.session.save(err => {
-      console.log('session save error:', err);
       if (err) {
         return reject(
           new InternalServerErrorException('Failed to save session')

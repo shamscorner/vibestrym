@@ -1,3 +1,4 @@
+import { RedisService } from '@microservices/redis';
 import {
   Injectable,
   NotFoundException,
@@ -8,7 +9,6 @@ import { verify } from 'argon2';
 import type { Request } from 'express';
 
 import { PrismaService } from '../prisma/prisma.service';
-import { RedisService } from '../redis/redis.service';
 
 import { LoginInput } from './inputs/login.input';
 import { destroySession, saveSession } from './utils/session.util';
