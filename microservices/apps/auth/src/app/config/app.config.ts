@@ -14,6 +14,8 @@ export interface AuthEnvironment {
   SESSION_HTTP_ONLY: string;
   SESSION_SECURE: string;
   SESSION_FOLDER: string;
+  THROTTLE_TTL: string;
+  THROTTLE_LIMIT: string;
   // Additional session-related configurations can be added here
 }
 
@@ -26,6 +28,10 @@ export type AppConfig = CoreAppConfig & {
     httpOnly: boolean;
     secure: boolean;
     folder: string;
+  };
+  throttle: {
+    ttl: number;
+    limit: number;
   };
   // Additional session-related configurations can be added here
 };
@@ -48,6 +54,10 @@ export const appConfig = (): AppConfig => {
         getEnv<AuthEnvironment, 'SESSION_SECURE'>('SESSION_SECURE', 'false')
       ),
       folder: getEnv<AuthEnvironment, 'SESSION_FOLDER'>('SESSION_FOLDER')
+    },
+    throttle: {
+      ttl: +getEnv<AuthEnvironment, 'THROTTLE_TTL'>('THROTTLE_TTL'),
+      limit: +getEnv<AuthEnvironment, 'THROTTLE_LIMIT'>('THROTTLE_LIMIT')
     }
     // Additional session-related configurations can be added here
   };

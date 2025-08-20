@@ -1,5 +1,6 @@
 import { UserAgent, type GqlContext } from '@microservices/core';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Throttle } from '@nestjs/throttler';
 
 import { AuthModel } from '../auth.model';
 
@@ -19,6 +20,12 @@ export class SessionResolver {
   }
 
   @Mutation(() => AuthModel, { name: 'loginUser' })
+  @Throttle({
+    default: {
+      limit: 10,
+      ttl: 60000
+    }
+  })
   async login(
     @Context() { req }: GqlContext,
     @Args('data') input: LoginInput,
@@ -29,6 +36,12 @@ export class SessionResolver {
 
   @Authorization()
   @Mutation(() => Boolean, { name: 'logoutUser' })
+  @Throttle({
+    default: {
+      limit: 10,
+      ttl: 60000
+    }
+  })
   async logout(@Context() { req }: GqlContext) {
     return this.sessionService.logout(req);
   }
@@ -41,11 +54,23 @@ export class SessionResolver {
 
   @Authorization()
   @Mutation(() => Boolean, { name: 'removeSession' })
+  @Throttle({
+    default: {
+      limit: 10,
+      ttl: 60000
+    }
+  })
   async remove(@Context() { req }: GqlContext, @Args('id') id: string) {
     return this.sessionService.remove(req, id);
   }
 
   @Mutation(() => Boolean, { name: 'clearSessionCookie' })
+  @Throttle({
+    default: {
+      limit: 10,
+      ttl: 60000
+    }
+  })
   clearSession(@Context() { req }: GqlContext) {
     return this.sessionService.clearSession(req);
   }
