@@ -98,9 +98,13 @@
   "dependencies": {
     "argon2": "^0.43.1",
     "connect-redis": "^8.1.0",
-    "express-session": "^1.18.2"
+    "device-detector-js": "^3.0.3",
+    "express-session": "^1.18.2",
+    "geoip-lite": "^1.4.10",
+    "i18n-iso-countries": "^7.14.0"
   },
   "devDependencies": {
-    "@types/express-session": "^1.18.2"
+    "@types/express-session": "^1.18.2",
+    "@types/geoip-lite": "^1.4.4"
   }
 }

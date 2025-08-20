@@ -1,4 +1,4 @@
-import { type GqlContext } from '@microservices/core';
+import { UserAgent, type GqlContext } from '@microservices/core';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { AuthModel } from '../auth.model';
@@ -19,8 +19,12 @@ export class SessionResolver {
   }
 
   @Mutation(() => AuthModel, { name: 'loginUser' })
-  async login(@Context() { req }: GqlContext, @Args('data') input: LoginInput) {
-    return this.sessionService.login(req, input);
+  async login(
+    @Context() { req }: GqlContext,
+    @Args('data') input: LoginInput,
+    @UserAgent() userAgent: string
+  ) {
+    return this.sessionService.login(req, input, userAgent);
   }
 
   @Authorization()

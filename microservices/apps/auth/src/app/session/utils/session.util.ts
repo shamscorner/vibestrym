@@ -1,3 +1,4 @@
+import { SessionMetadata } from '@microservices/core';
 import { RedisService } from '@microservices/redis';
 import { InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -37,11 +38,13 @@ export function getSessionOptions(configService: ConfigService) {
 export function saveSession(
   redisService: RedisService,
   request: Request,
-  user: User
+  user: User,
+  metadata: SessionMetadata
 ) {
   return new Promise((resolve, reject) => {
     request.session.createdAt = new Date();
     request.session.userId = user.id;
+    request.session.metadata = metadata;
 
     request.session.save(err => {
       if (err) {

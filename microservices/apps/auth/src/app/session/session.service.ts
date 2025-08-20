@@ -12,6 +12,7 @@ import { SessionData } from 'express-session';
 import { PrismaService } from '../prisma/prisma.service';
 
 import { LoginInput } from './inputs/login.input';
+import { getSessionMetadata } from './utils/session-metadata.util';
 import {
   destroySession,
   getSessionIdWithSessionFolder,
@@ -36,7 +37,7 @@ export class SessionService {
     };
   }
 
-  async login(request: Request, input: LoginInput) {
+  async login(request: Request, input: LoginInput, userAgent: string) {
     const { login, password } = input;
 
     const user = await this.prismaService.user.findFirst({
@@ -57,9 +58,9 @@ export class SessionService {
 
     // TODO: Check if email is verified, if not, send verification email
 
-    // TODO: add session metadata
+    const metadata = getSessionMetadata(this.configService, request, userAgent);
 
-    return saveSession(this.redisService, request, user);
+    return saveSession(this.redisService, request, user, metadata);
   }
 
   async logout(request: Request) {
