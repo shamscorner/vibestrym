@@ -1,4 +1,5 @@
 import { StringValue } from '@/src/shared/utils/ms.util'
+import { parseBoolean } from '@/src/shared/utils/parse-boolean.util'
 
 import { getEnv } from '../../env'
 
@@ -109,8 +110,8 @@ export const loadAppConfig = (): AppConfig => {
 			name: getEnv('SESSION_NAME'),
 			domain: getEnv('SESSION_DOMAIN'),
 			maxAge: getEnv('SESSION_MAX_AGE'),
-			httpOnly: getEnv('SESSION_HTTP_ONLY', true),
-			secure: getEnv('SESSION_SECURE', false),
+			httpOnly: parseBoolean(getEnv('SESSION_HTTP_ONLY', 'true')),
+			secure: parseBoolean(getEnv('SESSION_SECURE', 'false')),
 			folder: getEnv('SESSION_FOLDER')
 		},
 		postgres: {

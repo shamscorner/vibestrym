@@ -17,8 +17,8 @@ export interface Environment {
 	SESSION_NAME: string
 	SESSION_DOMAIN: string
 	SESSION_MAX_AGE: StringValue
-	SESSION_HTTP_ONLY: boolean
-	SESSION_SECURE: boolean
+	SESSION_HTTP_ONLY: string
+	SESSION_SECURE: string
 	SESSION_FOLDER: string
 	POSTGRES_USER: string
 	POSTGRES_PASSWORD: string
@@ -60,7 +60,7 @@ export const getEnv = <K extends keyof Environment>(
 
 	if (value === undefined) {
 		// handle fallback falsy cases that should still be used as value
-		if (fallback === false || fallback === '' || fallback === 0) {
+		if (fallback === 'false' || fallback === '' || fallback === 0) {
 			return fallback
 		}
 		if (fallback) {
