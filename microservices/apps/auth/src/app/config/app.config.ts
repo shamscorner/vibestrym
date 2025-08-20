@@ -2,6 +2,7 @@ import {
   CoreAppConfig,
   coreAppConfig,
   getEnv,
+  parseBoolean,
   StringValue
 } from '@microservices/core';
 
@@ -10,8 +11,8 @@ export interface AuthEnvironment {
   SESSION_NAME: string;
   SESSION_DOMAIN: string;
   SESSION_MAX_AGE: StringValue;
-  SESSION_HTTP_ONLY: boolean;
-  SESSION_SECURE: boolean;
+  SESSION_HTTP_ONLY: string;
+  SESSION_SECURE: string;
   SESSION_FOLDER: string;
   // Additional session-related configurations can be added here
 }
@@ -37,13 +38,14 @@ export const appConfig = (): AppConfig => {
       name: getEnv<AuthEnvironment, 'SESSION_NAME'>('SESSION_NAME'),
       domain: getEnv<AuthEnvironment, 'SESSION_DOMAIN'>('SESSION_DOMAIN'),
       maxAge: getEnv<AuthEnvironment, 'SESSION_MAX_AGE'>('SESSION_MAX_AGE'),
-      httpOnly: getEnv<AuthEnvironment, 'SESSION_HTTP_ONLY'>(
-        'SESSION_HTTP_ONLY',
-        true
+      httpOnly: parseBoolean(
+        getEnv<AuthEnvironment, 'SESSION_HTTP_ONLY'>(
+          'SESSION_HTTP_ONLY',
+          'true'
+        )
       ),
-      secure: getEnv<AuthEnvironment, 'SESSION_SECURE'>(
-        'SESSION_SECURE',
-        false
+      secure: parseBoolean(
+        getEnv<AuthEnvironment, 'SESSION_SECURE'>('SESSION_SECURE', 'false')
       ),
       folder: getEnv<AuthEnvironment, 'SESSION_FOLDER'>('SESSION_FOLDER')
     }

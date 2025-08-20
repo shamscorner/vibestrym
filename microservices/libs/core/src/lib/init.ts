@@ -23,7 +23,7 @@ export async function init(app: NestExpressApplication) {
   );
 
   app.enableCors({
-    origin: config.get('allowedOrigin', { infer: true }) || '*',
+    origin: config.get('allowedOrigin', { infer: true }) || true,
     credentials: true,
     exposedHeaders: ['set-cookie']
   });

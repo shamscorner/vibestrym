@@ -8,6 +8,19 @@ import { AppConfig } from '../../config/app.config';
 
 export const USERS_SESSIONS_KEY = 'user_sessions';
 
+export function getSessionFolder(configService: ConfigService): string {
+  return configService.getOrThrow<AppConfig['session']['folder']>(
+    'session.folder'
+  );
+}
+
+export function getSessionIdWithSessionFolder(
+  configService: ConfigService,
+  sessionId: string
+): string {
+  return `${getSessionFolder(configService)}${sessionId}`;
+}
+
 export function getSessionOptions(configService: ConfigService) {
   const sessionConfig =
     configService.getOrThrow<AppConfig['session']>('session');
