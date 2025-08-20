@@ -1,5 +1,6 @@
 import { RedisService } from '@microservices/redis';
 import {
+  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException
@@ -9,6 +10,7 @@ import { verify } from 'argon2';
 import type { Request } from 'express';
 import { SessionData } from 'express-session';
 
+import { AppConfig } from '../config/app.config';
 import { PrismaService } from '../prisma/prisma.service';
 
 import { LoginInput } from './inputs/login.input';
@@ -134,6 +136,33 @@ export class SessionService {
 
     // Filter out current session
     return userSessions.filter(session => session.id !== req.session.id);
+  }
+
+  async remove(req: Request, id: string) {
+    if (req.session.id === id) {
+      throw new ConflictException('Cannot delete the current session');
+    }
+
+    // Remove from session storage and user tracking
+    const userId = req.session.userId;
+    const pipeline = this.redisService.pipeline();
+    pipeline.del(getSessionIdWithSessionFolder(this.configService, id));
+
+    if (userId) {
+      pipeline.srem(getUserSessionsKey(userId), id);
+    }
+
+    await pipeline.exec();
+    return true;
+  }
+
+  clearSession(req: Request) {
+    req.res?.clearCookie(
+      this.configService.getOrThrow<AppConfig['session']['name']>(
+        'session.name'
+      )
+    );
+    return true;
   }
 
   private async getSessionFromSessionId(
