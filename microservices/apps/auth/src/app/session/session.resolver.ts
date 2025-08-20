@@ -32,4 +32,10 @@ export class SessionResolver {
   async logout(@Context() { req }: GqlContext) {
     return this.sessionService.logout(req);
   }
+
+  @Authorization()
+  @Query(() => [SessionModel], { name: 'findSessionsByUser' })
+  async findByUser(@Context() { req }: GqlContext) {
+    return this.sessionService.findByUser(req);
+  }
 }

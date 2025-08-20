@@ -16,8 +16,13 @@ import { getSessionMetadata } from './utils/session-metadata.util';
 import {
   destroySession,
   getSessionIdWithSessionFolder,
+  getUserSessionsKey,
   saveSession
 } from './utils/session.util';
+
+type SessionDataInRedis = SessionData & {
+  id: string;
+};
 
 @Injectable()
 export class SessionService {
@@ -75,6 +80,62 @@ export class SessionService {
     );
   }
 
+  async findByUser(req: Request) {
+    const userId = req.session.userId;
+
+    if (!userId) {
+      throw new NotFoundException('User not found in session');
+    }
+
+    // Use Redis set to track user sessions for O(1) lookup
+    const userSessionsKey = getUserSessionsKey(userId);
+    const sessionIds = await this.redisService.smembers(userSessionsKey);
+
+    if (sessionIds.length === 0) return [];
+
+    // Use batch operations with error handling
+    const sessionKeys = sessionIds.map(id =>
+      getSessionIdWithSessionFolder(this.configService, id)
+    );
+    const pipeline = this.redisService.pipeline();
+    sessionKeys.forEach(key => pipeline.get(key));
+
+    const results = await pipeline.exec();
+    const userSessions: SessionDataInRedis[] = [];
+
+    if (!results) return [];
+
+    for (let i = 0; i < results.length; i++) {
+      const [error, sessionData] = results[i];
+
+      if (!error && sessionData) {
+        try {
+          const session = JSON.parse(sessionData as string) as SessionData;
+          userSessions.push({
+            ...session,
+            id: sessionIds[i]
+          });
+        } catch {
+          // Remove invalid session from tracking set
+          await this.redisService.srem(userSessionsKey, sessionIds[i]);
+        }
+      } else if (error) {
+        // Remove non-existent session from tracking set
+        await this.redisService.srem(userSessionsKey, sessionIds[i]);
+      }
+    }
+
+    // Sort by timestamp (more efficient comparison)
+    userSessions.sort((a, b) => {
+      const aTime = this.getTimestamp(a.createdAt);
+      const bTime = this.getTimestamp(b.createdAt);
+      return bTime - aTime;
+    });
+
+    // Filter out current session
+    return userSessions.filter(session => session.id !== req.session.id);
+  }
+
   private async getSessionFromSessionId(
     sessionId: string
   ): Promise<SessionData | null> {
@@ -82,5 +143,12 @@ export class SessionService {
       getSessionIdWithSessionFolder(this.configService, sessionId)
     );
     return sessionData ? (JSON.parse(sessionData) as SessionData) : null;
+  }
+
+  private getTimestamp(date?: string | number | Date): number {
+    if (!date) return 0;
+    if (typeof date === 'number') return date;
+    if (typeof date === 'string') return new Date(date).getTime();
+    return date.getTime();
   }
 }
