@@ -3,8 +3,8 @@ import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Throttle } from '@nestjs/throttler';
 
 import { AuthModel } from '../auth.model';
+import { Authorization } from '../shared/decorators/auth.decorator';
 
-import { Authorization } from './decorators/auth.decorator';
 import { LoginInput } from './inputs/login.input';
 import { SessionModel } from './models/session.model';
 import { SessionService } from './session.service';
