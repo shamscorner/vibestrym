@@ -1,7 +1,7 @@
 services:
     db:
         container_name: postgres
-        image: postgres:latest
+        image: postgres:18
         restart: always
         environment:
             - POSTGRES_USER=${POSTGRES_USER}
@@ -10,7 +10,7 @@ services:
         ports:
             - 5433:5432
         volumes:
-            - postgres_data:/var/lib/postgresql/data
+            - postgres_data:/var/lib/postgresql
         networks:
             - vibestrym-backend
 
