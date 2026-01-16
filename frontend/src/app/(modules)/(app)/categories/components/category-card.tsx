@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import type { FindRandomCategoriesQuery } from '@/graphql/_generated/output';
-import { getRandomColor } from '@/utils/color';
-import { getMediaSource } from '@/utils/get-media-source';
-import { cn } from '@/utils/tw-merge';
-import { useSidebar } from '../../hooks/sidebar';
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import type { Query } from "@/gql/graphql";
+import { getRandomColor } from "@/utils/color";
+import { getMediaSource } from "@/utils/get-media-source";
+import { cn } from "@/utils/tw-merge";
+import { useSidebar } from "../../hooks/sidebar";
 
 interface CategoryCardProps {
-  category: FindRandomCategoriesQuery['findRandomCategories'][0];
+  category: Query["findRandomCategories"][0];
 }
 
 export function CategoryCard({ category }: CategoryCardProps) {
-  const [randomColor, setRandomColor] = useState('');
+  const [randomColor, setRandomColor] = useState("");
   const { isCollapsed } = useSidebar();
 
   useEffect(() => {
@@ -28,8 +28,8 @@ export function CategoryCard({ category }: CategoryCardProps) {
     >
       <div
         className={cn(
-          'group relative cursor-pointer rounded-xl',
-          isCollapsed ? 'h-60' : 'h-52'
+          "group relative cursor-pointer rounded-xl",
+          isCollapsed ? "h-60" : "h-52"
         )}
       >
         <div
@@ -40,9 +40,9 @@ export function CategoryCard({ category }: CategoryCardProps) {
         />
         <Image
           alt={category.title}
-          className="group-hover:-translate-y-2 rounded-lg object-cover transition-transform group-hover:translate-x-2"
+          className="rounded-lg object-cover transition-transform group-hover:translate-x-2 group-hover:-translate-y-2"
           fill
-          sizes='(100vw - 2rem) / 4'
+          sizes="(100vw - 2rem) / 4"
           src={getMediaSource(category.thumbnailUrl)}
         />
       </div>

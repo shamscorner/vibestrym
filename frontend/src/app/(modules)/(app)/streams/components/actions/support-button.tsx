@@ -1,57 +1,77 @@
-import { MedalIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { toast } from 'sonner';
-import { useAuth } from '@/app/(modules)/(auth)/hooks';
-import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
-import { Button } from '@/components/ui/common/button';
+import { useMutation, useQuery } from "@apollo/client/react";
+import { MedalIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
+import { useAuth } from "@/app/(modules)/(auth)/hooks";
+import { useCurrentAccount } from "@/app/(modules)/(auth)/hooks/current-account";
+import { Button } from "@/components/ui/common/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/common/dialog';
+} from "@/components/ui/common/dialog";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@/components/ui/common/tabs';
-import {
-  type FindChannelByUsernameQuery,
-  useFindSponsorsByChannelQuery,
-  useMakePaymentMutation,
-} from '@/graphql/_generated/output';
-import { convertPrice } from '@/utils/convert-price';
+} from "@/components/ui/common/tabs";
+import type { Query } from "@/gql/graphql";
+import { convertPrice } from "@/utils/convert-price";
+import { graphql } from "../../../../../../gql";
+
+const MakePaymentDoc = graphql(`
+mutation MakePayment($planId: String!) {
+  makePayment(planId: $planId) {
+    url
+  }
+}
+`);
+
+const FindSponsorsByChannelDoc = graphql(`
+query FindSponsorsByChannel($channelId: String!) {
+  findSponsorsByChannel(channelId: $channelId) {
+    user {
+      id
+      username
+      avatar
+    }
+  }
+}
+`);
 
 interface SupportButtonProps {
-  channel: FindChannelByUsernameQuery['findChannelByUsername'];
+  channel: Query["findChannelByUsername"];
 }
 
 export function SupportButton({ channel }: SupportButtonProps) {
-  const t = useTranslations('streams.stream.actions.support');
+  const t = useTranslations("streams.stream.actions.support");
   const router = useRouter();
 
   const { isAuthenticated } = useAuth();
   const { user, isLoadingProfile } = useCurrentAccount();
 
-  const { data } = useFindSponsorsByChannelQuery({
+  const { data } = useQuery(FindSponsorsByChannelDoc, {
     variables: {
       channelId: channel.id,
     },
   });
   const sponsors = data?.findSponsorsByChannel;
 
-  const [makePayment, { loading: isLoadingMakePayment }] =
-    useMakePaymentMutation({
+  const [makePayment, { loading: isLoadingMakePayment }] = useMutation(
+    MakePaymentDoc,
+    {
       onCompleted(paymentData) {
         router.push(paymentData.makePayment.url);
       },
       onError() {
-        toast.error(t('errorMessage'));
+        toast.error(t("errorMessage"));
       },
-    });
+    }
+  );
 
   const isSponsor = sponsors?.some((sponsor) => sponsor.user.id === user?.id);
   const isOwnerChannel = user?.id === channel.id;
@@ -64,7 +84,7 @@ export function SupportButton({ channel }: SupportButtonProps) {
     return (
       <Button disabled variant="secondary">
         <MedalIcon className="size-4" />
-        {t('alreadySponsor')}
+        {t("alreadySponsor")}
       </Button>
     );
   }
@@ -74,7 +94,7 @@ export function SupportButton({ channel }: SupportButtonProps) {
       <DialogTrigger asChild>
         <Button variant="secondary">
           <MedalIcon className="size-4" />
-          {t('supportAuthor')}
+          {t("supportAuthor")}
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -105,7 +125,7 @@ export function SupportButton({ channel }: SupportButtonProps) {
                   })
                 }
               >
-                {t('choose')}
+                {t("choose")}
               </Button>
             </TabsContent>
           ))}
@@ -113,9 +133,9 @@ export function SupportButton({ channel }: SupportButtonProps) {
       </DialogContent>
     </Dialog>
   ) : (
-    <Button onClick={() => router.push('/account/login')} variant="secondary">
+    <Button onClick={() => router.push("/account/login")} variant="secondary">
       <MedalIcon className="size-4" />
-      {t('supportAuthor')}
+      {t("supportAuthor")}
     </Button>
   );
 }

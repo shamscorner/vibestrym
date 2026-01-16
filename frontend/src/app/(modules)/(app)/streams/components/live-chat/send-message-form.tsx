@@ -1,47 +1,51 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { SendHorizonal } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-
-import { Button } from '@/components/ui/common/button';
+import { useMutation } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SendHorizonal } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/common/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-} from '@/components/ui/common/form';
-import { Textarea } from '@/components/ui/common/textarea';
-import { EmojiPicker } from '@/components/ui/custom/emoji-picker';
-
-import {
-  type FindChannelByUsernameQuery,
-  useSendChatMessageMutation,
-} from '@/graphql/_generated/output';
-
+} from "@/components/ui/common/form";
+import { Textarea } from "@/components/ui/common/textarea";
+import { EmojiPicker } from "@/components/ui/custom/emoji-picker";
+import type { Query } from "@/gql/graphql";
+import { graphql } from "../../../../../../gql";
 import {
   type SendMessageSchema,
   sendMessageSchema,
-} from './send-message.schema';
+} from "./send-message.schema";
+
+const SendChatMessageDoc = graphql(`
+mutation SendChatMessage($data: SendMessageInput!) {
+  sendChatMessage(data: $data) {
+    streamId
+  }
+}
+`);
 
 interface SendMessageFormProps {
-  channel: FindChannelByUsernameQuery['findChannelByUsername'];
+  channel: Query["findChannelByUsername"];
   isDisabled: boolean;
 }
 
 export function SendMessageForm({ channel, isDisabled }: SendMessageFormProps) {
-  const t = useTranslations('streams.chat.sendMessage');
+  const t = useTranslations("streams.chat.sendMessage");
 
   const form = useForm<SendMessageSchema>({
     resolver: zodResolver(sendMessageSchema),
     defaultValues: {
-      text: '',
+      text: "",
     },
   });
 
-  const [send, { loading: isLoadingSend }] = useSendChatMessageMutation({
+  const [send, { loading: isLoadingSend }] = useMutation(SendChatMessageDoc, {
     onError() {
-      toast.error(t('errorMessage'));
+      toast.error(t("errorMessage"));
     },
   });
 
@@ -76,16 +80,16 @@ export function SendMessageForm({ channel, isDisabled }: SendMessageFormProps) {
                     className="min-h-[40px] resize-none pr-8"
                     disabled={isDisabled || isLoadingSend}
                     onInput={(e) => {
-                      e.currentTarget.style.height = 'auto';
+                      e.currentTarget.style.height = "auto";
                       e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
                     }}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter' && !e.shiftKey) {
+                      if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();
                         form.handleSubmit(onSubmit)();
                       }
                     }}
-                    placeholder={t('placeholder')}
+                    placeholder={t("placeholder")}
                     rows={1}
                     {...field}
                   />

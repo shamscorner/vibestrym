@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import type { FindProfileQuery } from "@/graphql/_generated/output";
+import type { Query } from "@/gql/graphql";
 import { getMediaSource } from "@/utils/get-media-source";
 import { cn } from "@/utils/tw-merge";
 import { Avatar, AvatarFallback, AvatarImage } from "../common/avatar";
@@ -19,7 +19,7 @@ const avatarSizes = cva("", {
 });
 
 interface ChannelAvatarProps extends VariantProps<typeof avatarSizes> {
-  channel: Pick<FindProfileQuery["findProfile"], "username" | "avatar">;
+  channel: Pick<Query["findProfile"], "username" | "avatar">;
   isLive?: boolean;
 }
 

@@ -1,20 +1,20 @@
-import { EmptyState } from '@/components/ui/custom/empty-state'
-import { Heading } from '@/components/ui/custom/heading'
+import { EmptyState } from "@/components/ui/custom/empty-state";
+import { Heading } from "@/components/ui/custom/heading";
 
-import type { FindRandomStreamsQuery } from '@/graphql/_generated/output'
+import type { Query } from "@/gql/graphql";
 
-import { StreamCard } from './stream-card'
+import { StreamCard } from "./stream-card";
 
 interface StreamsListProps {
-  heading?: string
-  streams: FindRandomStreamsQuery['findRandomStreams']
+  heading?: string;
+  streams: Query["findRandomStreams"];
 }
 
 export function StreamsList({ heading, streams }: StreamsListProps) {
   return streams.length ? (
     <>
       {heading && <Heading title={heading} />}
-      <div className='mt-6 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+      <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {streams.map((stream, index) => (
           <StreamCard key={index} stream={stream} />
         ))}
@@ -22,5 +22,5 @@ export function StreamsList({ heading, streams }: StreamsListProps) {
     </>
   ) : (
     <EmptyState />
-  )
+  );
 }

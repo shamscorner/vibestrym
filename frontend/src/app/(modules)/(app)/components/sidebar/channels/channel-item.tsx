@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { Button } from '@/components/ui/common/button';
-import { Skeleton } from '@/components/ui/common/skeleton';
-import { ChannelAvatar } from '@/components/ui/custom/channel-avatar';
-import { ChannelVerified } from '@/components/ui/custom/channel-verified';
-import { Hint } from '@/components/ui/custom/hint';
-import { LiveBadge } from '@/components/ui/custom/live-badge';
-import type { FindRecommendedChannelsQuery } from '@/graphql/_generated/output';
-import { cn } from '@/utils/tw-merge';
-import { useSidebar } from '../../../hooks/sidebar';
+import { Button } from "@/components/ui/common/button";
+import { Skeleton } from "@/components/ui/common/skeleton";
+import { ChannelAvatar } from "@/components/ui/custom/channel-avatar";
+import { ChannelVerified } from "@/components/ui/custom/channel-verified";
+import { Hint } from "@/components/ui/custom/hint";
+import { LiveBadge } from "@/components/ui/custom/live-badge";
+import type { FindRecommendedChannelsQuery } from "@/gql/graphql";
+import { cn } from "@/utils/tw-merge";
+import { useSidebar } from "../../../hooks/sidebar";
 
 interface ChannelItemProps {
-  channel: FindRecommendedChannelsQuery['findRecommendedChannels'][0];
+  channel: FindRecommendedChannelsQuery["findRecommendedChannels"][0];
 }
 
 export function ChannelItem({ channel }: ChannelItemProps) {
@@ -35,7 +35,7 @@ export function ChannelItem({ channel }: ChannelItemProps) {
   ) : (
     <Button
       asChild
-      className={cn('mt-2 h-11 w-full justify-start', isActive && 'bg-accent')}
+      className={cn("mt-2 h-11 w-full justify-start", isActive && "bg-accent")}
       variant="ghost"
     >
       <Link className="flex w-full items-center" href={`/${channel.username}`}>

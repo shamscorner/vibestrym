@@ -1,36 +1,60 @@
-import { useTranslations } from 'next-intl';
-import { toast } from 'sonner';
+import { useMutation, useQuery } from "@apollo/client/react";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/common/button";
+import { CardContainer } from "@/components/ui/custom/card-container";
+import type { Query } from "@/gql/graphql";
+import { useConfirmDialog } from "@/hooks/confirm-dialog";
+import { graphql } from "../../../../../../../gql";
+import { SessionModal } from "./session-dialog";
+import { getBrowserIcon } from "./utils/get-browser-icon";
 
-import { Button } from '@/components/ui/common/button';
-import { CardContainer } from '@/components/ui/custom/card-container';
+const RemoveSessionDoc = graphql(`
+mutation RemoveSession($id: String!) {
+  removeSession(id: $id)
+}
+`);
 
-import {
-  type FindSessionsByUserQuery,
-  useFindSessionsByUserQuery,
-  useRemoveSessionMutation,
-} from '@/graphql/_generated/output';
-import { useConfirmDialog } from '@/hooks/confirm-dialog';
-import { SessionModal } from './session-dialog';
-import { getBrowserIcon } from './utils/get-browser-icon';
+const FindSessionsByUserDoc = graphql(`
+query FindSessionsByUser {
+  findSessionsByUser {
+    id
+    createdAt
+    metadata {
+      location {
+        country
+        city
+        latitude
+        longitude
+      }
+      device {
+        browser
+        os
+      }
+      ip
+    }
+  }
+}
+`);
 
 interface SessionItemProps {
-  session: FindSessionsByUserQuery['findSessionsByUser'][0];
+  session: Query["findSessionsByUser"][0];
   isCurrentSession?: boolean;
 }
 
 export function SessionItem({ session, isCurrentSession }: SessionItemProps) {
-  const t = useTranslations('dashboard.settings.sessions.sessionItem');
+  const t = useTranslations("dashboard.settings.sessions.sessionItem");
   const { confirm: confirmDelete } = useConfirmDialog();
 
-  const { refetch } = useFindSessionsByUserQuery();
+  const { refetch } = useQuery(FindSessionsByUserDoc);
 
-  const [remove, { loading: isLoadingRemove }] = useRemoveSessionMutation({
+  const [remove, { loading: isLoadingRemove }] = useMutation(RemoveSessionDoc, {
     onCompleted() {
       refetch();
-      toast.success(t('successMessage'));
+      toast.success(t("successMessage"));
     },
     onError() {
-      toast.error(t('errorMessage'));
+      toast.error(t("errorMessage"));
     },
   });
 
@@ -48,9 +72,9 @@ export function SessionItem({ session, isCurrentSession }: SessionItemProps) {
               disabled={isLoadingRemove}
               onClick={async () =>
                 await confirmDelete({
-                  title: t('confirmDialog.heading'),
-                  description: t('confirmDialog.message'),
-                  actionType: 'destructive',
+                  title: t("confirmDialog.heading"),
+                  description: t("confirmDialog.message"),
+                  actionType: "destructive",
                   action: async () => {
                     await remove({ variables: { id: session.id } });
                     return true;
@@ -59,11 +83,11 @@ export function SessionItem({ session, isCurrentSession }: SessionItemProps) {
               }
               variant="destructive"
             >
-              {t('deleteButton')}
+              {t("deleteButton")}
             </Button>
           )}
           <SessionModal session={session}>
-            <Button>{t('detailsButton')}</Button>
+            <Button>{t("detailsButton")}</Button>
           </SessionModal>
         </div>
       }

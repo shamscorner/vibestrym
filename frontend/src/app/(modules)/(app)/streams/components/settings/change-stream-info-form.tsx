@@ -1,9 +1,9 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-
-import { Button } from '@/components/ui/common/button';
+import { useMutation, useQuery } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/common/button";
 import {
   Form,
   FormControl,
@@ -11,53 +11,69 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/common/form';
-import { Input } from '@/components/ui/common/input';
+} from "@/components/ui/common/form";
+import { Input } from "@/components/ui/common/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/common/select';
-
-import {
-  type FindChannelByUsernameQuery,
-  useChangeStreamInfoMutation,
-  useFindAllCategoriesQuery,
-} from '@/graphql/_generated/output';
-
+} from "@/components/ui/common/select";
+import { graphql } from "@/gql";
+import type { Query } from "@/gql/graphql";
 import {
   type ChangeStreamInfoSchema,
   changeStreamInfoSchema,
-} from './change-stream-info.schema';
+} from "./change-stream-info.schema";
+
+const FindAllCategoriesDoc = graphql(`
+query FindAllCategories {
+  findAllCategories {
+    id
+    updatedAt
+    title
+    slug
+    thumbnailUrl
+  }
+}
+`);
+
+const ChangeStreamInfoDoc = graphql(`
+mutation ChangeStreamInfo($data: ChangeStreamInfoInput!) {
+  changeStreamInfo(data: $data)
+}
+`);
 
 interface Props {
-  stream: FindChannelByUsernameQuery['findChannelByUsername']['stream'];
+  stream: Query["findChannelByUsername"]["stream"];
 }
 
 export function ChangeStreamInfoForm({ stream }: Props) {
-  const t = useTranslations('streams.stream.settings.info');
+  const t = useTranslations("streams.stream.settings.info");
 
-  const { data } = useFindAllCategoriesQuery();
+  const { data } = useQuery(FindAllCategoriesDoc);
   const categories = data?.findAllCategories ?? [];
 
   const form = useForm<ChangeStreamInfoSchema>({
     resolver: zodResolver(changeStreamInfoSchema),
     values: {
-      title: stream?.title ?? '',
-      categoryId: stream?.category?.id ?? '',
+      title: stream?.title ?? "",
+      categoryId: stream?.category?.id ?? "",
     },
   });
 
-  const [update, { loading: isLoadingUpdate }] = useChangeStreamInfoMutation({
-    onCompleted() {
-      toast.success(t('successMessage'));
-    },
-    onError() {
-      toast.error(t('errorMessage'));
-    },
-  });
+  const [update, { loading: isLoadingUpdate }] = useMutation(
+    ChangeStreamInfoDoc,
+    {
+      onCompleted() {
+        toast.success(t("successMessage"));
+      },
+      onError() {
+        toast.error(t("errorMessage"));
+      },
+    }
+  );
 
   const { isValid } = form.formState;
 
@@ -67,21 +83,21 @@ export function ChangeStreamInfoForm({ stream }: Props) {
 
   return (
     <Form {...form}>
-      <form className='mt-4 grid gap-6' onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="mt-4 grid gap-6" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('title.label')}</FormLabel>
+              <FormLabel>{t("title.label")}</FormLabel>
               <FormControl>
                 <Input
                   disabled={isLoadingUpdate}
-                  placeholder={t('title.placeholder')}
+                  placeholder={t("title.placeholder")}
                   {...field}
                 />
               </FormControl>
-              <FormDescription>{t('title.description')}</FormDescription>
+              <FormDescription>{t("title.description")}</FormDescription>
             </FormItem>
           )}
         />
@@ -90,11 +106,11 @@ export function ChangeStreamInfoForm({ stream }: Props) {
           name="categoryId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('category.label')}</FormLabel>
+              <FormLabel>{t("category.label")}</FormLabel>
               <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder={t('category.placeholder')} />
+                    <SelectValue placeholder={t("category.placeholder")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent className="p-0">
@@ -105,14 +121,14 @@ export function ChangeStreamInfoForm({ stream }: Props) {
                   ))}
                 </SelectContent>
               </Select>
-              <FormDescription>{t('category.description')}</FormDescription>
+              <FormDescription>{t("category.description")}</FormDescription>
             </FormItem>
           )}
         />
 
         <div className="flex justify-end pt-5">
           <Button disabled={!isValid || isLoadingUpdate}>
-            {t('submitButton')}
+            {t("submitButton")}
           </Button>
         </div>
       </form>

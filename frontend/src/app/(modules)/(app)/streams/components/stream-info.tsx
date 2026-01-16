@@ -1,21 +1,21 @@
-import { useParticipants } from '@livekit/components-react';
-import { User } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useParticipants } from "@livekit/components-react";
+import { User } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-import { Skeleton } from '@/components/ui/common/skeleton';
-import { ChannelAvatar } from '@/components/ui/custom/channel-avatar';
-import { ChannelVerified } from '@/components/ui/custom/channel-verified';
+import { Skeleton } from "@/components/ui/common/skeleton";
+import { ChannelAvatar } from "@/components/ui/custom/channel-avatar";
+import { ChannelVerified } from "@/components/ui/custom/channel-verified";
 
-import type { FindChannelByUsernameQuery } from '@/graphql/_generated/output';
+import type { Query } from "@/gql/graphql";
 
-import { StreamActions, StreamActionsSkeleton } from './stream-actions';
+import { StreamActions, StreamActionsSkeleton } from "./stream-actions";
 
 interface StreamInfoProps {
-  channel: FindChannelByUsernameQuery['findChannelByUsername'];
+  channel: Query["findChannelByUsername"];
 }
 
 export function StreamInfo({ channel }: StreamInfoProps) {
-  const t = useTranslations('streams.stream.info');
+  const t = useTranslations("streams.stream.info");
 
   const participants = useParticipants();
 
@@ -24,10 +24,10 @@ export function StreamInfo({ channel }: StreamInfoProps) {
   return (
     <div className="flex flex-col gap-y-5">
       <h1 className="font-semibold text-xl">
-        {channel.stream.title}{' '}
+        {channel.stream.title}{" "}
         {channel.stream.category && ` | ${channel.stream.category.title}`}
       </h1>
-      <div className='flex flex-col items-start justify-between md:flex-row'>
+      <div className="flex flex-col items-start justify-between md:flex-row">
         <div className="flex items-center gap-x-3 px-1">
           <ChannelAvatar
             channel={channel}
@@ -42,11 +42,11 @@ export function StreamInfo({ channel }: StreamInfoProps) {
             {channel.stream.isLive ? (
               <div className="flex items-center gap-x-1 font-semibold text-rose-500 text-xs">
                 <User className="size-4" />
-                {participantCount} {t('viewers')}
+                {participantCount} {t("viewers")}
               </div>
             ) : (
               <p className="font-semibold text-muted-foreground text-xs">
-                {t('offline')}
+                {t("offline")}
               </p>
             )}
           </div>

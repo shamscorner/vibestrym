@@ -1,24 +1,42 @@
-import { Heart, HeartOff } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { toast } from 'sonner';
-import { useAuth } from '@/app/(modules)/(auth)/hooks';
-import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
-import { Button } from '@/components/ui/common/button';
-import {
-  type FindChannelByUsernameQuery,
-  useFindMyFollowingsQuery,
-  useFollowChannelMutation,
-  useUnfollowChannelMutation,
-} from '@/graphql/_generated/output';
-import { useConfirmDialog } from '@/hooks/confirm-dialog';
+import { useMutation, useQuery } from "@apollo/client/react";
+import { Heart, HeartOff } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
+import { useAuth } from "@/app/(modules)/(auth)/hooks";
+import { useCurrentAccount } from "@/app/(modules)/(auth)/hooks/current-account";
+import { Button } from "@/components/ui/common/button";
+import type { Query } from "@/gql/graphql";
+import { useConfirmDialog } from "@/hooks/confirm-dialog";
+import { graphql } from "../../../../../../gql";
+
+const UnfollowChannelDoc = graphql(`
+mutation UnfollowChannel($channelId: String!) {
+  unfollowChannel(channelId: $channelId)
+}
+`);
+
+const FollowChannelDoc = graphql(`
+mutation FollowChannel($channelId: String!) {
+  followChannel(channelId: $channelId)
+}
+`);
+
+const FindMyFollowingsDoc = graphql(`
+query FindMyFollowings {
+  findMyFollowings {
+    createdAt
+    followingId
+  }
+}
+`);
 
 interface FollowButtonProps {
-  channel: FindChannelByUsernameQuery['findChannelByUsername'];
+  channel: Query["findChannelByUsername"];
 }
 
 export function FollowButton({ channel }: FollowButtonProps) {
-  const t = useTranslations('streams.stream.actions.follow');
+  const t = useTranslations("streams.stream.actions.follow");
   const router = useRouter();
 
   const { isAuthenticated } = useAuth();
@@ -29,29 +47,34 @@ export function FollowButton({ channel }: FollowButtonProps) {
     data,
     loading: isLoadingFollowings,
     refetch,
-  } = useFindMyFollowingsQuery({
+  } = useQuery(FindMyFollowingsDoc, {
     skip: !isAuthenticated,
   });
   const followings = data?.findMyFollowings;
 
-  const [follow, { loading: isLoadingFollow }] = useFollowChannelMutation({
+  const [follow, { loading: isLoadingFollow }] = useMutation(FollowChannelDoc, {
     onCompleted() {
       refetch();
-      toast.success(t('followMessage.success', { channelName: channel.username }));
+      toast.success(
+        t("followMessage.success", { channelName: channel.username })
+      );
     },
     onError() {
-      toast.error(t('followMessage.error'));
+      toast.error(t("followMessage.error"));
     },
   });
 
-  const [unfollow, { loading: isLoadingUnfollow }] = useUnfollowChannelMutation(
+  const [unfollow, { loading: isLoadingUnfollow }] = useMutation(
+    UnfollowChannelDoc,
     {
       onCompleted() {
         refetch();
-        toast.success(t('unfollowMessage.success', { channelName: channel.username }));
+        toast.success(
+          t("unfollowMessage.success", { channelName: channel.username })
+        );
       },
       onError() {
-        toast.error(t('unfollowMessage.error'));
+        toast.error(t("unfollowMessage.error"));
       },
     }
   );
@@ -66,19 +89,22 @@ export function FollowButton({ channel }: FollowButtonProps) {
   }
 
   return isExistingFollow ? (
-    <Button disabled={isLoadingFollowings || isLoadingUnfollow} onClick={async () =>
-      await confirmUnfollow({
-        title: t('unfollowDialog.heading'),
-        description: t('unfollowDialog.message'),
-        actionType: 'destructive',
-        action: async () => {
-          await unfollow({ variables: { channelId: channel.id } })
-          return true;
-        },
-      })
-    }>
+    <Button
+      disabled={isLoadingFollowings || isLoadingUnfollow}
+      onClick={async () =>
+        await confirmUnfollow({
+          title: t("unfollowDialog.heading"),
+          description: t("unfollowDialog.message"),
+          actionType: "destructive",
+          action: async () => {
+            await unfollow({ variables: { channelId: channel.id } });
+            return true;
+          },
+        })
+      }
+    >
       <HeartOff className="size-4" />
-      <span>{t('unfollowButton')}</span>
+      <span>{t("unfollowButton")}</span>
     </Button>
   ) : (
     <Button
@@ -86,11 +112,11 @@ export function FollowButton({ channel }: FollowButtonProps) {
       onClick={() =>
         isAuthenticated
           ? follow({ variables: { channelId: channel.id } })
-          : router.push('/account/login')
+          : router.push("/account/login")
       }
     >
       <Heart className="size-4" />
-      {t('followButton')}
+      {t("followButton")}
     </Button>
   );
 }
