@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-
-import { Button } from '@/components/ui/common/button';
+import { useMutation, useQuery } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/common/button";
 import {
   Form,
   FormControl,
@@ -13,46 +13,62 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/common/form';
-import { Input } from '@/components/ui/common/input';
-import { Skeleton } from '@/components/ui/common/skeleton';
-import { FormWrapper } from '@/components/ui/custom/form-wrapper';
-
-import {
-  useCreateSocialLinkMutation,
-  useFindSocialLinksQuery,
-} from '@/graphql/_generated/output';
+} from "@/components/ui/common/form";
+import { Input } from "@/components/ui/common/input";
+import { Skeleton } from "@/components/ui/common/skeleton";
+import { FormWrapper } from "@/components/ui/custom/form-wrapper";
+import { graphql } from "../../../../../../../../gql";
 import {
   type SocialLinksSchema,
   socialLinksSchema,
-} from './social-links.schema';
-import { SocialLinksList } from './social-links-list';
+} from "./social-links.schema";
+import { SocialLinksList } from "./social-links-list";
+
+const FindSocialLinksDoc = graphql(`
+query FindSocialLinks {
+  findSocialLinks {
+    id
+    title
+    url
+    position
+  }
+}
+`);
+
+const CreateSocialLinkDoc = graphql(`
+mutation CreateSocialLink($data: SocialLinkInput!) {
+  createSocialLink(data: $data)
+}
+`);
 
 export function SocialLinksForm() {
   const t = useTranslations(
-    'dashboard.settings.profile.socialLinks.createForm'
+    "dashboard.settings.profile.socialLinks.createForm"
   );
 
-  const { loading: isLoadingLinks, refetch } = useFindSocialLinksQuery();
+  const { loading: isLoadingLinks, refetch } = useQuery(FindSocialLinksDoc);
 
   const form = useForm<SocialLinksSchema>({
     resolver: zodResolver(socialLinksSchema),
     defaultValues: {
-      title: '',
-      url: '',
+      title: "",
+      url: "",
     },
   });
 
-  const [create, { loading: isLoadingCreate }] = useCreateSocialLinkMutation({
-    onCompleted() {
-      form.reset();
-      refetch();
-      toast.success(t('successMessage'));
-    },
-    onError() {
-      toast.error(t('errorMessage'));
-    },
-  });
+  const [create, { loading: isLoadingCreate }] = useMutation(
+    CreateSocialLinkDoc,
+    {
+      onCompleted() {
+        form.reset();
+        refetch();
+        toast.success(t("successMessage"));
+      },
+      onError() {
+        toast.error(t("errorMessage"));
+      },
+    }
+  );
 
   const { isValid } = form.formState;
 
@@ -63,7 +79,7 @@ export function SocialLinksForm() {
   return isLoadingLinks ? (
     <SocialLinksFormSkeleton />
   ) : (
-    <FormWrapper heading={t('heading')}>
+    <FormWrapper heading={t("heading")}>
       <Form {...form}>
         <form className="grid gap-y-6" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -71,15 +87,15 @@ export function SocialLinksForm() {
             name="title"
             render={({ field }) => (
               <FormItem className="px-5">
-                <FormLabel>{t('title.label')}</FormLabel>
+                <FormLabel>{t("title.label")}</FormLabel>
                 <FormControl>
                   <Input
                     disabled={isLoadingCreate}
-                    placeholder={t('title.placeholder')}
+                    placeholder={t("title.placeholder")}
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>{t('title.description')}</FormDescription>
+                <FormDescription>{t("title.description")}</FormDescription>
               </FormItem>
             )}
           />
@@ -88,21 +104,21 @@ export function SocialLinksForm() {
             name="url"
             render={({ field }) => (
               <FormItem className="px-5 pb-3">
-                <FormLabel>{t('url.label')}</FormLabel>
+                <FormLabel>{t("url.label")}</FormLabel>
                 <FormControl>
                   <Input
                     disabled={isLoadingCreate}
-                    placeholder={t('url.placeholder')}
+                    placeholder={t("url.placeholder")}
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>{t('url.description')}</FormDescription>
+                <FormDescription>{t("url.description")}</FormDescription>
               </FormItem>
             )}
           />
           <div className="flex justify-end px-5 pb-5">
             <Button disabled={!isValid || isLoadingCreate}>
-              {t('submitButton')}
+              {t("submitButton")}
             </Button>
           </div>
         </form>

@@ -1,7 +1,7 @@
-import type { PropsWithChildren } from 'react';
-import { Header } from './components/header/header';
-import { LayoutWrapper } from './components/layout-wrapper';
-import { Sidebar } from './components/sidebar/sidebar';
+import type { PropsWithChildren } from "react";
+import { Header } from "./components/header/header";
+import { LayoutWrapper } from "./components/layout-wrapper";
+import { Sidebar } from "./components/sidebar/sidebar";
 
 export default function ProtectedLayout({
   children,

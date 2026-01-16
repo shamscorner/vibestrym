@@ -1,4 +1,4 @@
-import { configStore } from '@/store/config/config.store';
+import { configStore } from "@/store/config/config.store";
 
 export function useConfig() {
   const theme = configStore((state) => state.theme);

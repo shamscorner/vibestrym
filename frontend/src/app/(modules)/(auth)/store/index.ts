@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-import type { AuthStore } from './types';
+import type { AuthStore } from "./types";
 
 export const authStore = create(
   persist<AuthStore>(
@@ -10,7 +10,7 @@ export const authStore = create(
       setIsAuthenticated: (value: boolean) => set({ isAuthenticated: value }),
     }),
     {
-      name: 'auth',
+      name: "auth",
       storage: createJSONStorage(() => localStorage),
     }
   )

@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-import type { SidebarStore } from './sidebar.types';
+import type { SidebarStore } from "./sidebar.types";
 
 export const sidebarStore = create(
   persist<SidebarStore>(
@@ -10,7 +10,7 @@ export const sidebarStore = create(
       setIsCollapsed: (value: boolean) => set({ isCollapsed: value }),
     }),
     {
-      name: 'sidebar',
+      name: "sidebar",
       storage: createJSONStorage(() => localStorage),
     }
   )

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { OTPInput, OTPInputContext } from 'input-otp';
-import { MinusIcon } from 'lucide-react';
-import { type ComponentProps, useContext } from 'react';
-import { cn } from '@/utils/tw-merge';
+import { OTPInput, OTPInputContext } from "input-otp";
+import { MinusIcon } from "lucide-react";
+import { type ComponentProps, useContext } from "react";
+import { cn } from "@/utils/tw-merge";
 
 function InputOTP({
   className,
@@ -14,9 +14,9 @@ function InputOTP({
 }) {
   return (
     <OTPInput
-      className={cn('disabled:cursor-not-allowed', className)}
+      className={cn("disabled:cursor-not-allowed", className)}
       containerClassName={cn(
-        'flex items-center gap-2 has-disabled:opacity-50',
+        "flex items-center gap-2 has-disabled:opacity-50",
         containerClassName
       )}
       data-slot="input-otp"
@@ -25,10 +25,10 @@ function InputOTP({
   );
 }
 
-function InputOTPGroup({ className, ...props }: ComponentProps<'div'>) {
+function InputOTPGroup({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
-      className={cn('flex w-full items-center', className)}
+      className={cn("flex w-full items-center", className)}
       data-slot="input-otp-group"
       {...props}
     />
@@ -39,7 +39,7 @@ function InputOTPSlot({
   index,
   className,
   ...props
-}: ComponentProps<'div'> & {
+}: ComponentProps<"div"> & {
   index: number;
 }) {
   const inputOTPContext = useContext(OTPInputContext);
@@ -48,7 +48,7 @@ function InputOTPSlot({
   return (
     <div
       className={cn(
-        'relative flex h-16 w-auto flex-1 items-center justify-center border-input border-y border-r font-semibold text-xl shadow-xs outline-none transition-all first:rounded-l-md first:border-l last:rounded-r-md aria-invalid:border-destructive data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-[1px] data-[active=true]:ring-ring/50 data-[active=true]:aria-invalid:border-destructive data-[active=true]:aria-invalid:ring-destructive/20 dark:bg-input/30 dark:data-[active=true]:aria-invalid:ring-destructive/40',
+        "relative flex h-16 w-auto flex-1 items-center justify-center border-input border-y border-r font-semibold text-xl shadow-xs outline-none transition-all first:rounded-l-md first:border-l last:rounded-r-md aria-invalid:border-destructive data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-[1px] data-[active=true]:ring-ring/50 data-[active=true]:aria-invalid:border-destructive data-[active=true]:aria-invalid:ring-destructive/20 dark:bg-input/30 dark:data-[active=true]:aria-invalid:ring-destructive/40",
         className
       )}
       data-active={isActive}
@@ -65,7 +65,7 @@ function InputOTPSlot({
   );
 }
 
-function InputOTPSeparator({ ...props }: ComponentProps<'div'>) {
+function InputOTPSeparator({ ...props }: ComponentProps<"div">) {
   return (
     // biome-ignore lint/a11y/useFocusableInteractive: <according to shadcn, this is valid>
     // biome-ignore lint/a11y/useSemanticElements: <according to shadcn, this is valid>

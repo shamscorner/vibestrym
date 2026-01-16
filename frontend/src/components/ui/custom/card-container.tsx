@@ -1,10 +1,10 @@
-import type { LucideIcon } from 'lucide-react';
-import type { PropsWithChildren, ReactNode } from 'react';
-import type { IconType } from 'react-icons';
+import type { LucideIcon } from "lucide-react";
+import type { PropsWithChildren, ReactNode } from "react";
+import type { IconType } from "react-icons";
 
-import { cn } from '@/utils/tw-merge';
+import { cn } from "@/utils/tw-merge";
 
-import { Card } from '../common/card';
+import { Card } from "../common/card";
 
 interface CardContainerProps {
   heading: string;
@@ -33,7 +33,7 @@ export function CardContainer({
               <Icon className="size-7 text-secondary" />
             </div>
           )}
-          <div className='flex min-w-[100px] flex-col gap-y-1'>
+          <div className="flex min-w-[100px] flex-col gap-y-1">
             <h2 className="font-semibold tracking-wide">{heading}</h2>
             {description && (
               <p className="max-w-4xl text-muted-foreground text-sm">
@@ -43,7 +43,7 @@ export function CardContainer({
           </div>
         </div>
         {rightContent && (
-          <div className={cn(isRightContentFull && 'w-full')}>
+          <div className={cn(isRightContentFull && "w-full")}>
             {rightContent}
           </div>
         )}

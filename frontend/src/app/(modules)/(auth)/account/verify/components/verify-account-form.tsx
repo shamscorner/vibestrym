@@ -1,46 +1,59 @@
-'use client';
+"use client";
 
-import { captureException } from '@sentry/nextjs';
-import { Loader2Icon, OctagonXIcon } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { useMutation } from "@apollo/client/react";
+import { captureException } from "@sentry/nextjs";
+import { Loader2Icon, OctagonXIcon } from "lucide-react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from '@/components/ui/common/alert';
-import { Button } from '@/components/ui/common/button';
-import { useVerifyAccountMutation } from '@/graphql/_generated/output';
-import { useAuth } from '../../../hooks';
+} from "@/components/ui/common/alert";
+import { Button } from "@/components/ui/common/button";
+import { graphql } from "../../../../../../gql";
+import { useAuth } from "../../../hooks";
+
+const VerifyAccountDoc = graphql(`
+mutation VerifyAccount($data: VerificationInput!) {
+  verifyAccount(data: $data) {
+    message
+    user {
+      email
+      isEmailVerified
+    }
+  }
+}
+`);
 
 export function VerifyAccountForm() {
-  const t = useTranslations('auth.verify');
+  const t = useTranslations("auth.verify");
 
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const token = searchParams.get('token') ?? '';
+  const token = searchParams.get("token") ?? "";
 
   const { auth } = useAuth();
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const [verifyAccount] = useVerifyAccountMutation({
+  const [verifyAccount] = useMutation(VerifyAccountDoc, {
     onCompleted() {
       auth();
-      setErrorMessage('');
-      toast.success(t('successMessage'));
-      router.push('/dashboard/settings');
+      setErrorMessage("");
+      toast.success(t("successMessage"));
+      router.push("/dashboard/settings");
     },
     onError(error) {
-      const errMessage = error.message || t('errorMessage');
+      const errMessage = error.message || t("errorMessage");
       setErrorMessage(errMessage);
       captureException(error, {
         extra: {
-          action: 'verify-account',
+          action: "verify-account",
           variables: { token },
         },
       });
@@ -58,11 +71,11 @@ export function VerifyAccountForm() {
   return errorMessage ? (
     <Alert>
       <OctagonXIcon className="size-4" />
-      <AlertTitle>{t('errorAlert.title')}</AlertTitle>
+      <AlertTitle>{t("errorAlert.title")}</AlertTitle>
       <AlertDescription>
-        <p>{errorMessage || t('errorAlert.description')}</p>
+        <p>{errorMessage || t("errorAlert.description")}</p>
         <Button asChild className="mt-5 w-full">
-          <Link href="/account/login">{t('loginAgain')}</Link>
+          <Link href="/account/login">{t("loginAgain")}</Link>
         </Button>
       </AlertDescription>
     </Alert>

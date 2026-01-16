@@ -1,4 +1,4 @@
-import { authStore } from '../store';
+import { authStore } from "../store";
 
 export function useAuth() {
   const isAuthenticated = authStore((state) => state.isAuthenticated);

@@ -1,18 +1,18 @@
-import { ArrowLeftIcon } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-import type { ReactNode } from 'react';
-import { Logo } from '@/components/logo';
-import { Button } from '@/components/ui/common/button';
-import AuthBackground from './assets/images/auth-background.webp';
+import { ArrowLeftIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
+import { Logo } from "@/components/logo";
+import { Button } from "@/components/ui/common/button";
+import AuthBackground from "./assets/images/auth-background.webp";
 
 export default function AuthLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const t = useTranslations('auth.common');
+  const t = useTranslations("auth.common");
 
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
@@ -26,7 +26,7 @@ export default function AuthLayout({
             <Button asChild className="w-full" variant="ghost">
               <Link className="text-muted-foreground" href="/">
                 <ArrowLeftIcon className="size-4" />
-                <span>{t('goBack')}</span>
+                <span>{t("goBack")}</span>
               </Link>
             </Button>
           </div>

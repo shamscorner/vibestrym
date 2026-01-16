@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
-import type { ButtonVariants } from '@/components/ui/common/button';
+import type { ButtonVariants } from "@/components/ui/common/button";
 
 export type ConfirmItem = {
   title: string;
@@ -9,7 +9,7 @@ export type ConfirmItem = {
   htmlContent?: ReactNode;
   confirmText?: string;
   cancelText?: string;
-  actionType?: ButtonVariants['variant'];
+  actionType?: ButtonVariants["variant"];
   action: () => boolean | Promise<boolean>;
   onSuccess?: () => void;
 };

@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { captureException } from '@sentry/nextjs';
-import { useParams, useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import type { ComponentProps } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/common/button';
+import { useMutation } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { captureException } from "@sentry/nextjs";
+import { useParams, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import type { ComponentProps } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/common/button";
 import {
   Form,
   FormControl,
@@ -16,51 +17,59 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/common/form';
-import { Input } from '@/components/ui/common/input';
-import { useNewPasswordMutation } from '@/graphql/_generated/output';
-import { cn } from '@/utils/tw-merge';
+} from "@/components/ui/common/form";
+import { Input } from "@/components/ui/common/input";
+import { cn } from "@/utils/tw-merge";
+import { graphql } from "../../../../../../../../gql";
 import {
   type UpdatePasswordSchema,
   updatePasswordSchema,
-} from '../update-password.schema';
+} from "../update-password.schema";
+
+const NewPasswordDoc = graphql(`
+mutation NewPassword($data: NewPasswordInput!) {
+  newPassword(data: $data)
+}
+`);
 
 export function UpdatePasswordForm({
   className,
   ...props
-}: ComponentProps<'form'>) {
-  const t = useTranslations('auth.updatePassword');
+}: ComponentProps<"form">) {
+  const t = useTranslations("auth.updatePassword");
 
   const router = useRouter();
   const params = useParams<{ token: string }>();
 
   const form = useForm<UpdatePasswordSchema>({
     resolver: zodResolver(updatePasswordSchema),
-    mode: 'onBlur',
+    mode: "onBlur",
     defaultValues: {
-      password: '',
-      passwordRepeat: '',
+      password: "",
+      passwordRepeat: "",
     },
   });
 
   const { isSubmitting } = form.formState;
 
-  const [updatePassword, { loading: isLoadingUpdatePassword }] =
-    useNewPasswordMutation({
+  const [updatePassword, { loading: isLoadingUpdatePassword }] = useMutation(
+    NewPasswordDoc,
+    {
       onCompleted: () => {
-        toast.success(t('successMessage'));
-        router.push('/account/login');
+        toast.success(t("successMessage"));
+        router.push("/account/login");
       },
       onError: (error) => {
-        toast.error(error.message || t('errorMessage'));
+        toast.error(error.message || t("errorMessage"));
         captureException(error, {
           extra: {
-            action: 'updatePassword',
+            action: "updatePassword",
             variables: form.getValues(),
           },
         });
       },
-    });
+    }
+  );
 
   function onSubmit(values: UpdatePasswordSchema) {
     updatePassword({
@@ -72,13 +81,13 @@ export function UpdatePasswordForm({
     <Form {...form}>
       <form
         {...props}
-        className={cn('flex flex-col gap-6', className)}
+        className={cn("flex flex-col gap-6", className)}
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className="mb-6 flex flex-col items-center gap-2 text-center">
-          <h1 className="font-bold text-2xl">{t('heading')}</h1>
+          <h1 className="font-bold text-2xl">{t("heading")}</h1>
           <p className="text-balance text-muted-foreground text-sm">
-            {t('description')}
+            {t("description")}
           </p>
         </div>
         <div className="grid gap-6">
@@ -87,7 +96,7 @@ export function UpdatePasswordForm({
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('password.label')}</FormLabel>
+                <FormLabel>{t("password.label")}</FormLabel>
                 <FormControl>
                   <Input
                     disabled={isSubmitting || isLoadingUpdatePassword}
@@ -95,7 +104,7 @@ export function UpdatePasswordForm({
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>{t('password.description')}</FormDescription>
+                <FormDescription>{t("password.description")}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -105,7 +114,7 @@ export function UpdatePasswordForm({
             name="passwordRepeat"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('passwordRepeat.label')}</FormLabel>
+                <FormLabel>{t("passwordRepeat.label")}</FormLabel>
                 <FormControl>
                   <Input
                     disabled={isSubmitting || isLoadingUpdatePassword}
@@ -114,7 +123,7 @@ export function UpdatePasswordForm({
                   />
                 </FormControl>
                 <FormDescription>
-                  {t('passwordRepeat.description')}
+                  {t("passwordRepeat.description")}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -125,7 +134,7 @@ export function UpdatePasswordForm({
             disabled={isSubmitting || isLoadingUpdatePassword}
             type="submit"
           >
-            {t('submitButton')}
+            {t("submitButton")}
           </Button>
         </div>
       </form>

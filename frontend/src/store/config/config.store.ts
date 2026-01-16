@@ -1,18 +1,18 @@
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-import type { TypeBaseColor } from '@/constants/colors.constants';
+import type { TypeBaseColor } from "@/constants/colors.constants";
 
-import type { ConfigStore } from './config.types';
+import type { ConfigStore } from "./config.types";
 
 export const configStore = create(
   persist<ConfigStore>(
     (set) => ({
-      theme: 'violet',
+      theme: "violet",
       setTheme: (theme: TypeBaseColor) => set({ theme }),
     }),
     {
-      name: 'config',
+      name: "config",
       storage: createJSONStorage(() => localStorage),
     }
   )

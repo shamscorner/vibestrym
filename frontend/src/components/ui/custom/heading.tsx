@@ -1,18 +1,18 @@
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from '@/utils/tw-merge';
+import { cn } from "@/utils/tw-merge";
 
-const headingSizes = cva('', {
+const headingSizes = cva("", {
   variants: {
     size: {
-      sm: 'text-lg',
-      default: 'text-2xl',
-      lg: 'text-4xl',
-      xl: 'text-5xl',
+      sm: "text-lg",
+      default: "text-2xl",
+      lg: "text-4xl",
+      xl: "text-5xl",
     },
   },
   defaultVariants: {
-    size: 'default',
+    size: "default",
   },
 });
 
@@ -24,9 +24,9 @@ interface HeadingProps extends VariantProps<typeof headingSizes> {
 
 export function Heading({ size, title, description, className }: HeadingProps) {
   return (
-    <div className={cn('flex max-w-xl flex-col gap-y-2', className)}>
+    <div className={cn("flex max-w-xl flex-col gap-y-2", className)}>
       <h1
-        className={cn('font-semibold text-foreground', headingSizes({ size }))}
+        className={cn("font-semibold text-foreground", headingSizes({ size }))}
       >
         {title}
       </h1>

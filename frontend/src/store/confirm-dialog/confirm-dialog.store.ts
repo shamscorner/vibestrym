@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import type { ConfirmItem } from './confirm-dialog.type';
+import { create } from "zustand";
+import type { ConfirmItem } from "./confirm-dialog.type";
 
 type ConfirmStore = {
   isOpen: boolean;

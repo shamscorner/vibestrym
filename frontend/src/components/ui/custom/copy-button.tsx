@@ -1,16 +1,16 @@
-import { Check, Copy } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
-import { toast } from 'sonner';
+import { Check, Copy } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { toast } from "sonner";
 
-import { Button } from '../common/button';
+import { Button } from "../common/button";
 
 interface CopyButtonProps {
   value: string | null;
 }
 
 export function CopyButton({ value }: CopyButtonProps) {
-  const t = useTranslations('common.copyButton');
+  const t = useTranslations("common.copyButton");
 
   const [isCopied, setIsCopied] = useState(false);
 
@@ -19,7 +19,7 @@ export function CopyButton({ value }: CopyButtonProps) {
 
     setIsCopied(true);
     navigator.clipboard.writeText(value);
-    toast.success(t('successMessage'));
+    toast.success(t("successMessage"));
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);

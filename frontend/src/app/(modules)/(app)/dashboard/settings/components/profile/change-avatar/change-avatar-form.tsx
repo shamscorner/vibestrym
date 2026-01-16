@@ -1,30 +1,40 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { captureException } from '@sentry/nextjs';
-import { Trash } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { type ChangeEvent, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
-import { Button } from '@/components/ui/common/button';
-import { Form, FormField } from '@/components/ui/common/form';
-import { Skeleton } from '@/components/ui/common/skeleton';
-import { ChannelAvatar } from '@/components/ui/custom/channel-avatar';
-import { FormWrapper } from '@/components/ui/custom/form-wrapper';
-import {
-  useChangeProfileAvatarMutation,
-  useRemoveProfileAvatarMutation,
-} from '@/graphql/_generated/output';
-import { useConfirmDialog } from '@/hooks/confirm-dialog';
+import { useMutation } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { captureException } from "@sentry/nextjs";
+import { Trash } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { type ChangeEvent, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { useCurrentAccount } from "@/app/(modules)/(auth)/hooks/current-account";
+import { Button } from "@/components/ui/common/button";
+import { Form, FormField } from "@/components/ui/common/form";
+import { Skeleton } from "@/components/ui/common/skeleton";
+import { ChannelAvatar } from "@/components/ui/custom/channel-avatar";
+import { FormWrapper } from "@/components/ui/custom/form-wrapper";
+import { useConfirmDialog } from "@/hooks/confirm-dialog";
 import {
   type UploadFileSchema,
   uploadFileSchema,
-} from '@/schemas/upload-file.schema';
+} from "@/schemas/upload-file.schema";
+import { graphql } from "../../../../../../../../gql";
+
+const RemoveProfileAvatarDoc = graphql(`
+mutation RemoveProfileAvatar {
+  removeProfileAvatar
+}
+`);
+
+const ChangeProfileAvatarDoc = graphql(`
+mutation ChangeProfileAvatar($avatar: Upload!) {
+  changeProfileAvatar(avatar: $avatar)
+}
+`);
 
 export function ChangeAvatarForm() {
-  const t = useTranslations('dashboard.settings.profile.avatar');
+  const t = useTranslations("dashboard.settings.profile.avatar");
   const [avatarKey, setAvatarKey] = useState<number>(Date.now());
 
   const { user, isLoadingProfile, refetch } = useCurrentAccount();
@@ -39,42 +49,44 @@ export function ChangeAvatarForm() {
     },
   });
 
-  const [update, { loading: isLoadingUpdate }] = useChangeProfileAvatarMutation(
+  const [update, { loading: isLoadingUpdate }] = useMutation(
+    ChangeProfileAvatarDoc,
     {
       onCompleted() {
         refetch();
-        toast.success(t('updateMessage.success'));
+        toast.success(t("updateMessage.success"));
       },
       onError(error) {
         captureException(error, {
           extra: {
             userId: user?.id,
-            action: 'ChangeAvatarForm.update',
+            action: "ChangeAvatarForm.update",
           },
         });
-        toast.error(t('updateMessage.error'));
+        toast.error(t("updateMessage.error"));
       },
     }
   );
 
-  const [remove, { loading: isLoadingRemove }] = useRemoveProfileAvatarMutation(
+  const [remove, { loading: isLoadingRemove }] = useMutation(
+    RemoveProfileAvatarDoc,
     {
       onCompleted() {
         refetch();
         // Reset the form value to undefined after successful removal
-        form.setValue('file', undefined);
+        form.setValue("file", undefined);
         // Force re-render of the avatar component
         setAvatarKey(Date.now());
-        toast.success(t('removeMessage.success'));
+        toast.success(t("removeMessage.success"));
       },
       onError(error) {
         captureException(error, {
           extra: {
             userId: user?.id,
-            action: 'ChangeAvatarForm.remove',
+            action: "ChangeAvatarForm.remove",
           },
         });
-        toast.error(t('removeMessage.error'));
+        toast.error(t("removeMessage.error"));
       },
     }
   );
@@ -83,14 +95,14 @@ export function ChangeAvatarForm() {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    form.setValue('file', file);
+    form.setValue("file", file);
     update({ variables: { avatar: file } });
   }
 
   return isLoadingProfile ? (
     <ChangeAvatarFormSkeleton />
   ) : (
-    <FormWrapper heading={t('heading')}>
+    <FormWrapper heading={t("heading")}>
       <Form {...form}>
         <FormField
           control={form.control}
@@ -100,7 +112,7 @@ export function ChangeAvatarForm() {
               <div className="flex w-full flex-col items-start gap-6 lg:flex-row lg:items-center">
                 <ChannelAvatar
                   channel={{
-                    username: user?.username || '',
+                    username: user?.username || "",
                     avatar:
                       field.value instanceof File
                         ? URL.createObjectURL(field.value)
@@ -123,16 +135,16 @@ export function ChangeAvatarForm() {
                       onClick={() => inputRef.current?.click()}
                       variant="secondary"
                     >
-                      {t('updateButton')}
+                      {t("updateButton")}
                     </Button>
                     {user?.avatar && (
                       <Button
                         disabled={isLoadingUpdate || isLoadingRemove}
                         onClick={async () =>
                           await confirmRemove({
-                            title: t('confirmDialog.heading'),
-                            description: t('confirmDialog.message'),
-                            actionType: 'destructive',
+                            title: t("confirmDialog.heading"),
+                            description: t("confirmDialog.message"),
+                            actionType: "destructive",
                             action: async () => {
                               await remove();
                               return true;
@@ -146,7 +158,7 @@ export function ChangeAvatarForm() {
                       </Button>
                     )}
                   </div>
-                  <p className="text-muted-foreground text-sm">{t('info')}</p>
+                  <p className="text-muted-foreground text-sm">{t("info")}</p>
                 </div>
               </div>
             </div>

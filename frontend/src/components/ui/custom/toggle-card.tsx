@@ -1,7 +1,7 @@
-import { Skeleton } from '../common/skeleton';
-import { Switch } from '../common/switch';
+import { Skeleton } from "../common/skeleton";
+import { Switch } from "../common/switch";
 
-import { CardContainer } from './card-container';
+import { CardContainer } from "./card-container";
 
 interface ToggleCardProps {
   heading: string;

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useConfig } from '@/hooks/config';
+import { useEffect } from "react";
+import { useConfig } from "@/hooks/config";
 
 const themeClassRegex = /^theme.*/;
 

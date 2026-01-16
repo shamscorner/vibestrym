@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { type PropsWithChildren, useEffect } from 'react';
-import { useMediaQuery } from '@/hooks/media-query';
-import { cn } from '@/utils/tw-merge';
-import { useSidebar } from '../hooks/sidebar';
+import { type PropsWithChildren, useEffect } from "react";
+import { useMediaQuery } from "@/hooks/media-query";
+import { cn } from "@/utils/tw-merge";
+import { useSidebar } from "../hooks/sidebar";
 
 export function LayoutWrapper({ children }: PropsWithChildren<unknown>) {
-  const isMobile = useMediaQuery('(max-width: 1024px)');
+  const isMobile = useMediaQuery("(max-width: 1024px)");
 
   const { isCollapsed, open, close } = useSidebar();
 
@@ -20,8 +20,8 @@ export function LayoutWrapper({ children }: PropsWithChildren<unknown>) {
   return (
     <div
       className={cn(
-        'mt-[75px] h-full p-8',
-        isCollapsed ? 'ml-16' : 'ml-16 lg:ml-64'
+        "mt-[75px] h-full p-8",
+        isCollapsed ? "ml-16" : "ml-16 lg:ml-64"
       )}
     >
       {children}

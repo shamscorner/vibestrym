@@ -1,18 +1,18 @@
-import type { MetadataRoute } from 'next';
-import { APP_URL, SERVER_URL } from '@/constants/url.constants';
+import type { MetadataRoute } from "next";
+import { APP_URL, SERVER_URL } from "@/constants/url.constants";
 import {
   FindAllCategoriesDocument,
   type FindAllCategoriesQuery,
-} from '@/graphql/_generated/output';
+} from "@/graphql/_generated/output";
 
 async function findAllCategories() {
   try {
     const query = FindAllCategoriesDocument.loc?.source.body;
 
     const response = await fetch(SERVER_URL, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ query }),
       next: {
@@ -24,10 +24,10 @@ async function findAllCategories() {
 
     return {
       categories: data.data
-        .findAllCategories as FindAllCategoriesQuery['findAllCategories'],
+        .findAllCategories as FindAllCategoriesQuery["findAllCategories"],
     };
   } catch {
-    throw new Error('Failed to fetch categories');
+    throw new Error("Failed to fetch categories");
   }
 }
 

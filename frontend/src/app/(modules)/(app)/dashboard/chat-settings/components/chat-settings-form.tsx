@@ -1,24 +1,31 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
-import { Form, FormField } from '@/components/ui/common/form';
-import { Heading } from '@/components/ui/custom/heading';
+import { useMutation } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { useCurrentAccount } from "@/app/(modules)/(auth)/hooks/current-account";
+import { Form, FormField } from "@/components/ui/common/form";
+import { Heading } from "@/components/ui/custom/heading";
 import {
   ToggleCard,
   ToggleCardSkeleton,
-} from '@/components/ui/custom/toggle-card';
-import { useChangeChatSettingsMutation } from '@/graphql/_generated/output';
+} from "@/components/ui/custom/toggle-card";
+import { graphql } from "../../../../../../gql";
 import {
   type ChangeChatSettingsSchema,
   changeChatSettingsSchema,
-} from './chat-settings.schema';
+} from "./chat-settings.schema";
+
+const ChangeChatSettingsDoc = graphql(`
+mutation ChangeChatSettings($data: ChangeChatSettingsInput!) {
+  changeChatSettings(data: $data)
+}
+`);
 
 export function ChatSettingsForm() {
-  const t = useTranslations('dashboard.chatSettings');
+  const t = useTranslations("dashboard.chatSettings");
 
   const { user, isLoadingProfile } = useCurrentAccount();
 
@@ -32,14 +39,17 @@ export function ChatSettingsForm() {
     },
   });
 
-  const [update, { loading: isLoadingUpdate }] = useChangeChatSettingsMutation({
-    onCompleted() {
-      toast.success(t('successMessage'));
-    },
-    onError() {
-      toast.error(t('errorMessage'));
-    },
-  });
+  const [update, { loading: isLoadingUpdate }] = useMutation(
+    ChangeChatSettingsDoc,
+    {
+      onCompleted() {
+        toast.success(t("successMessage"));
+      },
+      onError() {
+        toast.error(t("errorMessage"));
+      },
+    }
+  );
 
   function onChange(field: keyof ChangeChatSettingsSchema, value: boolean) {
     form.setValue(field, value);
@@ -52,11 +62,11 @@ export function ChatSettingsForm() {
   }
 
   return (
-    <div className='max-w-2xl lg:px-10'>
+    <div className="max-w-2xl lg:px-10">
       <Heading
-        description={t('header.description')}
+        description={t("header.description")}
         size="lg"
-        title={t('header.heading')}
+        title={t("header.heading")}
       />
       <div className="mt-3 flex flex-col gap-y-6">
         {isLoadingProfile ? (
@@ -70,10 +80,10 @@ export function ChatSettingsForm() {
               name="isChatEnabled"
               render={({ field }) => (
                 <ToggleCard
-                  description={t('isChatEnabled.description')}
-                  heading={t('isChatEnabled.heading')}
+                  description={t("isChatEnabled.description")}
+                  heading={t("isChatEnabled.heading")}
                   isDisabled={isLoadingUpdate}
-                  onChange={(value) => onChange('isChatEnabled', value)}
+                  onChange={(value) => onChange("isChatEnabled", value)}
                   value={field.value}
                 />
               )}
@@ -83,10 +93,10 @@ export function ChatSettingsForm() {
               name="isChatFollowersOnly"
               render={({ field }) => (
                 <ToggleCard
-                  description={t('isChatFollowersOnly.description')}
-                  heading={t('isChatFollowersOnly.heading')}
+                  description={t("isChatFollowersOnly.description")}
+                  heading={t("isChatFollowersOnly.heading")}
                   isDisabled={isLoadingUpdate}
-                  onChange={(value) => onChange('isChatFollowersOnly', value)}
+                  onChange={(value) => onChange("isChatFollowersOnly", value)}
                   value={field.value}
                 />
               )}
@@ -96,11 +106,11 @@ export function ChatSettingsForm() {
               name="isChatPremiumFollowersOnly"
               render={({ field }) => (
                 <ToggleCard
-                  description={t('isChatPremiumFollowersOnly.description')}
-                  heading={t('isChatPremiumFollowersOnly.heading')}
+                  description={t("isChatPremiumFollowersOnly.description")}
+                  heading={t("isChatPremiumFollowersOnly.heading")}
                   isDisabled={isLoadingUpdate || !user?.isVerified}
                   onChange={(value) =>
-                    onChange('isChatPremiumFollowersOnly', value)
+                    onChange("isChatPremiumFollowersOnly", value)
                   }
                   value={field.value}
                 />

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const disableTotpSchema = z.object({
   pin: z.string().length(6),

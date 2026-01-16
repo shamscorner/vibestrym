@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { captureException } from '@sentry/nextjs';
-import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { type ComponentProps, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/common/button';
+import { useMutation } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { captureException } from "@sentry/nextjs";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { type ComponentProps, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/common/button";
 import {
   Form,
   FormControl,
@@ -15,25 +16,36 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/common/form';
-import { Input } from '@/components/ui/common/input';
+} from "@/components/ui/common/form";
+import { Input } from "@/components/ui/common/input";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from '@/components/ui/common/input-otp';
-import { useDeactivateAccountMutation } from '@/graphql/_generated/output';
-import { useAuth } from '../../../hooks';
+} from "@/components/ui/common/input-otp";
+import { graphql } from "../../../../../../gql";
+import { useAuth } from "../../../hooks";
 import {
   type DeactivateSchema,
   deactivateSchema,
-} from '../deactivate-account.schema';
+} from "../deactivate-account.schema";
+
+const DeactivateAccountDoc = graphql(`
+mutation DeactivateAccount($data: DeactivateAccountInput!) {
+  deactivateAccount(data: $data) {
+    user {
+      isDeactivated
+    }
+    message
+  }
+}
+`);
 
 export function DeactivateForm({
   className,
   ...props
-}: ComponentProps<'form'>) {
-  const t = useTranslations('auth.deactivate');
+}: ComponentProps<"form">) {
+  const t = useTranslations("auth.deactivate");
 
   const { exit } = useAuth();
   const router = useRouter();
@@ -43,32 +55,34 @@ export function DeactivateForm({
   const form = useForm<DeactivateSchema>({
     resolver: zodResolver(deactivateSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
-  const [deactivate, { loading: isLoadingDeactivate }] =
-    useDeactivateAccountMutation({
+  const [deactivate, { loading: isLoadingDeactivate }] = useMutation(
+    DeactivateAccountDoc,
+    {
       onCompleted(data) {
         if (data.deactivateAccount.message) {
           setIsShowConfirm(true);
         } else {
           exit();
-          toast.success(t('successMessage'));
-          router.push('/');
+          toast.success(t("successMessage"));
+          router.push("/");
         }
       },
       onError(error) {
         captureException(error, {
           extra: {
-            action: 'deactivateAccount',
+            action: "deactivateAccount",
             data: form.getValues(),
           },
         });
-        toast.error(error.message || t('errorMessage'));
+        toast.error(error.message || t("errorMessage"));
       },
-    });
+    }
+  );
 
   const { isValid } = form.formState;
 
@@ -84,9 +98,9 @@ export function DeactivateForm({
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className="mb-6 flex flex-col items-center gap-2 text-center">
-          <h1 className="font-bold text-2xl">{t('heading')}</h1>
+          <h1 className="font-bold text-2xl">{t("heading")}</h1>
           <p className="text-balance text-muted-foreground text-sm">
-            {t('description')}
+            {t("description")}
           </p>
         </div>
         {isShowConfirm ? (
@@ -95,7 +109,7 @@ export function DeactivateForm({
             name="pin"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('pin.label')}</FormLabel>
+                <FormLabel>{t("pin.label")}</FormLabel>
                 <FormControl>
                   <InputOTP maxLength={6} {...field}>
                     <InputOTPGroup>
@@ -108,7 +122,7 @@ export function DeactivateForm({
                     </InputOTPGroup>
                   </InputOTP>
                 </FormControl>
-                <FormDescription>{t('pin.description')}</FormDescription>
+                <FormDescription>{t("pin.description")}</FormDescription>
               </FormItem>
             )}
           />
@@ -119,7 +133,7 @@ export function DeactivateForm({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('email.label')}</FormLabel>
+                  <FormLabel>{t("email.label")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isLoadingDeactivate}
@@ -127,7 +141,7 @@ export function DeactivateForm({
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>{t('email.description')}</FormDescription>
+                  <FormDescription>{t("email.description")}</FormDescription>
                 </FormItem>
               )}
             />
@@ -136,7 +150,7 @@ export function DeactivateForm({
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('password.label')}</FormLabel>
+                  <FormLabel>{t("password.label")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isLoadingDeactivate}
@@ -144,7 +158,7 @@ export function DeactivateForm({
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>{t('password.description')}</FormDescription>
+                  <FormDescription>{t("password.description")}</FormDescription>
                 </FormItem>
               )}
             />
@@ -154,7 +168,7 @@ export function DeactivateForm({
           className="mt-2 w-full"
           disabled={!isValid || isLoadingDeactivate}
         >
-          {t('submitButton')}
+          {t("submitButton")}
         </Button>
       </form>
     </Form>

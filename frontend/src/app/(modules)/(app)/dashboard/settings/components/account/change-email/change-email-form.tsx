@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
-import { Button } from '@/components/ui/common/button';
+import { useMutation } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { useCurrentAccount } from "@/app/(modules)/(auth)/hooks/current-account";
+import { Button } from "@/components/ui/common/button";
 import {
   Form,
   FormControl,
@@ -13,35 +14,41 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/common/form';
-import { Input } from '@/components/ui/common/input';
-import { Skeleton } from '@/components/ui/common/skeleton';
-import { FormWrapper } from '@/components/ui/custom/form-wrapper';
-import { useChangeEmailMutation } from '@/graphql/_generated/output';
+} from "@/components/ui/common/form";
+import { Input } from "@/components/ui/common/input";
+import { Skeleton } from "@/components/ui/common/skeleton";
+import { FormWrapper } from "@/components/ui/custom/form-wrapper";
+import { graphql } from "../../../../../../../../gql";
 import {
   type ChangeEmailSchema,
   changeEmailSchema,
-} from './change-email.schema';
+} from "./change-email.schema";
+
+const ChangeEmailDoc = graphql(`
+mutation ChangeEmail($data: ChangeEmailInput!) {
+  changeEmail(data: $data)
+}
+`);
 
 export function ChangeEmailForm() {
-  const t = useTranslations('dashboard.settings.account.email');
+  const t = useTranslations("dashboard.settings.account.email");
 
   const { user, isLoadingProfile, refetch } = useCurrentAccount();
 
   const form = useForm<ChangeEmailSchema>({
     resolver: zodResolver(changeEmailSchema),
     values: {
-      email: user?.email ?? '',
+      email: user?.email ?? "",
     },
   });
 
-  const [update, { loading: isLoadingUpdate }] = useChangeEmailMutation({
+  const [update, { loading: isLoadingUpdate }] = useMutation(ChangeEmailDoc, {
     onCompleted() {
       refetch();
-      toast.success(t('successMessage'));
+      toast.success(t("successMessage"));
     },
     onError() {
-      toast.error(t('errorMessage'));
+      toast.error(t("errorMessage"));
     },
   });
 
@@ -54,7 +61,7 @@ export function ChangeEmailForm() {
   return isLoadingProfile ? (
     <ChangeEmailFormSkeleton />
   ) : (
-    <FormWrapper heading={t('heading')}>
+    <FormWrapper heading={t("heading")}>
       <Form {...form}>
         <form className="grid gap-y-3" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -62,7 +69,7 @@ export function ChangeEmailForm() {
             name="email"
             render={({ field }) => (
               <FormItem className="px-5">
-                <FormLabel>{t('label')}</FormLabel>
+                <FormLabel>{t("label")}</FormLabel>
                 <FormControl>
                   <Input
                     disabled={isLoadingUpdate}
@@ -70,13 +77,13 @@ export function ChangeEmailForm() {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>{t('description')}</FormDescription>
+                <FormDescription>{t("description")}</FormDescription>
               </FormItem>
             )}
           />
           <div className="flex justify-end px-5">
             <Button disabled={!(isValid && isDirty) || isLoadingUpdate}>
-              {t('submitButton')}
+              {t("submitButton")}
             </Button>
           </div>
         </form>

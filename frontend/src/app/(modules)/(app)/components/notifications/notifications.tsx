@@ -1,18 +1,25 @@
-import { BellIcon } from 'lucide-react';
-
+import { useQuery } from "@apollo/client/react";
+import { BellIcon } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/common/popover';
-import { useFindUnreadNotificationsCountQuery } from '@/graphql/_generated/output';
-import { NotificationsList } from './notifications-list';
+} from "@/components/ui/common/popover";
+import { graphql } from "../../../../../gql";
+import { NotificationsList } from "./notifications-list";
+
+const FindUnreadNotificationsCountDoc = graphql(`
+query FindUnreadNotificationsCount {
+  findUnreadNotificationsCount
+}
+`);
 
 export function Notifications() {
-  const { data, loading: isLoadingCount } =
-    useFindUnreadNotificationsCountQuery();
+  const { data, loading: isLoadingCount } = useQuery(
+    FindUnreadNotificationsCountDoc
+  );
   const count = data?.findUnreadNotificationsCount ?? 0;
-  const displayCount = count > 10 ? '+9' : count;
+  const displayCount = count > 10 ? "+9" : count;
 
   if (isLoadingCount) return null;
 

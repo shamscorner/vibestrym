@@ -1,9 +1,9 @@
-import { Volume1, Volume2, VolumeX } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { Volume1, Volume2, VolumeX } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-import { Button } from '@/components/ui/common/button';
-import { Slider } from '@/components/ui/common/slider';
-import { Hint } from '@/components/ui/custom/hint';
+import { Button } from "@/components/ui/common/button";
+import { Slider } from "@/components/ui/common/slider";
+import { Hint } from "@/components/ui/custom/hint";
 
 interface VolumeControlProps {
   onToggle: () => void;
@@ -16,7 +16,7 @@ export function VolumeControl({
   onChange,
   value,
 }: VolumeControlProps) {
-  const t = useTranslations('streams.stream.video.player');
+  const t = useTranslations("streams.stream.video.player");
 
   const isMuted = value === 0;
   const isAboveHalf = value > 50;
@@ -35,7 +35,7 @@ export function VolumeControl({
 
   return (
     <div className="flex items-center gap-2">
-      <Hint asChild label={t('volume')}>
+      <Hint asChild label={t("volume")}>
         <Button
           className="text-white hover:bg-white/10"
           onClick={onToggle}
