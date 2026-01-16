@@ -3,9 +3,9 @@ import { ConfigService } from '@nestjs/config'
 import GqlUpload from 'graphql-upload/Upload.mjs'
 import { AccessToken } from 'livekit-server-sdk'
 
-import type { Prisma, User } from '@/prisma/generated'
 import { AppConfig } from '@/src/core/config/app.config'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import type { Prisma, User } from '@/src/generated/prisma/client'
 import { uploadImage } from '@/src/shared/utils/upload.util'
 
 import { StorageService } from '../libs/storage/storage.service'

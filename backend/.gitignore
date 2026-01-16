@@ -58,6 +58,7 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 # Prisma Client generated files
 /generated/prisma
 /prisma/generated
+/src/generated
 
 # Compodoc documentation
 /documentation

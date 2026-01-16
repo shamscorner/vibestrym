@@ -2,7 +2,7 @@ import { BadRequestException } from '@nestjs/common'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { Throttle } from '@nestjs/throttler'
 
-import type { User } from '@/prisma/generated'
+import type { User } from '@/src/generated/prisma/client'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 

@@ -1,9 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common'
 
+import { PrismaService } from '@/src/core/prisma/prisma.service'
 // import { Cron, CronExpression } from '@nestjs/schedule'
 
-import { User } from '@/prisma/generated'
-import { PrismaService } from '@/src/core/prisma/prisma.service'
+import { User } from '@/src/generated/prisma/client'
 
 import { MailService } from '../libs/mail/mail.service'
 import { StorageService } from '../libs/storage/storage.service'

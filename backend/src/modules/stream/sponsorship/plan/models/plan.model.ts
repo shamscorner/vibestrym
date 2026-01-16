@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 
-import type { SponsorshipPlan } from '@/prisma/generated'
+import type { SponsorshipPlan } from '@/src/generated/prisma/client'
 import { UserModel } from '@/src/modules/auth/account/models/user.model'
 import { Relation } from '@/src/shared/types/swc.types'
 

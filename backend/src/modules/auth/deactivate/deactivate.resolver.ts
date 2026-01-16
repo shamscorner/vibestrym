@@ -1,7 +1,7 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql'
 import { Throttle } from '@nestjs/throttler'
 
-import { User } from '@/prisma/generated'
+import { User } from '@/src/generated/prisma/client'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 import { UserAgent } from '@/src/shared/decorators/user-agent.decorator'

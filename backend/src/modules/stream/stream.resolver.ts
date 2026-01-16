@@ -3,7 +3,7 @@ import { Throttle } from '@nestjs/throttler'
 import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs'
 import GqlUpload from 'graphql-upload/Upload.mjs'
 
-import { User } from '@/prisma/generated'
+import { User } from '@/src/generated/prisma/client'
 import { Authorization } from '@/src/shared/decorators/auth.decorator'
 import { Authorized } from '@/src/shared/decorators/authorized.decorator'
 import { FileValidationPipe } from '@/src/shared/pipes/file-validation.pipe'

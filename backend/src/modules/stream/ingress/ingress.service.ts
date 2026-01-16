@@ -9,8 +9,8 @@ import {
 	TrackSource
 } from 'livekit-server-sdk'
 
-import type { User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import type { User } from '@/src/generated/prisma/client'
 
 import { LivekitService } from '../../libs/livekit/livekit.service'
 

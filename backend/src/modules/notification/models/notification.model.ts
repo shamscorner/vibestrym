@@ -1,6 +1,9 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql'
 
-import { type Notification, NotificationType } from '@/prisma/generated'
+import {
+	type Notification,
+	NotificationType
+} from '@/src/generated/prisma/client'
 import { Relation } from '@/src/shared/types/swc.types'
 
 import { UserModel } from '../../auth/account/models/user.model'

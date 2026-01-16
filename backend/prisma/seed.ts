@@ -1,13 +1,22 @@
 import { Logger } from '@nestjs/common'
+import { PrismaPg } from '@prisma/adapter-pg'
 import { hash } from 'argon2'
+import 'dotenv/config'
+import { env } from 'prisma/config'
 
-import { Prisma, PrismaClient } from '../../../prisma/generated'
-
-import { CATEGORIES } from './data/categories.data'
-import { STREAMS } from './data/streams.data'
-import { TEST_CHANNEL, TEST_FOLLOWERS, USERNAMES } from './data/users.data'
+import { CATEGORIES } from '../src/core/prisma/data/categories.data'
+import { STREAMS } from '../src/core/prisma/data/streams.data'
+import {
+	TEST_CHANNEL,
+	TEST_FOLLOWERS,
+	USERNAMES
+} from '../src/core/prisma/data/users.data'
+import { Prisma, PrismaClient } from '../src/generated/prisma/client'
 
 const prisma = new PrismaClient({
+	adapter: new PrismaPg({
+		connectionString: env('DATABASE_URL')
+	}),
 	transactionOptions: {
 		maxWait: 5000,
 		timeout: 10000,

@@ -40,6 +40,9 @@ export type AppConfig = {
 		database: string
 		uri: string
 	}
+	database: {
+		url: string
+	}
 	redis: {
 		user: string
 		password: string
@@ -120,6 +123,9 @@ export const loadAppConfig = (): AppConfig => {
 			port: getEnv('POSTGRES_PORT'),
 			database: getEnv('POSTGRES_DATABASE'),
 			uri: getEnv('POSTGRES_URI')
+		},
+		database: {
+			url: getEnv('DATABASE_URL')
 		},
 		redis: {
 			user: getEnv('REDIS_USER'),

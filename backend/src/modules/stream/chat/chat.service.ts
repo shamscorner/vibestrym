@@ -4,8 +4,8 @@ import {
 	NotFoundException
 } from '@nestjs/common'
 
-import { User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import { User } from '@/src/generated/prisma/client'
 
 import { ChangeChatSettingsInput } from './inputs/change-chat-settings.input'
 import { SendMessageInput } from './inputs/send-message.input'

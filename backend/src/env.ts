@@ -26,6 +26,7 @@ export interface Environment {
 	POSTGRES_PORT: number
 	POSTGRES_DATABASE: string
 	POSTGRES_URI: string
+	DATABASE_URL: string
 	REDIS_USER: string
 	REDIS_PASSWORD: string
 	REDIS_HOST: string

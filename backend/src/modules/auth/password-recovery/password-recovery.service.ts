@@ -7,8 +7,8 @@ import {
 import { hash } from 'argon2'
 import type { Request } from 'express'
 
-import { TokenType } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import { TokenType } from '@/src/generated/prisma/client'
 import { generateToken } from '@/src/shared/utils/generate-token.util'
 import { getSessionMetadata } from '@/src/shared/utils/session-metadata.util'
 

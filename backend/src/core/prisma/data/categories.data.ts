@@ -1,4 +1,4 @@
-import { Prisma } from '@/prisma/generated'
+import { Prisma } from '@/src/generated/prisma/client'
 
 export const CATEGORIES: Prisma.CategoryCreateManyInput[] = [
 	{

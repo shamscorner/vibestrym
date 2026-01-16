@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 
-import type { Follow } from '@/prisma/generated'
+import type { Follow } from '@/src/generated/prisma/client'
 import { Relation } from '@/src/shared/types/swc.types'
 
 import { UserModel } from '../../auth/account/models/user.model'

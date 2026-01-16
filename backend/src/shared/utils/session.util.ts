@@ -2,9 +2,9 @@ import { InternalServerErrorException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import type { CookieOptions, Request } from 'express'
 
-import type { User } from '@/prisma/generated'
 import { AppConfig } from '@/src/core/config/app.config'
 import { RedisService } from '@/src/core/redis/redis.service'
+import type { User } from '@/src/generated/prisma/client'
 
 import type { SessionMetadata } from '../types/session-metadata.types'
 

@@ -1,8 +1,8 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 import GqlUpload from 'graphql-upload/Upload.mjs'
 
-import type { User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import type { User } from '@/src/generated/prisma/client'
 import { uploadImage } from '@/src/shared/utils/upload.util'
 
 import { StorageService } from '../../libs/storage/storage.service'

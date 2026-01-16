@@ -1,6 +1,9 @@
 import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql'
 
-import { type Transaction, TransactionStatus } from '@/prisma/generated'
+import {
+	type Transaction,
+	TransactionStatus
+} from '@/src/generated/prisma/client'
 import { UserModel } from '@/src/modules/auth/account/models/user.model'
 
 registerEnumType(TransactionStatus, {

@@ -5,9 +5,9 @@ import {
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 
-import type { User } from '@/prisma/generated'
 import { AppConfig } from '@/src/core/config/app.config'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import type { User } from '@/src/generated/prisma/client'
 import { StripeService } from '@/src/modules/libs/stripe/stripe.service'
 
 @Injectable()

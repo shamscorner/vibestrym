@@ -3,8 +3,12 @@ import { ConfigService } from '@nestjs/config'
 import { Action, Command, Ctx, Start, Update } from 'nestjs-telegraf'
 import { Context, Telegraf } from 'telegraf'
 
-import { SponsorshipPlan, TokenType, type User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import {
+	SponsorshipPlan,
+	TokenType,
+	type User
+} from '@/src/generated/prisma/client'
 import type { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 
 import { BUTTONS } from './telegram.buttons'

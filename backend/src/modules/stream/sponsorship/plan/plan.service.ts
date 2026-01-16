@@ -5,8 +5,8 @@ import {
 	NotFoundException
 } from '@nestjs/common'
 
-import type { User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import type { User } from '@/src/generated/prisma/client'
 import { StripeService } from '@/src/modules/libs/stripe/stripe.service'
 
 import { CreatePlanInput } from './inputs/create-plan.input'

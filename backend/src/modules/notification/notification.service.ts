@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common'
 
+import { PrismaService } from '@/src/core/prisma/prisma.service'
 import {
 	Notification,
 	NotificationSettings,
@@ -7,8 +8,7 @@ import {
 	SponsorshipPlan,
 	TokenType,
 	User
-} from '@/prisma/generated'
-import { PrismaService } from '@/src/core/prisma/prisma.service'
+} from '@/src/generated/prisma/client'
 import { generateToken } from '@/src/shared/utils/generate-token.util'
 
 import { TelegramService } from '../libs/telegram/telegram.service'

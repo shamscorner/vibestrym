@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql'
 
-import type { NotificationSettings } from '@/prisma/generated'
+import type { NotificationSettings } from '@/src/generated/prisma/client'
 import { UserModel } from '@/src/modules/auth/account/models/user.model'
 import { Relation } from '@/src/shared/types/swc.types'
 

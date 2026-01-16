@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
 
-import { User } from '@/prisma/generated'
+import { User } from '@/src/generated/prisma/client'
 
 export interface GqlContext {
 	req: Request & {

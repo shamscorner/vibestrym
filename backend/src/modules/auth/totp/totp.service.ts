@@ -4,9 +4,9 @@ import { randomBytes } from 'crypto'
 import { encode } from 'hi-base32'
 import * as QRCode from 'qrcode'
 
-import type { User } from '@/prisma/generated'
 import { AppConfig } from '@/src/core/config/app.config'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import type { User } from '@/src/generated/prisma/client'
 import { generateTotp } from '@/src/shared/utils/generate-totp.util'
 
 import { DisableTotpInput } from './inputs/disable-totp.input'

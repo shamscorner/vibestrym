@@ -5,9 +5,9 @@ import {
 } from '@nestjs/common'
 import type { Request } from 'express'
 
-import { TokenType, User } from '@/prisma/generated'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
 import { RedisService } from '@/src/core/redis/redis.service'
+import { TokenType, User } from '@/src/generated/prisma/client'
 import { generateToken } from '@/src/shared/utils/generate-token.util'
 import { getSessionMetadata } from '@/src/shared/utils/session-metadata.util'
 import { saveSession } from '@/src/shared/utils/session.util'

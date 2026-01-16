@@ -2,9 +2,9 @@ import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import Stripe from 'stripe'
 
-import { Stream, TransactionStatus, User } from '@/prisma/generated'
 import { AppConfig } from '@/src/core/config/app.config'
 import { PrismaService } from '@/src/core/prisma/prisma.service'
+import { Stream, TransactionStatus, User } from '@/src/generated/prisma/client'
 
 import { LivekitService } from '../libs/livekit/livekit.service'
 import { StripeService } from '../libs/stripe/stripe.service'

@@ -1,4 +1,4 @@
-import type { SponsorshipPlan, User } from '@/prisma/generated'
+import type { SponsorshipPlan, User } from '@/src/generated/prisma/client'
 import type { SessionMetadata } from '@/src/shared/types/session-metadata.types'
 
 export const MESSAGES = {

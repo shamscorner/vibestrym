@@ -10,7 +10,7 @@ export function getStripeConfig(configService: ConfigService): StripeOptions {
 	return {
 		apiKey: stripeConfig.secretKey,
 		config: {
-			apiVersion: '2025-07-30.basil'
+			apiVersion: '2025-12-15.clover'
 		}
 	}
 }
