@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, split } from "@apollo/client";
+import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 import UploadHttpLink from "apollo-upload-client/UploadHttpLink.mjs";
@@ -35,7 +35,7 @@ const wsLink =
 
 const splitLink =
   typeof window !== "undefined" && wsLink
-    ? split(
+    ? ApolloLink.split(
         ({ query }) => {
           const definition = getMainDefinition(query);
           return (
