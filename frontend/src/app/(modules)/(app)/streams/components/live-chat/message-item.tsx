@@ -1,11 +1,11 @@
 import { Medal } from "lucide-react";
 
-import type { Query } from "@/gql/graphql";
+import type { ChatMessageAddedSubscription } from "@/gql/graphql";
 
 import { stringToColor } from "@/utils/color";
 
 interface MessageItemProps {
-  message: Query["findChatMessagesByStream"][0];
+  message: ChatMessageAddedSubscription["chatMessageAdded"];
   isSponsor: boolean;
 }
 
