@@ -1,91 +1,96 @@
-'use client';
+"use client";
 
-import type { ColumnDef } from '@tanstack/react-table';
-import { useTranslations } from 'next-intl';
-
+import { useQuery } from "@apollo/client/react";
+import type { ColumnDef } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
 import {
   DataTable,
   DataTableSkeleton,
-} from '@/components/ui/custom/data-table';
-import { Heading } from '@/components/ui/custom/heading';
+} from "@/components/ui/custom/data-table";
+import { Heading } from "@/components/ui/custom/heading";
+import { graphql } from "@/gql";
+import { TransactionStatus } from "@/gql/graphql";
+import { convertPrice } from "@/utils/convert-price";
+import { formatDate } from "@/utils/format-date";
 
-import {
-  type FindMyTransactionsQuery,
-  TransactionStatus,
-  useFindMyTransactionsQuery,
-} from '@/graphql/_generated/output';
-
-import { convertPrice } from '@/utils/convert-price';
-import { formatDate } from '@/utils/format-date';
+const FindMyTransactionsDoc = graphql(`
+query FindMyTransactions {
+  findMyTransactions {
+    createdAt
+    status
+    amount
+  }
+}
+`);
 
 export function TransactionsTable() {
-  const t = useTranslations('dashboard.transactions');
+  const t = useTranslations("dashboard.transactions");
 
-  const { data, loading: isLoadingTransactions } = useFindMyTransactionsQuery();
+  const { data, loading: isLoadingTransactions } = useQuery(
+    FindMyTransactionsDoc
+  );
   const transactions = data?.findMyTransactions ?? [];
 
-  const transactionsColumns: ColumnDef<
-    FindMyTransactionsQuery['findMyTransactions'][0]
-  >[] = [
-      {
-        accessorKey: 'createdAt',
-        header: t('columns.date'),
-        cell: ({ row }) => formatDate(row.original.createdAt),
-      },
-      {
-        accessorKey: 'status',
-        header: t('columns.status'),
-        cell: ({ row }) => {
-          const status = row.original.status;
-          let statusColor = '';
+  const transactionsColumns: ColumnDef<(typeof transactions)[number]>[] = [
+    {
+      accessorKey: "createdAt",
+      header: t("columns.date"),
+      cell: ({ row }) => formatDate(row.original.createdAt),
+    },
+    {
+      accessorKey: "status",
+      header: t("columns.status"),
+      cell: ({ row }) => {
+        const status = row.original.status;
+        let statusColor = "";
 
-          switch (status) {
-            case TransactionStatus.Success:
-              statusColor = 'text-green-500';
-              return (
-                <div className={`py-1.5 ${statusColor}`}>
-                  {t('columns.success')}
-                </div>
-              );
-            case TransactionStatus.Pending:
-              statusColor = 'text-yellow-500';
-              return (
-                <div className={`py-1.5 ${statusColor}`}>
-                  {t('columns.pending')}
-                </div>
-              );
-            case TransactionStatus.Failed:
-              statusColor = 'text-red-600';
-              return (
-                <div className={`py-1.5 ${statusColor}`}>
-                  {t('columns.failed')}
-                </div>
-              );
-            case TransactionStatus.Expired:
-              statusColor = 'text-purple-500';
-              return (
-                <div className={`py-1.5 ${statusColor}`}>
-                  {t('columns.expired')}
-                </div>
-              );
-            default:
-              statusColor = 'text-foreground';
-              return <div className={`py-1.5 ${statusColor}`}>{status}</div>;
-          }
-        },
+        switch (status) {
+          case TransactionStatus.Success:
+            statusColor = "text-green-500";
+            return (
+              <div className={`py-1.5 ${statusColor}`}>
+                {t("columns.success")}
+              </div>
+            );
+          case TransactionStatus.Pending:
+            statusColor = "text-yellow-500";
+            return (
+              <div className={`py-1.5 ${statusColor}`}>
+                {t("columns.pending")}
+              </div>
+            );
+          case TransactionStatus.Failed:
+            statusColor = "text-red-600";
+            return (
+              <div className={`py-1.5 ${statusColor}`}>
+                {t("columns.failed")}
+              </div>
+            );
+          case TransactionStatus.Expired:
+            statusColor = "text-purple-500";
+            return (
+              <div className={`py-1.5 ${statusColor}`}>
+                {t("columns.expired")}
+              </div>
+            );
+          default:
+            statusColor = "text-foreground";
+            return <div className={`py-1.5 ${statusColor}`}>{status}</div>;
+        }
       },
-      {
-        accessorKey: 'amount',
-        header: t('columns.amount'),
-        cell: ({ row }) => convertPrice(row.original.amount),
-      },
-    ];
+    },
+    {
+      accessorKey: "amount",
+      header: t("columns.amount"),
+      cell: ({ row }) => convertPrice(row.original.amount),
+    },
+  ];
 
   return (
-    <div className='max-w-2xl lg:px-10'>
+    <div className="max-w-2xl lg:px-10">
       <Heading
-        description={t('header.description')}
-        title={t('header.heading')}
+        description={t("header.description")}
+        title={t("header.heading")}
       />
       <div className="mt-5">
         {isLoadingTransactions ? (

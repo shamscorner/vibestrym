@@ -22,41 +22,49 @@ import { Heading } from "@/components/ui/custom/heading";
 import { formatDate } from "@/utils/format-date";
 import { graphql } from "../../../../../../gql";
 
-const FindMyFollowersDoc = graphql(`
-query FindMyFollowers {
-  findMyFollowers {
-    createdAt
-    follower {
+const FindMySponsorsDoc = graphql(`
+query FindMySponsors {
+  findMySponsors {
+    expiresAt
+    user {
       username
       avatar
       isVerified
+    }
+    plan {
+      title
     }
   }
 }
 `);
 
-export function FollowersTable() {
-  const t = useTranslations("dashboard.followers");
+export function SponsorsTable() {
+  const t = useTranslations("dashboard.sponsors");
 
-  const { data, loading: isLoadingFollowers } = useQuery(FindMyFollowersDoc);
-  const followers = data?.findMyFollowers ?? [];
+  const { data, loading: isLoadingSponsors } = useQuery(FindMySponsorsDoc);
+  const sponsors = data?.findMySponsors ?? [];
 
-  const followersColumns: ColumnDef<(typeof followers)[number]>[] = [
+  const sponsorsColumns: ColumnDef<(typeof sponsors)[0]>[] = [
     {
-      accessorKey: "createdAt",
+      accessorKey: "expiresAt",
       header: t("columns.date"),
-      cell: ({ row }) => formatDate(row.original.createdAt),
+      cell: ({ row }) => formatDate(row.original.expiresAt),
     },
     {
-      accessorKey: "follower",
+      accessorKey: "user",
       header: t("columns.user"),
       cell: ({ row }) => (
         <div className="flex items-center gap-x-2">
-          <ChannelAvatar channel={row.original.follower} size="sm" />
-          <h2>{row.original.follower.username}</h2>
-          {row.original.follower.isVerified && <ChannelVerified size="sm" />}
+          <ChannelAvatar channel={row.original.user} size="sm" />
+          <h2>{row.original.user.username}</h2>
+          {row.original.user.isVerified && <ChannelVerified size="sm" />}
         </div>
       ),
+    },
+    {
+      accessorKey: "plan",
+      header: t("columns.plan"),
+      cell: ({ row }) => row.original.plan.title,
     },
     {
       accessorKey: "actions",
@@ -69,7 +77,7 @@ export function FollowersTable() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="right">
-            <Link href={`/${row.original.follower.username}`} target="_blank">
+            <Link href={`/${row.original.user.username}`} target="_blank">
               <DropdownMenuItem>
                 <User className="mr-2 size-4" />
                 {t("columns.viewChannel")}
@@ -82,17 +90,17 @@ export function FollowersTable() {
   ];
 
   return (
-    <div className="max-w-2xl lg:px-10">
+    <div className="max-w-4xl lg:px-10">
       <Heading
         description={t("header.description")}
         size="lg"
         title={t("header.heading")}
       />
       <div className="mt-5">
-        {isLoadingFollowers ? (
+        {isLoadingSponsors ? (
           <DataTableSkeleton />
         ) : (
-          <DataTable columns={followersColumns} data={followers} />
+          <DataTable columns={sponsorsColumns} data={sponsors} />
         )}
       </div>
     </div>
