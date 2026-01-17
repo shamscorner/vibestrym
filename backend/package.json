@@ -62,7 +62,7 @@
 		"class-validator": "^0.14.3",
 		"clsx": "^2.1.1",
 		"concurrently": "^9.2.1",
-		"connect-redis": "^9.0.0",
+		"connect-redis": "8.1.0",
 		"cookie-parser": "^1.4.7",
 		"device-detector-js": "^3.0.3",
 		"discord.js": "^14.25.1",
