@@ -279,11 +279,6 @@
   resolved "https://registry.yarnpkg.com/@arr/every/-/every-1.0.1.tgz#22fe1f8e6355beca6c7c7bde965eb15cf994387b"
   integrity sha512-UQFQ6SgyJ6LX42W8rHCs8KVc0JS0tzVL9ct4XYedJukskYVWTo49tNiMEK9C2HTyarbNiT/RVIRSY82vH+6sTg==
 
-"@as-integrations/express4@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@as-integrations/express4/-/express4-1.1.2.tgz#cc77e94b461845b57483e1dcc49179fc4dd0996d"
-  integrity sha512-PGeMcwoOKdYnZ4LtsmM7aLNoel3tbK8wKnfyahdRau1qb7wLbuaXB35zg3w34Ov4bm3WJtO3yzd8Bw5jVE+aIQ==
-
 "@as-integrations/express5@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@as-integrations/express5/-/express5-1.1.2.tgz#5c5b207b8e457bbd546e9b20898d0b1f4a478480"

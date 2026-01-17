@@ -32,11 +32,11 @@ export function getSessionOptions(configService: ConfigService) {
 		configService.getOrThrow<AppConfig['session']>('session')
 
 	return {
-		domain: sessionConfig.domain,
-		path: '/', // Important: must match the original
+		path: '/',
 		httpOnly: sessionConfig.httpOnly,
 		secure: sessionConfig.secure,
-		sameSite: 'lax'
+		sameSite: 'lax',
+		...(sessionConfig.domain ? { domain: sessionConfig.domain } : {})
 	} as CookieOptions
 }
 

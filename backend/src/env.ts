@@ -1,5 +1,29 @@
 import { StringValue } from './shared/utils/ms.util'
 
+const parseBooleanEnvValue = (
+	value: string | boolean,
+	key: string
+): boolean => {
+	if (typeof value === 'boolean') return value
+	const normalized = value.trim().toLowerCase()
+	if (normalized === 'true' || normalized === '1') return true
+	if (normalized === 'false' || normalized === '0') return false
+	throw new Error(`Invalid boolean for ${key}: ${value}`)
+}
+
+const parseNumberEnvValue = (value: string | number, key: string): number => {
+	if (typeof value === 'number') return value
+	const trimmed = value.trim()
+	if (trimmed === '') {
+		throw new Error(`Invalid number for ${key}: empty string`)
+	}
+	const numericValue = Number(trimmed)
+	if (Number.isNaN(numericValue)) {
+		throw new Error(`Invalid number for ${key}: ${value}`)
+	}
+	return numericValue
+}
+
 export interface Environment {
 	NODE_ENV: 'development' | 'production' | 'test'
 	LOG_LEVEL: 'info' | 'warn' | 'error' | 'debug'
@@ -68,6 +92,20 @@ export const getEnv = <K extends keyof Environment>(
 			return fallback
 		}
 		throw new Error(`Missing environment variable: ${key}.`)
+	}
+
+	if (typeof fallback === 'boolean') {
+		return parseBooleanEnvValue(
+			value as string | boolean,
+			key
+		) as Environment[K]
+	}
+
+	if (typeof fallback === 'number') {
+		return parseNumberEnvValue(
+			value as string | number,
+			key
+		) as Environment[K]
 	}
 
 	return value
