@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { graphql } from "@/gql";
-import { useGraphQL } from "@/gql/execute";
+import { gqlFetch } from "@/gql/execute";
 import type { CategoryModel } from "@/gql/graphql";
 import { getMediaSource } from "@/utils/get-media-source";
 import { CategoryOverview } from "./components/category-overview";
@@ -35,10 +35,11 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const params = await props.params;
 
-  const { findCategoryBySlug: category } =
-    useGraphQL(findCategoryBySlugDocument, {
-      slug: params.slug,
-    }).data?.data ?? {};
+  const { data: categoryData } = await gqlFetch(findCategoryBySlugDocument, {
+    slug: params.slug,
+  });
+
+  const category = categoryData?.findCategoryBySlug;
 
   if (!category) {
     return notFound();
@@ -63,10 +64,11 @@ export default async function CategoryPage(props: {
 }) {
   const params = await props.params;
 
-  const { findCategoryBySlug: category } =
-    useGraphQL(findCategoryBySlugDocument, {
-      slug: params.slug,
-    }).data?.data ?? {};
+  const { data: categoryData } = await gqlFetch(findCategoryBySlugDocument, {
+    slug: params.slug,
+  });
+
+  const category = categoryData?.findCategoryBySlug;
 
   if (!category) {
     return notFound();

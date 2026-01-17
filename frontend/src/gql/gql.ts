@@ -18,6 +18,7 @@ type Documents = {
     "\nquery FindRandomStreams {\n  findRandomStreams {\n    title\n    thumbnailUrl\n    isLive\n    user {\n      username\n      avatar\n      isVerified\n    }\n    category {\n      title\n      slug\n    }\n  }\n}\n": typeof types.FindRandomStreamsDocument,
     "\nquery FindRandomCategories {\n  findRandomCategories {\n    title\n    slug\n    thumbnailUrl\n  }\n}\n": typeof types.FindRandomCategoriesDocument,
     "\nquery FindCategoryBySlug($slug: String!) {\n  findCategoryBySlug(slug: $slug) {\n    title\n    thumbnailUrl\n    description\n    streams {\n      title\n      thumbnailUrl\n      isLive\n      user {\n        username\n        avatar\n        isVerified\n      }\n      category {\n        title\n        slug\n      }\n    }\n  }\n}\n": typeof types.FindCategoryBySlugDocument,
+    "\nquery FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n": typeof types.FindAllCategoriesDocument,
     "\n  query FindUnreadNotificationsCount {\n    findUnreadNotificationsCount\n  }\n": typeof types.FindUnreadNotificationsCountDocument,
     "\n  query FindNotificationsByUser {\n    findNotificationsByUser {\n      id\n      message\n      type\n    }\n  }\n": typeof types.FindNotificationsByUserDocument,
     "\nquery FindUnreadNotificationsCount {\n  findUnreadNotificationsCount\n}\n": typeof types.FindUnreadNotificationsCountDocument,
@@ -56,7 +57,6 @@ type Documents = {
     "\nquery FindChatMessagesByStream($streamId: String!) {\n  findChatMessagesByStream(streamId: $streamId) {\n    createdAt\n    text\n    user {\n      id\n      username\n    }\n  }\n}\n": typeof types.FindChatMessagesByStreamDocument,
     "\nsubscription ChatMessageAdded($streamId: String!) {\n  chatMessageAdded(streamId: $streamId) {\n    createdAt\n    text\n    user {\n      id\n      username\n    }\n  }\n}\n": typeof types.ChatMessageAddedDocument,
     "\nmutation SendChatMessage($data: SendMessageInput!) {\n  sendChatMessage(data: $data) {\n    streamId\n  }\n}\n": typeof types.SendChatMessageDocument,
-    "\nquery FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n": typeof types.FindAllCategoriesDocument,
     "\nmutation ChangeStreamInfo($data: ChangeStreamInfoInput!) {\n  changeStreamInfo(data: $data)\n}\n": typeof types.ChangeStreamInfoDocument,
     "\nmutation RemoveStreamThumbnail {\n  removeStreamThumbnail\n}\n": typeof types.RemoveStreamThumbnailDocument,
     "\nmutation ChangeStreamThumbnail($thumbnail: Upload!) {\n  changeStreamThumbnail(thumbnail: $thumbnail)\n}\n": typeof types.ChangeStreamThumbnailDocument,
@@ -71,12 +71,14 @@ type Documents = {
     "\nquery FindProfile {\n  findProfile {\n    id\n    username\n    displayName\n    email\n    avatar\n    bio\n    isVerified\n    isTotpEnabled\n    notificationSettings {\n      siteNotifications\n      telegramNotifications\n    }\n    stream {\n      serverUrl\n      streamKey\n      isChatEnabled\n      isChatFollowersOnly\n      isChatPremiumFollowersOnly\n    }\n  }\n}\n": typeof types.FindProfileDocument,
     "\nmutation ClearSessionCookie {\n  clearSessionCookie\n}\n": typeof types.ClearSessionCookieDocument,
     "\nmutation LogoutUser {\n  logoutUser\n}\n": typeof types.LogoutUserDocument,
+    "\n query FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n": typeof types.FindAllCategoriesDocument,
 };
 const documents: Documents = {
     "\nquery FindChannelByUsername($username: String!) {\n  findChannelByUsername(username: $username) {\n    id\n    username\n    displayName\n    avatar\n    bio\n    isVerified\n    socialLinks {\n      title\n      url\n    }\n    stream {\n      id\n      title\n      thumbnailUrl\n      isLive\n      isChatEnabled\n      isChatFollowersOnly\n      isChatPremiumFollowersOnly\n      category {\n        id\n        title\n      }\n    }\n    sponsorshipPlans {\n      id\n      title\n      description\n      price\n    }\n    followings {\n      id\n    }\n  }\n}\n": types.FindChannelByUsernameDocument,
     "\nquery FindRandomStreams {\n  findRandomStreams {\n    title\n    thumbnailUrl\n    isLive\n    user {\n      username\n      avatar\n      isVerified\n    }\n    category {\n      title\n      slug\n    }\n  }\n}\n": types.FindRandomStreamsDocument,
     "\nquery FindRandomCategories {\n  findRandomCategories {\n    title\n    slug\n    thumbnailUrl\n  }\n}\n": types.FindRandomCategoriesDocument,
     "\nquery FindCategoryBySlug($slug: String!) {\n  findCategoryBySlug(slug: $slug) {\n    title\n    thumbnailUrl\n    description\n    streams {\n      title\n      thumbnailUrl\n      isLive\n      user {\n        username\n        avatar\n        isVerified\n      }\n      category {\n        title\n        slug\n      }\n    }\n  }\n}\n": types.FindCategoryBySlugDocument,
+    "\nquery FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n": types.FindAllCategoriesDocument,
     "\n  query FindUnreadNotificationsCount {\n    findUnreadNotificationsCount\n  }\n": types.FindUnreadNotificationsCountDocument,
     "\n  query FindNotificationsByUser {\n    findNotificationsByUser {\n      id\n      message\n      type\n    }\n  }\n": types.FindNotificationsByUserDocument,
     "\nquery FindUnreadNotificationsCount {\n  findUnreadNotificationsCount\n}\n": types.FindUnreadNotificationsCountDocument,
@@ -115,7 +117,6 @@ const documents: Documents = {
     "\nquery FindChatMessagesByStream($streamId: String!) {\n  findChatMessagesByStream(streamId: $streamId) {\n    createdAt\n    text\n    user {\n      id\n      username\n    }\n  }\n}\n": types.FindChatMessagesByStreamDocument,
     "\nsubscription ChatMessageAdded($streamId: String!) {\n  chatMessageAdded(streamId: $streamId) {\n    createdAt\n    text\n    user {\n      id\n      username\n    }\n  }\n}\n": types.ChatMessageAddedDocument,
     "\nmutation SendChatMessage($data: SendMessageInput!) {\n  sendChatMessage(data: $data) {\n    streamId\n  }\n}\n": types.SendChatMessageDocument,
-    "\nquery FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n": types.FindAllCategoriesDocument,
     "\nmutation ChangeStreamInfo($data: ChangeStreamInfoInput!) {\n  changeStreamInfo(data: $data)\n}\n": types.ChangeStreamInfoDocument,
     "\nmutation RemoveStreamThumbnail {\n  removeStreamThumbnail\n}\n": types.RemoveStreamThumbnailDocument,
     "\nmutation ChangeStreamThumbnail($thumbnail: Upload!) {\n  changeStreamThumbnail(thumbnail: $thumbnail)\n}\n": types.ChangeStreamThumbnailDocument,
@@ -130,6 +131,7 @@ const documents: Documents = {
     "\nquery FindProfile {\n  findProfile {\n    id\n    username\n    displayName\n    email\n    avatar\n    bio\n    isVerified\n    isTotpEnabled\n    notificationSettings {\n      siteNotifications\n      telegramNotifications\n    }\n    stream {\n      serverUrl\n      streamKey\n      isChatEnabled\n      isChatFollowersOnly\n      isChatPremiumFollowersOnly\n    }\n  }\n}\n": types.FindProfileDocument,
     "\nmutation ClearSessionCookie {\n  clearSessionCookie\n}\n": types.ClearSessionCookieDocument,
     "\nmutation LogoutUser {\n  logoutUser\n}\n": types.LogoutUserDocument,
+    "\n query FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n": types.FindAllCategoriesDocument,
 };
 
 /**
@@ -162,6 +164,10 @@ export function graphql(source: "\nquery FindRandomCategories {\n  findRandomCat
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\nquery FindCategoryBySlug($slug: String!) {\n  findCategoryBySlug(slug: $slug) {\n    title\n    thumbnailUrl\n    description\n    streams {\n      title\n      thumbnailUrl\n      isLive\n      user {\n        username\n        avatar\n        isVerified\n      }\n      category {\n        title\n        slug\n      }\n    }\n  }\n}\n"): (typeof documents)["\nquery FindCategoryBySlug($slug: String!) {\n  findCategoryBySlug(slug: $slug) {\n    title\n    thumbnailUrl\n    description\n    streams {\n      title\n      thumbnailUrl\n      isLive\n      user {\n        username\n        avatar\n        isVerified\n      }\n      category {\n        title\n        slug\n      }\n    }\n  }\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nquery FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n"): (typeof documents)["\nquery FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -317,10 +323,6 @@ export function graphql(source: "\nmutation SendChatMessage($data: SendMessageIn
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\nquery FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n"): (typeof documents)["\nquery FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
 export function graphql(source: "\nmutation ChangeStreamInfo($data: ChangeStreamInfoInput!) {\n  changeStreamInfo(data: $data)\n}\n"): (typeof documents)["\nmutation ChangeStreamInfo($data: ChangeStreamInfoInput!) {\n  changeStreamInfo(data: $data)\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -374,6 +376,10 @@ export function graphql(source: "\nmutation ClearSessionCookie {\n  clearSession
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\nmutation LogoutUser {\n  logoutUser\n}\n"): (typeof documents)["\nmutation LogoutUser {\n  logoutUser\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n query FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n"): (typeof documents)["\n query FindAllCategories {\n  findAllCategories {\n    id\n    updatedAt\n    title\n    slug\n    thumbnailUrl\n  }\n}\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { graphql } from "@/gql";
-import { useGraphQL } from "@/gql/execute";
+import { gqlFetch } from "@/gql/execute";
 import type { UserModel } from "@/gql/graphql";
 import { getMediaSource } from "@/utils/get-media-source";
 import { StreamOverview } from "../../streams/components/stream-overview";
@@ -50,10 +50,10 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const params = await props.params;
 
-  const { data: channelData } = useGraphQL(findChannelByUsername, {
+  const { data: channelData } = await gqlFetch(findChannelByUsername, {
     username: params.username,
   });
-  const channel = channelData?.data?.findChannelByUsername;
+  const channel = channelData?.findChannelByUsername;
 
   if (!channel) {
     return notFound();
@@ -78,12 +78,11 @@ export default async function ChannelPage(props: {
 }) {
   const params = await props.params;
 
-  const { data: channelData } = useGraphQL(findChannelByUsername, {
+  const { data: channelData } = await gqlFetch(findChannelByUsername, {
     username: params.username,
   });
 
-  const channel = channelData?.data?.findChannelByUsername;
-
+  const channel = channelData?.findChannelByUsername;
   if (!channel) {
     return notFound();
   }

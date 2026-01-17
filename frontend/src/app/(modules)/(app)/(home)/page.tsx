@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { SITE_TITLE } from "@/constants/seo.constants";
 import { graphql } from "@/gql";
-import { useGraphQL } from "@/gql/execute";
+import { gqlFetch } from "@/gql/execute";
 import type { CategoryModel, StreamModel } from "@/gql/graphql";
 import { CategoriesList } from "../categories/components/categories-list";
 import { StreamsList } from "../streams/components/stream-list";
@@ -45,19 +45,17 @@ export function generateMetadata(): Metadata {
 export default async function HomePage() {
   const t = await getTranslations("home");
 
-  const { data: streamsData } = useGraphQL(findRandomStreamsDocument);
-  const { data: categoriesData } = useGraphQL(findRandomCategoriesDocument);
+  const { data: streamsData } = await gqlFetch(findRandomStreamsDocument);
+  const { data: categoriesData } = await gqlFetch(findRandomCategoriesDocument);
 
   return (
     <div className="flex flex-col gap-y-10">
       <StreamsList
         heading={t("streamsHeading")}
-        streams={streamsData?.data?.findRandomStreams as StreamModel[]}
+        streams={streamsData?.findRandomStreams as StreamModel[]}
       />
       <CategoriesList
-        categories={
-          categoriesData?.data?.findRandomCategories as CategoryModel[]
-        }
+        categories={categoriesData?.findRandomCategories as CategoryModel[]}
         heading={t("categoriesHeading")}
       />
     </div>

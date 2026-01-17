@@ -1,20 +1,20 @@
 import { SERVER_URL } from '@/constants/url.constants'
 import { type TypedDocumentNode } from '@graphql-typed-document-node/core'
-import { ExecutionResult } from 'graphql'
-import { useQuery, type UseQueryResult } from '@tanstack/react-query'
+// import { captureException } from '@sentry/nextjs'
+import { ExecutionResult, print } from 'graphql'
 
-async function gqlFetch<TResult, TVariables>(
-  url: string,
+export async function gqlFetch<TResult, TVariables>(
   document: TypedDocumentNode<TResult, TVariables>,
-  variables?: TVariables
+  ...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
 ): Promise<ExecutionResult<TResult>> {
-  const response = await fetch(url, {
+
+  const response = await fetch(SERVER_URL, {
     method: 'POST',
     headers: {
       'content-type': 'application/json'
     },
     body: JSON.stringify({
-      query: document.loc?.source.body,
+      query: print(document),
       variables
     }),
     next: {
@@ -22,20 +22,10 @@ async function gqlFetch<TResult, TVariables>(
     },
   })
 
-  if (response.status !== 200) {
+  if (!response.ok) {
+    // captureException(new Error(`GraphQL fetch failed: ${response.statusText}`))
     throw new Error(`Failed to fetch: ${response.statusText}. Body: ${await response.text()}`)
   }
 
-  return (await response.json()) as ExecutionResult<TResult>
-}
-
-export function useGraphQL<TResult, TVariables>(
-  document: TypedDocumentNode<TResult, TVariables>,
-  variables?: TVariables
-): UseQueryResult<ExecutionResult<TResult>, Error> {
-  const key = [(document.definitions[0] as any).name.value, variables] as const
-  return useQuery<ExecutionResult<TResult>, Error, ExecutionResult<TResult>>({
-    queryKey: key,
-    queryFn: () => gqlFetch<TResult, TVariables>(SERVER_URL, document, variables)
-  })
+  return response.json() as ExecutionResult<TResult>
 }
