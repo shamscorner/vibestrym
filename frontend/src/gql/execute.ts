@@ -11,7 +11,8 @@ export async function gqlFetch<TResult, TVariables>(
   const response = await fetch(SERVER_URL, {
     method: 'POST',
     headers: {
-      'content-type': 'application/json'
+      'content-type': 'application/json',
+      Accept: 'application/graphql-response+json'
     },
     body: JSON.stringify({
       query: print(document),

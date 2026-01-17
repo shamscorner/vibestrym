@@ -32,6 +32,13 @@ function bootstrap(app: NestExpressApplication) {
 		})
 	)
 
+	app.enableCors({
+		origin: config.getOrThrow<string>('ALLOWED_ORIGIN'),
+		credentials: true,
+		exposedHeaders: ['set-cookie']
+	})
+
+	const sessionOptions = getSessionOptions(config)
 	app.use(
 		session({
 			secret: config.getOrThrow<string>('SESSION_SECRET'),
@@ -39,7 +46,7 @@ function bootstrap(app: NestExpressApplication) {
 			resave: false,
 			saveUninitialized: false,
 			cookie: {
-				...getSessionOptions(config),
+				...sessionOptions,
 				maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE'))
 			},
 			store: new RedisStore({
@@ -48,12 +55,6 @@ function bootstrap(app: NestExpressApplication) {
 			})
 		})
 	)
-
-	app.enableCors({
-		origin: config.getOrThrow<string>('ALLOWED_ORIGIN'),
-		credentials: true,
-		exposedHeaders: ['set-cookie']
-	})
 
 	app.use(
 		helmet({

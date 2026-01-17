@@ -26,8 +26,8 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/common/input-otp";
+import { graphql } from "@/gql";
 import { cn } from "@/utils/tw-merge";
-import { graphql } from "../../../../../../gql";
 import { useAuth } from "../../../hooks";
 import { type LoginSchema, loginSchema } from "../login.schema";
 
@@ -59,17 +59,14 @@ export function LoginForm({ className, ...props }: ComponentProps<"form">) {
   });
 
   const { isSubmitting, isValid } = form.formState;
+  const [loginUser, { loading: isLoadingLogin }] = useMutation(LoginUserDoc);
 
-  const [loginUser, { loading: isLoadingLogin }] = useMutation(LoginUserDoc, {
-    onCompleted: (data) => {
-      if (data.loginUser.message) {
-        setIsShowTwoFactor(true);
-        return;
-      }
-      auth();
-      router.replace("/dashboard/settings");
-    },
-    onError: (error) => {
+  async function onSubmit(values: LoginSchema) {
+    const { data, error } = await loginUser({
+      variables: { data: values },
+    });
+
+    if (error) {
       toast.error(error.message || t("errorMessage"));
       captureException(error, {
         extra: {
@@ -77,13 +74,18 @@ export function LoginForm({ className, ...props }: ComponentProps<"form">) {
           variables: form.getValues(),
         },
       });
-    },
-  });
+      return;
+    }
 
-  function onSubmit(values: LoginSchema) {
-    loginUser({
-      variables: { data: values },
-    });
+    console.log("Login response data:", data);
+
+    if (data?.loginUser.message) {
+      setIsShowTwoFactor(true);
+      return;
+    }
+
+    auth();
+    router.replace("/dashboard/settings");
   }
 
   return (
