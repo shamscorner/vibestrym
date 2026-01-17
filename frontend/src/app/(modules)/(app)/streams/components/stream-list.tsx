@@ -1,13 +1,13 @@
 import { EmptyState } from "@/components/ui/custom/empty-state";
 import { Heading } from "@/components/ui/custom/heading";
 
-import type { Query } from "@/gql/graphql";
+import type { StreamModel } from "@/gql/graphql";
 
 import { StreamCard } from "./stream-card";
 
 interface StreamsListProps {
   heading?: string;
-  streams: Query["findRandomStreams"];
+  streams: StreamModel[];
 }
 
 export function StreamsList({ heading, streams }: StreamsListProps) {

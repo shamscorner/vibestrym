@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { NotificationType } from "@/gql/graphql";
 
-export function getNotificationIcon(type: NotificationType) {
+export function getNotificationIcon(type?: NotificationType) {
   switch (type) {
     case NotificationType.StreamStart:
       return RadioIcon;

@@ -15,6 +15,9 @@
         "noArrayIndexKey": "off",
         "noDuplicateCustomProperties": "off",
         "noBitwiseOperators": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
       }
     }
   }

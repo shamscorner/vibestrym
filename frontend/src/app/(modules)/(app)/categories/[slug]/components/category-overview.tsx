@@ -3,12 +3,12 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Heading } from "@/components/ui/custom/heading";
-import type { Query } from "@/gql/graphql";
+import type { CategoryModel } from "@/gql/graphql";
 import { getMediaSource } from "@/utils/get-media-source";
 import { StreamsList } from "../../../streams/components/stream-list";
 
 interface CategoryOverviewProps {
-  category: Query["findCategoryBySlug"];
+  category: CategoryModel;
 }
 
 export function CategoryOverview({ category }: CategoryOverviewProps) {

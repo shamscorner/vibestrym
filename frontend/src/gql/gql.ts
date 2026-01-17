@@ -14,6 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "\nquery FindChannelByUsername($username: String!) {\n  findChannelByUsername(username: $username) {\n    id\n    username\n    displayName\n    avatar\n    bio\n    isVerified\n    socialLinks {\n      title\n      url\n    }\n    stream {\n      id\n      title\n      thumbnailUrl\n      isLive\n      isChatEnabled\n      isChatFollowersOnly\n      isChatPremiumFollowersOnly\n      category {\n        id\n        title\n      }\n    }\n    sponsorshipPlans {\n      id\n      title\n      description\n      price\n    }\n    followings {\n      id\n    }\n  }\n}\n": typeof types.FindChannelByUsernameDocument,
+    "\nquery FindRandomStreams {\n  findRandomStreams {\n    title\n    thumbnailUrl\n    isLive\n    user {\n      username\n      avatar\n      isVerified\n    }\n    category {\n      title\n      slug\n    }\n  }\n}\n": typeof types.FindRandomStreamsDocument,
+    "\nquery FindRandomCategories {\n  findRandomCategories {\n    title\n    slug\n    thumbnailUrl\n  }\n}\n": typeof types.FindRandomCategoriesDocument,
+    "\nquery FindCategoryBySlug($slug: String!) {\n  findCategoryBySlug(slug: $slug) {\n    title\n    thumbnailUrl\n    description\n    streams {\n      title\n      thumbnailUrl\n      isLive\n      user {\n        username\n        avatar\n        isVerified\n      }\n      category {\n        title\n        slug\n      }\n    }\n  }\n}\n": typeof types.FindCategoryBySlugDocument,
     "\n  query FindUnreadNotificationsCount {\n    findUnreadNotificationsCount\n  }\n": typeof types.FindUnreadNotificationsCountDocument,
     "\n  query FindNotificationsByUser {\n    findNotificationsByUser {\n      id\n      message\n      type\n    }\n  }\n": typeof types.FindNotificationsByUserDocument,
     "\nquery FindUnreadNotificationsCount {\n  findUnreadNotificationsCount\n}\n": typeof types.FindUnreadNotificationsCountDocument,
@@ -57,16 +61,22 @@ type Documents = {
     "\nmutation RemoveStreamThumbnail {\n  removeStreamThumbnail\n}\n": typeof types.RemoveStreamThumbnailDocument,
     "\nmutation ChangeStreamThumbnail($thumbnail: Upload!) {\n  changeStreamThumbnail(thumbnail: $thumbnail)\n}\n": typeof types.ChangeStreamThumbnailDocument,
     "\nquery FindAllStreams($filters: FiltersInput!) {\n  findAllStreams(filters: $filters) {\n    title\n    thumbnailUrl\n    isLive\n    user {\n      username\n      avatar\n      isVerified\n    }\n    category {\n      title\n      slug\n    }\n  }\n}\n": typeof types.FindAllStreamsDocument,
+    "\nmutation GenerateStreamToken($data: GenerateStreamTokenInput!) {\n  generateStreamToken(data: $data) {\n    token\n  }\n}\n": typeof types.GenerateStreamTokenDocument,
     "\nmutation CreateUser($data: CreateUserInput!) {\n  createUser(data: $data)\n}\n": typeof types.CreateUserDocument,
     "\nmutation DeactivateAccount($data: DeactivateAccountInput!) {\n  deactivateAccount(data: $data) {\n    user {\n      isDeactivated\n    }\n    message\n  }\n}\n": typeof types.DeactivateAccountDocument,
     "\nmutation LoginUser($data: LoginInput!) {\n  loginUser(data: $data) {\n    user {\n      username\n    }\n    message\n  }\n}\n": typeof types.LoginUserDocument,
     "\nmutation NewPassword($data: NewPasswordInput!) {\n  newPassword(data: $data)\n}\n": typeof types.NewPasswordDocument,
     "\nmutation ResetPassword($data: ResetPasswordInput!) {\n  resetPassword(data: $data)\n}\n": typeof types.ResetPasswordDocument,
     "\nmutation VerifyAccount($data: VerificationInput!) {\n  verifyAccount(data: $data) {\n    message\n    user {\n      email\n      isEmailVerified\n    }\n  }\n}\n": typeof types.VerifyAccountDocument,
-    "\nmutation LogoutUser {\n  logoutUser\n}\n": typeof types.LogoutUserDocument,
+    "\nquery FindProfile {\n  findProfile {\n    id\n    username\n    displayName\n    email\n    avatar\n    bio\n    isVerified\n    isTotpEnabled\n    notificationSettings {\n      siteNotifications\n      telegramNotifications\n    }\n    stream {\n      serverUrl\n      streamKey\n      isChatEnabled\n      isChatFollowersOnly\n      isChatPremiumFollowersOnly\n    }\n  }\n}\n": typeof types.FindProfileDocument,
     "\nmutation ClearSessionCookie {\n  clearSessionCookie\n}\n": typeof types.ClearSessionCookieDocument,
+    "\nmutation LogoutUser {\n  logoutUser\n}\n": typeof types.LogoutUserDocument,
 };
 const documents: Documents = {
+    "\nquery FindChannelByUsername($username: String!) {\n  findChannelByUsername(username: $username) {\n    id\n    username\n    displayName\n    avatar\n    bio\n    isVerified\n    socialLinks {\n      title\n      url\n    }\n    stream {\n      id\n      title\n      thumbnailUrl\n      isLive\n      isChatEnabled\n      isChatFollowersOnly\n      isChatPremiumFollowersOnly\n      category {\n        id\n        title\n      }\n    }\n    sponsorshipPlans {\n      id\n      title\n      description\n      price\n    }\n    followings {\n      id\n    }\n  }\n}\n": types.FindChannelByUsernameDocument,
+    "\nquery FindRandomStreams {\n  findRandomStreams {\n    title\n    thumbnailUrl\n    isLive\n    user {\n      username\n      avatar\n      isVerified\n    }\n    category {\n      title\n      slug\n    }\n  }\n}\n": types.FindRandomStreamsDocument,
+    "\nquery FindRandomCategories {\n  findRandomCategories {\n    title\n    slug\n    thumbnailUrl\n  }\n}\n": types.FindRandomCategoriesDocument,
+    "\nquery FindCategoryBySlug($slug: String!) {\n  findCategoryBySlug(slug: $slug) {\n    title\n    thumbnailUrl\n    description\n    streams {\n      title\n      thumbnailUrl\n      isLive\n      user {\n        username\n        avatar\n        isVerified\n      }\n      category {\n        title\n        slug\n      }\n    }\n  }\n}\n": types.FindCategoryBySlugDocument,
     "\n  query FindUnreadNotificationsCount {\n    findUnreadNotificationsCount\n  }\n": types.FindUnreadNotificationsCountDocument,
     "\n  query FindNotificationsByUser {\n    findNotificationsByUser {\n      id\n      message\n      type\n    }\n  }\n": types.FindNotificationsByUserDocument,
     "\nquery FindUnreadNotificationsCount {\n  findUnreadNotificationsCount\n}\n": types.FindUnreadNotificationsCountDocument,
@@ -110,14 +120,16 @@ const documents: Documents = {
     "\nmutation RemoveStreamThumbnail {\n  removeStreamThumbnail\n}\n": types.RemoveStreamThumbnailDocument,
     "\nmutation ChangeStreamThumbnail($thumbnail: Upload!) {\n  changeStreamThumbnail(thumbnail: $thumbnail)\n}\n": types.ChangeStreamThumbnailDocument,
     "\nquery FindAllStreams($filters: FiltersInput!) {\n  findAllStreams(filters: $filters) {\n    title\n    thumbnailUrl\n    isLive\n    user {\n      username\n      avatar\n      isVerified\n    }\n    category {\n      title\n      slug\n    }\n  }\n}\n": types.FindAllStreamsDocument,
+    "\nmutation GenerateStreamToken($data: GenerateStreamTokenInput!) {\n  generateStreamToken(data: $data) {\n    token\n  }\n}\n": types.GenerateStreamTokenDocument,
     "\nmutation CreateUser($data: CreateUserInput!) {\n  createUser(data: $data)\n}\n": types.CreateUserDocument,
     "\nmutation DeactivateAccount($data: DeactivateAccountInput!) {\n  deactivateAccount(data: $data) {\n    user {\n      isDeactivated\n    }\n    message\n  }\n}\n": types.DeactivateAccountDocument,
     "\nmutation LoginUser($data: LoginInput!) {\n  loginUser(data: $data) {\n    user {\n      username\n    }\n    message\n  }\n}\n": types.LoginUserDocument,
     "\nmutation NewPassword($data: NewPasswordInput!) {\n  newPassword(data: $data)\n}\n": types.NewPasswordDocument,
     "\nmutation ResetPassword($data: ResetPasswordInput!) {\n  resetPassword(data: $data)\n}\n": types.ResetPasswordDocument,
     "\nmutation VerifyAccount($data: VerificationInput!) {\n  verifyAccount(data: $data) {\n    message\n    user {\n      email\n      isEmailVerified\n    }\n  }\n}\n": types.VerifyAccountDocument,
-    "\nmutation LogoutUser {\n  logoutUser\n}\n": types.LogoutUserDocument,
+    "\nquery FindProfile {\n  findProfile {\n    id\n    username\n    displayName\n    email\n    avatar\n    bio\n    isVerified\n    isTotpEnabled\n    notificationSettings {\n      siteNotifications\n      telegramNotifications\n    }\n    stream {\n      serverUrl\n      streamKey\n      isChatEnabled\n      isChatFollowersOnly\n      isChatPremiumFollowersOnly\n    }\n  }\n}\n": types.FindProfileDocument,
     "\nmutation ClearSessionCookie {\n  clearSessionCookie\n}\n": types.ClearSessionCookieDocument,
+    "\nmutation LogoutUser {\n  logoutUser\n}\n": types.LogoutUserDocument,
 };
 
 /**
@@ -134,6 +146,22 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nquery FindChannelByUsername($username: String!) {\n  findChannelByUsername(username: $username) {\n    id\n    username\n    displayName\n    avatar\n    bio\n    isVerified\n    socialLinks {\n      title\n      url\n    }\n    stream {\n      id\n      title\n      thumbnailUrl\n      isLive\n      isChatEnabled\n      isChatFollowersOnly\n      isChatPremiumFollowersOnly\n      category {\n        id\n        title\n      }\n    }\n    sponsorshipPlans {\n      id\n      title\n      description\n      price\n    }\n    followings {\n      id\n    }\n  }\n}\n"): (typeof documents)["\nquery FindChannelByUsername($username: String!) {\n  findChannelByUsername(username: $username) {\n    id\n    username\n    displayName\n    avatar\n    bio\n    isVerified\n    socialLinks {\n      title\n      url\n    }\n    stream {\n      id\n      title\n      thumbnailUrl\n      isLive\n      isChatEnabled\n      isChatFollowersOnly\n      isChatPremiumFollowersOnly\n      category {\n        id\n        title\n      }\n    }\n    sponsorshipPlans {\n      id\n      title\n      description\n      price\n    }\n    followings {\n      id\n    }\n  }\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nquery FindRandomStreams {\n  findRandomStreams {\n    title\n    thumbnailUrl\n    isLive\n    user {\n      username\n      avatar\n      isVerified\n    }\n    category {\n      title\n      slug\n    }\n  }\n}\n"): (typeof documents)["\nquery FindRandomStreams {\n  findRandomStreams {\n    title\n    thumbnailUrl\n    isLive\n    user {\n      username\n      avatar\n      isVerified\n    }\n    category {\n      title\n      slug\n    }\n  }\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nquery FindRandomCategories {\n  findRandomCategories {\n    title\n    slug\n    thumbnailUrl\n  }\n}\n"): (typeof documents)["\nquery FindRandomCategories {\n  findRandomCategories {\n    title\n    slug\n    thumbnailUrl\n  }\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nquery FindCategoryBySlug($slug: String!) {\n  findCategoryBySlug(slug: $slug) {\n    title\n    thumbnailUrl\n    description\n    streams {\n      title\n      thumbnailUrl\n      isLive\n      user {\n        username\n        avatar\n        isVerified\n      }\n      category {\n        title\n        slug\n      }\n    }\n  }\n}\n"): (typeof documents)["\nquery FindCategoryBySlug($slug: String!) {\n  findCategoryBySlug(slug: $slug) {\n    title\n    thumbnailUrl\n    description\n    streams {\n      title\n      thumbnailUrl\n      isLive\n      user {\n        username\n        avatar\n        isVerified\n      }\n      category {\n        title\n        slug\n      }\n    }\n  }\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -309,6 +337,10 @@ export function graphql(source: "\nquery FindAllStreams($filters: FiltersInput!)
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\nmutation GenerateStreamToken($data: GenerateStreamTokenInput!) {\n  generateStreamToken(data: $data) {\n    token\n  }\n}\n"): (typeof documents)["\nmutation GenerateStreamToken($data: GenerateStreamTokenInput!) {\n  generateStreamToken(data: $data) {\n    token\n  }\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\nmutation CreateUser($data: CreateUserInput!) {\n  createUser(data: $data)\n}\n"): (typeof documents)["\nmutation CreateUser($data: CreateUserInput!) {\n  createUser(data: $data)\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -333,11 +365,15 @@ export function graphql(source: "\nmutation VerifyAccount($data: VerificationInp
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\nmutation LogoutUser {\n  logoutUser\n}\n"): (typeof documents)["\nmutation LogoutUser {\n  logoutUser\n}\n"];
+export function graphql(source: "\nquery FindProfile {\n  findProfile {\n    id\n    username\n    displayName\n    email\n    avatar\n    bio\n    isVerified\n    isTotpEnabled\n    notificationSettings {\n      siteNotifications\n      telegramNotifications\n    }\n    stream {\n      serverUrl\n      streamKey\n      isChatEnabled\n      isChatFollowersOnly\n      isChatPremiumFollowersOnly\n    }\n  }\n}\n"): (typeof documents)["\nquery FindProfile {\n  findProfile {\n    id\n    username\n    displayName\n    email\n    avatar\n    bio\n    isVerified\n    isTotpEnabled\n    notificationSettings {\n      siteNotifications\n      telegramNotifications\n    }\n    stream {\n      serverUrl\n      streamKey\n      isChatEnabled\n      isChatFollowersOnly\n      isChatPremiumFollowersOnly\n    }\n  }\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\nmutation ClearSessionCookie {\n  clearSessionCookie\n}\n"): (typeof documents)["\nmutation ClearSessionCookie {\n  clearSessionCookie\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nmutation LogoutUser {\n  logoutUser\n}\n"): (typeof documents)["\nmutation LogoutUser {\n  logoutUser\n}\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

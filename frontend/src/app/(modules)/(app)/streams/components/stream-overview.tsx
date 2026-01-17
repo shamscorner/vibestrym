@@ -2,7 +2,7 @@
 
 import { LiveKitRoom } from "@livekit/components-react";
 
-import type { Query } from "@/gql/graphql";
+import type { UserModel } from "@/gql/graphql";
 import { useStreamToken } from "../hooks/stream-token";
 import { AboutChannel, AboutChannelSkeleton } from "./about-channel";
 import { ChannelSponsors } from "./channel-sponsors";
@@ -11,7 +11,7 @@ import { StreamVideo, StreamVideoSkeleton } from "./player/stream-video";
 import { StreamInfo, StreamInfoSkeleton } from "./stream-info";
 
 interface StreamOverviewProps {
-  channel: Query["findChannelByUsername"];
+  channel: UserModel;
 }
 
 export function StreamOverview({ channel }: StreamOverviewProps) {

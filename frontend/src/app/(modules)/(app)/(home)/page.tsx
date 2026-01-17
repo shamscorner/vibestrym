@@ -1,80 +1,40 @@
-import { captureException } from '@sentry/nextjs';
-import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
-import {
-  SITE_TITLE,
-} from '@/constants/seo.constants';
-import { SERVER_URL } from '@/constants/url.constants';
-import {
-  FindRandomCategoriesDocument,
-  type FindRandomCategoriesQuery,
-  FindRandomStreamsDocument,
-  type FindRandomStreamsQuery,
-} from '@/graphql/_generated/output';
-import { CategoriesList } from '../categories/components/categories-list';
-import { StreamsList } from '../streams/components/stream-list';
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { SITE_TITLE } from "@/constants/seo.constants";
+import { graphql } from "@/gql";
+import { useGraphQL } from "@/gql/execute";
+import type { CategoryModel, StreamModel } from "@/gql/graphql";
+import { CategoriesList } from "../categories/components/categories-list";
+import { StreamsList } from "../streams/components/stream-list";
 
-async function findRandomStreams() {
-  try {
-    const query = FindRandomStreamsDocument.loc?.source.body;
-
-    const response = await fetch(SERVER_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query }),
-      next: {
-        revalidate: 30,
-      },
-    });
-
-    const data = await response.json();
-
-    return {
-      streams: data.data
-        .findRandomStreams as FindRandomStreamsQuery['findRandomStreams'],
-    };
-  } catch (error) {
-    captureException(error, {
-      extra: {
-        feature: 'home',
-      },
-    });
-    throw new Error('Error fetching streams');
+const findRandomStreamsDocument = graphql(`
+query FindRandomStreams {
+  findRandomStreams {
+    title
+    thumbnailUrl
+    isLive
+    user {
+      username
+      avatar
+      isVerified
+    }
+    category {
+      title
+      slug
+    }
   }
 }
+`);
 
-async function findRandomCategories() {
-  try {
-    const query = FindRandomCategoriesDocument.loc?.source.body;
-
-    const response = await fetch(SERVER_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query }),
-      next: {
-        revalidate: 30,
-      },
-    });
-
-    const data = await response.json();
-
-    return {
-      categories: data.data
-        .findRandomCategories as FindRandomCategoriesQuery['findRandomCategories'],
-    };
-  } catch (error) {
-    captureException(error, {
-      extra: {
-        feature: 'home',
-      },
-    });
-    throw new Error('Error fetching categories');
+const findRandomCategoriesDocument = graphql(`
+query FindRandomCategories {
+  findRandomCategories {
+    title
+    slug
+    thumbnailUrl
   }
 }
+`);
 
 export function generateMetadata(): Metadata {
   return {
@@ -83,17 +43,22 @@ export function generateMetadata(): Metadata {
 }
 
 export default async function HomePage() {
-  const t = await getTranslations('home');
+  const t = await getTranslations("home");
 
-  const { streams } = await findRandomStreams();
-  const { categories } = await findRandomCategories();
+  const { data: streamsData } = useGraphQL(findRandomStreamsDocument);
+  const { data: categoriesData } = useGraphQL(findRandomCategoriesDocument);
 
   return (
     <div className="flex flex-col gap-y-10">
-      <StreamsList heading={t('streamsHeading')} streams={streams} />
+      <StreamsList
+        heading={t("streamsHeading")}
+        streams={streamsData?.data?.findRandomStreams as StreamModel[]}
+      />
       <CategoriesList
-        categories={categories}
-        heading={t('categoriesHeading')}
+        categories={
+          categoriesData?.data?.findRandomCategories as CategoryModel[]
+        }
+        heading={t("categoriesHeading")}
       />
     </div>
   );

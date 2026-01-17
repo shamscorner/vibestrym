@@ -1,50 +1,48 @@
-import { captureException } from '@sentry/nextjs';
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { SERVER_URL } from '@/constants/url.constants';
-import {
-  FindCategoryBySlugDocument,
-  type FindCategoryBySlugQuery,
-} from '@/graphql/_generated/output';
-import { getMediaSource } from '@/utils/get-media-source';
-import { CategoryOverview } from './components/category-overview';
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { graphql } from "@/gql";
+import { useGraphQL } from "@/gql/execute";
+import type { CategoryModel } from "@/gql/graphql";
+import { getMediaSource } from "@/utils/get-media-source";
+import { CategoryOverview } from "./components/category-overview";
 
-async function findCategoryBySlug(params: { slug: string }) {
-  try {
-    const query = FindCategoryBySlugDocument.loc?.source.body;
-    const variables = { slug: params.slug };
-
-    const response = await fetch(SERVER_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query, variables }),
-      next: {
-        revalidate: 30,
-      },
-    });
-
-    const data = await response.json();
-
-    return {
-      category: data.data
-        .findCategoryBySlug as FindCategoryBySlugQuery['findCategoryBySlug'],
-    };
-  } catch (error) {
-    captureException(error, {
-      extra: { slug: params.slug },
-    });
-    return notFound();
+const findCategoryBySlugDocument = graphql(`
+query FindCategoryBySlug($slug: String!) {
+  findCategoryBySlug(slug: $slug) {
+    title
+    thumbnailUrl
+    description
+    streams {
+      title
+      thumbnailUrl
+      isLive
+      user {
+        username
+        avatar
+        isVerified
+      }
+      category {
+        title
+        slug
+      }
+    }
   }
 }
+`);
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const params = await props.params;
 
-  const { category } = await findCategoryBySlug(params);
+  const { findCategoryBySlug: category } =
+    useGraphQL(findCategoryBySlugDocument, {
+      slug: params.slug,
+    }).data?.data ?? {};
+
+  if (!category) {
+    return notFound();
+  }
 
   return {
     title: category.title,
@@ -65,7 +63,14 @@ export default async function CategoryPage(props: {
 }) {
   const params = await props.params;
 
-  const { category } = await findCategoryBySlug(params);
+  const { findCategoryBySlug: category } =
+    useGraphQL(findCategoryBySlugDocument, {
+      slug: params.slug,
+    }).data?.data ?? {};
 
-  return <CategoryOverview category={category} />;
+  if (!category) {
+    return notFound();
+  }
+
+  return <CategoryOverview category={category as CategoryModel} />;
 }
