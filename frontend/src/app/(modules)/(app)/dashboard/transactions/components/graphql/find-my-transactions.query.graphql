@@ -1,7 +1,0 @@
-query FindMyTransactions {
-  findMyTransactions {
-    createdAt
-    status
-    amount
-  }
-}

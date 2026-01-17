@@ -1,7 +1,0 @@
-query FindRandomCategories {
-  findRandomCategories {
-    title
-    slug
-    thumbnailUrl
-  }
-}

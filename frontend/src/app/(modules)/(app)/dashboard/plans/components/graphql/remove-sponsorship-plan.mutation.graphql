@@ -1,3 +1,0 @@
-mutation RemoveSponsorshipPlan($planId: String!) {
-  removeSponsorshipPlan(planId: $planId)
-}

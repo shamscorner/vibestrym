@@ -1,3 +1,0 @@
-mutation DisableTotp($data: DisableTotpInput!) {
-  disableTotp(data: $data)
-}

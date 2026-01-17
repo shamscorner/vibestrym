@@ -30,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/common/select";
+import type { IngressInputType } from "@/gql/graphql";
 import { graphql } from "../../../../../../gql";
 import {
   type CreateIngressSchema,
@@ -70,7 +71,11 @@ export function CreateIngressForm() {
   const { isValid } = form.formState;
 
   function onSubmit(data: CreateIngressSchema) {
-    create({ variables: { ingressType: data.ingressType } });
+    create({
+      variables: {
+        ingressType: data.ingressType as unknown as IngressInputType,
+      },
+    });
   }
 
   return (

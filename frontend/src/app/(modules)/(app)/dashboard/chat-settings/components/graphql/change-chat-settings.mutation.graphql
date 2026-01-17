@@ -1,3 +1,0 @@
-mutation ChangeChatSettings($data: ChangeChatSettingsInput!) {
-  changeChatSettings(data: $data)
-}

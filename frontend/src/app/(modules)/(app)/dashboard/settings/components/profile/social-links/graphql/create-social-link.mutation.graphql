@@ -1,3 +1,0 @@
-mutation CreateSocialLink($data: SocialLinkInput!) {
-  createSocialLink(data: $data)
-}

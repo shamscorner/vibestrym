@@ -1,3 +1,0 @@
-mutation ChangeProfileInfo($data: ChangeProfileInfoInput!) {
-  changeProfileInfo(data: $data)
-}

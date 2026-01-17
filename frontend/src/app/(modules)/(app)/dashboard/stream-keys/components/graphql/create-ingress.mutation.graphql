@@ -1,3 +1,0 @@
-mutation CreateIngress($ingressType: IngressInputType!) {
-  createIngress(ingressType: $ingressType)
-}

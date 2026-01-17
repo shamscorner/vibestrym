@@ -1,6 +1,0 @@
-query FindMyFollowings {
-  findMyFollowings {
-    createdAt
-    followingId
-  }
-}

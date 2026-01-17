@@ -12,7 +12,8 @@ import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { Separator } from "@/components/ui/common/separator";
-import { graphql } from "../../../../../../../../gql";
+import { graphql } from "@/gql";
+import type { SocialLinkModel } from "@/gql/graphql";
 import { SocialLinkItem } from "./social-link-item";
 
 const ReorderSocialLinksDoc = graphql(`
@@ -102,9 +103,9 @@ export function SocialLinksList() {
                   >
                     {(providedInner) => (
                       <SocialLinkItem
-                        key={index}
+                        key={socialLink.id}
                         provided={providedInner}
-                        socialLink={socialLink}
+                        socialLink={socialLink as SocialLinkModel}
                       />
                     )}
                   </Draggable>

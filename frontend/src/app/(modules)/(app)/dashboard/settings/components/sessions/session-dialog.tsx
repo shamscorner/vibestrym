@@ -8,11 +8,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/common/dialog";
 import MapLocation from "@/components/ui/custom/map-location";
-import type { FindSessionsByUserQuery } from "@/graphql/_generated/output";
+import type { SessionModel } from "@/gql/graphql";
 import { formatDate } from "@/utils/format-date";
 
 interface SessionModalProps {
-  session: FindSessionsByUserQuery["findSessionsByUser"][0];
+  session: SessionModel;
 }
 
 export function SessionModal({

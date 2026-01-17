@@ -4,7 +4,8 @@ import { useQuery } from "@apollo/client/react";
 import { useTranslations } from "next-intl";
 import { Heading } from "@/components/ui/custom/heading";
 import { ToggleCardSkeleton } from "@/components/ui/custom/toggle-card";
-import { graphql } from "../../../../../../../gql";
+import { graphql } from "@/gql";
+import type { SessionModel } from "@/gql/graphql";
 import { SessionItem } from "./session-item";
 
 const FindSessionsByUserDoc = graphql(`
@@ -71,7 +72,10 @@ export function SessionsList() {
         <ToggleCardSkeleton />
       ) : (
         currentSession && (
-          <SessionItem isCurrentSession session={currentSession} />
+          <SessionItem
+            isCurrentSession
+            session={currentSession as SessionModel}
+          />
         )
       )}
 
@@ -83,7 +87,7 @@ export function SessionsList() {
         ))
       ) : sessions.length ? (
         sessions.map((session, index) => (
-          <SessionItem key={index} session={session} />
+          <SessionItem key={index} session={session as SessionModel} />
         ))
       ) : (
         <div className="text-muted-foreground">{t("info.notFound")}</div>

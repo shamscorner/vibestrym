@@ -15,7 +15,7 @@ import {
   FormItem,
 } from "@/components/ui/common/form";
 import { Input } from "@/components/ui/common/input";
-import type { Query } from "@/gql/graphql";
+import type { SocialLinkModel } from "@/gql/graphql";
 import { useConfirmDialog } from "@/hooks/confirm-dialog";
 import { graphql } from "../../../../../../../../gql";
 import {
@@ -47,7 +47,7 @@ query FindSocialLinks {
 `);
 
 interface SocialLinkItemProps {
-  socialLink: Query["findSocialLinks"][0];
+  socialLink: SocialLinkModel;
   provided: DraggableProvided;
 }
 

@@ -1,5 +1,0 @@
-mutation MakePayment($planId: String!) {
-  makePayment(planId: $planId) {
-    url
-  }
-}
