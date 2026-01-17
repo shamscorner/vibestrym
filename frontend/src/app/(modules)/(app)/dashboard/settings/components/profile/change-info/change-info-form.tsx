@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/common/input";
 import { Skeleton } from "@/components/ui/common/skeleton";
 import { Textarea } from "@/components/ui/common/textarea";
 import { FormWrapper } from "@/components/ui/custom/form-wrapper";
-import { graphql } from "../../../../../../../../gql";
+import { graphql } from "@/gql";
 import { type ChangeInfoSchema, changeInfoSchema } from "./change-info.schema";
 
 const ChangeProfileInfoDoc = graphql(`

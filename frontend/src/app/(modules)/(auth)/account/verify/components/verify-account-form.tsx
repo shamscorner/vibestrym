@@ -14,7 +14,7 @@ import {
   AlertTitle,
 } from "@/components/ui/common/alert";
 import { Button } from "@/components/ui/common/button";
-import { graphql } from "../../../../../../gql";
+import { graphql } from "@/gql";
 import { useAuth } from "../../../hooks";
 
 const VerifyAccountDoc = graphql(`

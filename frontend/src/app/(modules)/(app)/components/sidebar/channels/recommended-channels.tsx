@@ -3,7 +3,7 @@
 import { useQuery } from "@apollo/client/react";
 import { useTranslations } from "next-intl";
 import { Separator } from "@/components/ui/common/separator";
-import { graphql } from "../../../../../../gql";
+import { graphql } from "@/gql";
 import { useSidebar } from "../../../hooks/sidebar";
 import { ChannelItem, ChannelItemSkeleton } from "./channel-item";
 

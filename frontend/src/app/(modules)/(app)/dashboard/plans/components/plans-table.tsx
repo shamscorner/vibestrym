@@ -18,10 +18,10 @@ import {
   DataTableSkeleton,
 } from "@/components/ui/custom/data-table";
 import { Heading } from "@/components/ui/custom/heading";
+import { graphql } from "@/gql";
 import { useConfirmDialog } from "@/hooks/confirm-dialog";
 import { convertPrice } from "@/utils/convert-price";
 import { formatDate } from "@/utils/format-date";
-import { graphql } from "../../../../../../gql";
 import { CreatePlanForm } from "./create-plan/create-plan-form";
 import { VerifiedChannelAlert } from "./verified-channel-alert";
 

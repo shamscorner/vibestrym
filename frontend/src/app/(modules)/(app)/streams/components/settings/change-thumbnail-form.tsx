@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/common/button";
 import { Card } from "@/components/ui/common/card";
 import { Form, FormField } from "@/components/ui/common/form";
 import { ChannelAvatar } from "@/components/ui/custom/channel-avatar";
+import { graphql } from "@/gql";
 import type { Query } from "@/gql/graphql";
 import { useConfirmDialog } from "@/hooks/confirm-dialog";
 import {
@@ -20,7 +21,6 @@ import {
   uploadFileSchema,
 } from "@/schemas/upload-file.schema";
 import { getMediaSource } from "@/utils/get-media-source";
-import { graphql } from "../../../../../../gql";
 
 const RemoveStreamThumbnailDoc = graphql(`
 mutation RemoveStreamThumbnail {

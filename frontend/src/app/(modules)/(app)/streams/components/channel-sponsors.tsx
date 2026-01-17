@@ -8,8 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/common/card";
 import { ChannelAvatar } from "@/components/ui/custom/channel-avatar";
+import { graphql } from "@/gql";
 import type { Query } from "@/gql/graphql";
-import { graphql } from "../../../../../gql";
 
 const FindSponsorsByChannelDoc = graphql(`
 query FindSponsorsByChannel($channelId: String!) {

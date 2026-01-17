@@ -30,8 +30,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/common/select";
+import { graphql } from "@/gql";
 import type { IngressInputType } from "@/gql/graphql";
-import { graphql } from "../../../../../../gql";
 import {
   type CreateIngressSchema,
   createIngressSchema,

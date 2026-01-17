@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/common/input";
 import { Skeleton } from "@/components/ui/common/skeleton";
 import { FormWrapper } from "@/components/ui/custom/form-wrapper";
-import { graphql } from "../../../../../../../../gql";
+import { graphql } from "@/gql";
 import {
   type ChangeEmailSchema,
   changeEmailSchema,

@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/common/popover";
-import { graphql } from "../../../../../gql";
+import { graphql } from "@/gql";
 import { NotificationsList } from "./notifications-list";
 
 const FindUnreadNotificationsCountDoc = graphql(`

@@ -19,8 +19,8 @@ import {
   DataTableSkeleton,
 } from "@/components/ui/custom/data-table";
 import { Heading } from "@/components/ui/custom/heading";
+import { graphql } from "@/gql";
 import { formatDate } from "@/utils/format-date";
-import { graphql } from "../../../../../../gql";
 
 const FindMySponsorsDoc = graphql(`
 query FindMySponsors {

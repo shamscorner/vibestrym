@@ -6,9 +6,9 @@ import { toast } from "sonner";
 import { useAuth } from "@/app/(modules)/(auth)/hooks";
 import { useCurrentAccount } from "@/app/(modules)/(auth)/hooks/current-account";
 import { Button } from "@/components/ui/common/button";
+import { graphql } from "@/gql";
 import type { Query } from "@/gql/graphql";
 import { useConfirmDialog } from "@/hooks/confirm-dialog";
-import { graphql } from "../../../../../../gql";
 
 const UnfollowChannelDoc = graphql(`
 mutation UnfollowChannel($channelId: String!) {

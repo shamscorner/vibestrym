@@ -14,12 +14,12 @@ import { Form, FormField } from "@/components/ui/common/form";
 import { Skeleton } from "@/components/ui/common/skeleton";
 import { ChannelAvatar } from "@/components/ui/custom/channel-avatar";
 import { FormWrapper } from "@/components/ui/custom/form-wrapper";
+import { graphql } from "@/gql";
 import { useConfirmDialog } from "@/hooks/confirm-dialog";
 import {
   type UploadFileSchema,
   uploadFileSchema,
 } from "@/schemas/upload-file.schema";
-import { graphql } from "../../../../../../../../gql";
 
 const RemoveProfileAvatarDoc = graphql(`
 mutation RemoveProfileAvatar {

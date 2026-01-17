@@ -29,7 +29,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/common/input-otp";
-import { graphql } from "../../../../../../../../gql";
+import { graphql } from "@/gql";
 import { type EnableTotpSchema, enableTotpSchema } from "./enable-totp.schema";
 
 const GenerateTotpSecretDoc = graphql(`

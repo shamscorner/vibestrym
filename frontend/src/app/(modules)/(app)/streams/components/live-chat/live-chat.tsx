@@ -15,8 +15,8 @@ import {
   CardTitle,
 } from "@/components/ui/common/card";
 import { Skeleton } from "@/components/ui/common/skeleton";
+import { graphql } from "@/gql";
 import type { Query } from "@/gql/graphql";
-import { graphql } from "../../../../../../gql";
 import { ChatInfo } from "./chat-info";
 import { LoadingChat } from "./loading-chat";
 import { MessagesList } from "./messages-list";

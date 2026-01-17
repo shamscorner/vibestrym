@@ -12,7 +12,7 @@ import {
   ToggleCard,
   ToggleCardSkeleton,
 } from "@/components/ui/custom/toggle-card";
-import { graphql } from "../../../../../../gql";
+import { graphql } from "@/gql";
 import {
   type ChangeChatSettingsSchema,
   changeChatSettingsSchema,

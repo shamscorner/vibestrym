@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/common/form";
 import { Input } from "@/components/ui/common/input";
 import { Textarea } from "@/components/ui/common/textarea";
-import { graphql } from "../../../../../../../gql";
+import { graphql } from "@/gql";
 import { type CreatePlanSchema, createPlanSchema } from "./create-plan.schema";
 
 const FindMySponsorshipPlansDoc = graphql(`

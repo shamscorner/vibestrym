@@ -3,9 +3,9 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/common/button";
 import { CardContainer } from "@/components/ui/custom/card-container";
+import { graphql } from "@/gql";
 import type { Query } from "@/gql/graphql";
 import { useConfirmDialog } from "@/hooks/confirm-dialog";
-import { graphql } from "../../../../../../../gql";
 import { SessionModal } from "./session-dialog";
 import { getBrowserIcon } from "./utils/get-browser-icon";
 

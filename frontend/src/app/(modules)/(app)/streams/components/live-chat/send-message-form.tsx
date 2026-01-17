@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/common/form";
 import { Textarea } from "@/components/ui/common/textarea";
 import { EmojiPicker } from "@/components/ui/custom/emoji-picker";
+import { graphql } from "@/gql";
 import type { Query } from "@/gql/graphql";
-import { graphql } from "../../../../../../gql";
 import {
   type SendMessageSchema,
   sendMessageSchema,

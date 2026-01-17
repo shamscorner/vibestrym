@@ -26,8 +26,8 @@ import {
   FormMessage,
 } from "@/components/ui/common/form";
 import { Input } from "@/components/ui/common/input";
+import { graphql } from "@/gql";
 import { cn } from "@/utils/tw-merge";
-import { graphql } from "../../../../../../gql";
 import {
   type CreateAccountFormSchema,
   createAccountFormSchema,

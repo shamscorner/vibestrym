@@ -19,9 +19,9 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/common/tabs";
+import { graphql } from "@/gql";
 import type { Query } from "@/gql/graphql";
 import { convertPrice } from "@/utils/convert-price";
-import { graphql } from "../../../../../../gql";
 
 const MakePaymentDoc = graphql(`
 mutation MakePayment($planId: String!) {

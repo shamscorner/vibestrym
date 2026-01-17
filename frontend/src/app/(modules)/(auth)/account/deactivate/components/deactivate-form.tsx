@@ -23,7 +23,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/common/input-otp";
-import { graphql } from "../../../../../../gql";
+import { graphql } from "@/gql";
 import { useAuth } from "../../../hooks";
 import {
   type DeactivateSchema,

@@ -15,9 +15,9 @@ import {
   FormItem,
 } from "@/components/ui/common/form";
 import { Input } from "@/components/ui/common/input";
+import { graphql } from "@/gql";
 import type { SocialLinkModel } from "@/gql/graphql";
 import { useConfirmDialog } from "@/hooks/confirm-dialog";
-import { graphql } from "../../../../../../../../gql";
 import {
   type SocialLinksSchema,
   socialLinksSchema,
