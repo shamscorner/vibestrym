@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { Root } from '@radix-ui/react-separator';
-import type * as React from 'react';
+import { Root } from "@radix-ui/react-separator";
+import type * as React from "react";
 
-import { cn } from '@/utils/tw-merge';
+import { cn } from "@/utils/tw-merge";
 
 function Separator({
   className,
-  orientation = 'horizontal',
+  orientation = "horizontal",
   decorative = true,
   ...props
 }: React.ComponentProps<typeof Root>) {
   return (
     <Root
       className={cn(
-        'shrink-0 bg-border data-[orientation=horizontal]:h-px data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-px',
+        "shrink-0 bg-border data-[orientation=horizontal]:h-px data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-px",
         className
       )}
       data-slot="separator"

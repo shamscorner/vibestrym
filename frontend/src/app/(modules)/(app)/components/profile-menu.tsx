@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
 import {
   LayoutDashboardIcon,
   LoaderIcon,
   LogOutIcon,
   UserIcon,
-} from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+} from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import {
   DropdownMenu,
@@ -16,13 +16,13 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/common/dropdown-menu';
-import { ChannelAvatar } from '@/components/ui/custom/channel-avatar';
-import { useCurrentAccount } from '../../(auth)/hooks/current-account';
-import { Notifications } from './notifications/notifications';
+} from "@/components/ui/common/dropdown-menu";
+import { ChannelAvatar } from "@/components/ui/custom/channel-avatar";
+import { useCurrentAccount } from "../../(auth)/hooks/current-account";
+import { Notifications } from "./notifications/notifications";
 
 export function ProfileMenu() {
-  const t = useTranslations('app.header.menu.profile');
+  const t = useTranslations("app.header.menu.profile");
   const router = useRouter();
 
   const { user, isLoadingProfile } = useCurrentAccount();
@@ -45,19 +45,19 @@ export function ProfileMenu() {
           <Link href={`/${user.username}`}>
             <DropdownMenuItem>
               <UserIcon className="mx-2 size-4 text-muted-foreground" />
-              {t('channel')}
+              {t("channel")}
             </DropdownMenuItem>
           </Link>
           <Link href="/dashboard/settings">
             <DropdownMenuItem>
               <LayoutDashboardIcon className="mx-2 size-4 text-muted-foreground" />
-              {t('dashboard')}
+              {t("dashboard")}
             </DropdownMenuItem>
           </Link>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => router.push('/logout')}>
+          <DropdownMenuItem onClick={() => router.push("/logout")}>
             <LogOutIcon className="mx-2 size-4 text-muted-foreground" />
-            {t('logout')}
+            {t("logout")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

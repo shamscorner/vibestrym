@@ -6,10 +6,12 @@ import {
   captureRouterTransitionStart,
   init,
   replayIntegration,
-} from '@sentry/nextjs';
+} from "@sentry/nextjs";
 
 init({
-  dsn: 'https://763fb39cec0dadbc40688ce37337dbd2@o4509662905303040.ingest.us.sentry.io/4509702264520704',
+  dsn: "https://763fb39cec0dadbc40688ce37337dbd2@o4509662905303040.ingest.us.sentry.io/4509702264520704",
+
+  enabled: process.env.NODE_ENV !== "development",
 
   // Add optional integrations for additional features
   integrations: [replayIntegration()],

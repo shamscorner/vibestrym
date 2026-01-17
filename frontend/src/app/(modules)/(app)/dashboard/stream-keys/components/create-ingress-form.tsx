@@ -1,19 +1,20 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
-import { Button } from '@/components/ui/common/button';
+import { useMutation } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { useCurrentAccount } from "@/app/(modules)/(auth)/hooks/current-account";
+import { Button } from "@/components/ui/common/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/common/dialog';
+} from "@/components/ui/common/dialog";
 import {
   Form,
   FormControl,
@@ -21,23 +22,29 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/common/form';
+} from "@/components/ui/common/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/common/select';
-import { useCreateIngressMutation } from '@/graphql/_generated/output';
+} from "@/components/ui/common/select";
+import { graphql } from "../../../../../../gql";
 import {
   type CreateIngressSchema,
   createIngressSchema,
   IngressType,
-} from './create-ingress.schema';
+} from "./create-ingress.schema";
+
+const CreateIngressDoc = graphql(`
+mutation CreateIngress($ingressType: IngressInputType!) {
+  createIngress(ingressType: $ingressType)
+}
+`);
 
 export function CreateIngressForm() {
-  const t = useTranslations('dashboard.streamKeys.createDialog');
+  const t = useTranslations("dashboard.streamKeys.createDialog");
 
   const [isOpen, setIsOpen] = useState(false);
   const { refetch } = useCurrentAccount();
@@ -49,14 +56,14 @@ export function CreateIngressForm() {
     },
   });
 
-  const [create, { loading: isLoadingCreate }] = useCreateIngressMutation({
+  const [create, { loading: isLoadingCreate }] = useMutation(CreateIngressDoc, {
     onCompleted() {
       setIsOpen(false);
       refetch();
-      toast.success(t('successMessage'));
+      toast.success(t("successMessage"));
     },
     onError() {
-      toast.error(t('errorMessage'));
+      toast.error(t("errorMessage"));
     },
   });
 
@@ -69,11 +76,11 @@ export function CreateIngressForm() {
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <Button>{t('trigger')}</Button>
+        <Button>{t("trigger")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t('heading')}</DialogTitle>
+          <DialogTitle>{t("heading")}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -85,7 +92,7 @@ export function CreateIngressForm() {
               name="ingressType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('ingressTypeLabel')}</FormLabel>
+                  <FormLabel>{t("ingressTypeLabel")}</FormLabel>
                   <FormControl>
                     <Select
                       defaultValue={field.value.toString()}
@@ -95,7 +102,7 @@ export function CreateIngressForm() {
                     >
                       <SelectTrigger>
                         <SelectValue
-                          placeholder={t('ingressTypePlaceholder')}
+                          placeholder={t("ingressTypePlaceholder")}
                         />
                       </SelectTrigger>
                       <SelectContent>
@@ -115,14 +122,14 @@ export function CreateIngressForm() {
                     </Select>
                   </FormControl>
                   <FormDescription>
-                    {t('ingressTypeDescription')}
+                    {t("ingressTypeDescription")}
                   </FormDescription>
                 </FormItem>
               )}
             />
             <div className="mt-4 flex justify-end">
               <Button disabled={!isValid || isLoadingCreate}>
-                {t('submitButton')}
+                {t("submitButton")}
               </Button>
             </div>
           </form>

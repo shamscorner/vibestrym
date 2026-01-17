@@ -2,19 +2,20 @@ import {
   useConnectionState,
   useRemoteParticipant,
   useTracks,
-} from '@livekit/components-react';
-import { ConnectionState, Track } from 'livekit-client';
-import type { JSX } from 'react';
+} from "@livekit/components-react";
+import { ConnectionState, Track } from "livekit-client";
+import type { JSX } from "react";
 
-import { Skeleton } from '@/components/ui/common/skeleton';
+import { Skeleton } from "@/components/ui/common/skeleton";
 
-import type { FindChannelByUsernameQuery } from '@/graphql/_generated/output';
-import { StreamLoading } from './player/stream-loading';
-import { StreamOffline } from './player/stream-offline';
-import { StreamPlayer } from './player/stream-player';
+import type { Query } from "@/gql/graphql";
+
+import { StreamLoading } from "./player/stream-loading";
+import { StreamOffline } from "./player/stream-offline";
+import { StreamPlayer } from "./player/stream-player";
 
 interface StreamVideoProps {
-  channel: FindChannelByUsernameQuery['findChannelByUsername'];
+  channel: Query["findChannelByUsername"];
 }
 
 export function StreamVideo({ channel }: StreamVideoProps) {

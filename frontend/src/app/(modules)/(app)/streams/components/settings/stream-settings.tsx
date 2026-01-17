@@ -1,24 +1,24 @@
-import { Pencil } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
-import { Button } from '@/components/ui/common/button';
+import { Pencil } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useCurrentAccount } from "@/app/(modules)/(auth)/hooks/current-account";
+import { Button } from "@/components/ui/common/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/common/dialog';
-import type { FindChannelByUsernameQuery } from '@/graphql/_generated/output';
-import { ChangeStreamInfoForm } from './change-stream-info-form';
-import { ChangeThumbnailForm } from './change-thumbnail-form';
+} from "@/components/ui/common/dialog";
+import type { Query } from "@/gql/graphql";
+import { ChangeStreamInfoForm } from "./change-stream-info-form";
+import { ChangeThumbnailForm } from "./change-thumbnail-form";
 
 interface StreamSettingsProps {
-  channel: FindChannelByUsernameQuery['findChannelByUsername'];
+  channel: Query["findChannelByUsername"];
 }
 
 export function StreamSettings({ channel }: StreamSettingsProps) {
-  const t = useTranslations('streams.stream.settings');
+  const t = useTranslations("streams.stream.settings");
 
   const { user } = useCurrentAccount();
 
@@ -37,7 +37,7 @@ export function StreamSettings({ channel }: StreamSettingsProps) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t('heading')}</DialogTitle>
+          <DialogTitle>{t("heading")}</DialogTitle>
         </DialogHeader>
         <ChangeThumbnailForm stream={channel.stream} />
         <ChangeStreamInfoForm stream={channel.stream} />

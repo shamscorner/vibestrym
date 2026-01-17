@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { ArrowLeftFromLineIcon, ArrowRightFromLineIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/common/button';
-import { Hint } from '@/components/ui/custom/hint';
-import { useSidebar } from '../../hooks/sidebar';
+import { ArrowLeftFromLineIcon, ArrowRightFromLineIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/common/button";
+import { Hint } from "@/components/ui/custom/hint";
+import { useSidebar } from "../../hooks/sidebar";
 
 export function SidebarHeader() {
-  const t = useTranslations('app.sidebar.header');
+  const t = useTranslations("app.sidebar.header");
 
   const { isCollapsed, open, close } = useSidebar();
 
-  const label = isCollapsed ? t('expand') : t('collapse');
+  const label = isCollapsed ? t("expand") : t("collapse");
 
   return isCollapsed ? (
     <div className="mb-4 hidden w-full items-center justify-center pt-4 lg:flex">
@@ -23,7 +23,7 @@ export function SidebarHeader() {
     </div>
   ) : (
     <div className="mb-2 flex w-full items-center justify-between p-3 pl-4">
-      <h2 className="font-semibold text-muted-foreground">{t('explore')}</h2>
+      <h2 className="font-semibold text-muted-foreground">{t("explore")}</h2>
       <Hint asChild label={label} side="right">
         <Button onClick={() => close()} size="icon" variant="ghost">
           <ArrowLeftFromLineIcon className="size-4" />

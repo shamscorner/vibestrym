@@ -1,10 +1,10 @@
-import { useTracks } from '@livekit/components-react';
-import { type RemoteParticipant, Track } from 'livekit-client';
-import { useEffect, useRef, useState } from 'react';
-import { useEventListener } from 'usehooks-ts';
+import { useTracks } from "@livekit/components-react";
+import { type RemoteParticipant, Track } from "livekit-client";
+import { useEffect, useRef, useState } from "react";
+import { useEventListener } from "usehooks-ts";
 
-import { FullscreenControl } from './full-screen-control';
-import { VolumeControl } from './volume-control';
+import { FullscreenControl } from "./full-screen-control";
+import { VolumeControl } from "./volume-control";
 
 interface StreamPlayerProps {
   participant: RemoteParticipant;
@@ -52,7 +52,7 @@ export function StreamPlayer({ participant }: StreamPlayerProps) {
   }
 
   useEventListener(
-    'fullscreenchange' as keyof WindowEventMap,
+    "fullscreenchange" as keyof WindowEventMap,
     handleFullscreenChange
   );
 
@@ -62,8 +62,10 @@ export function StreamPlayer({ participant }: StreamPlayerProps) {
   }, []);
 
   {
-    const tracks = useTracks([Track.Source.Camera, Track.Source.Microphone])
-      .filter((track) => track.participant.identity === participant.identity);
+    const tracks = useTracks([
+      Track.Source.Camera,
+      Track.Source.Microphone,
+    ]).filter((track) => track.participant.identity === participant.identity);
     for (const track of tracks) {
       if (videoRef.current) {
         track.publication.track?.attach(videoRef.current);

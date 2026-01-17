@@ -1,26 +1,41 @@
-'use client';
+"use client";
 
+import { useMutation, useQuery } from "@apollo/client/react";
 import {
   DragDropContext,
   Draggable,
   Droppable,
   type DropResult,
-} from '@hello-pangea/dnd';
-import { captureException } from '@sentry/nextjs';
-import { useTranslations } from 'next-intl';
-import { useEffect, useMemo, useState } from 'react';
-import { toast } from 'sonner';
-import { Separator } from '@/components/ui/common/separator';
-import {
-  useFindSocialLinksQuery,
-  useReorderSocialLinksMutation,
-} from '@/graphql/_generated/output';
-import { SocialLinkItem } from './social-link-item';
+} from "@hello-pangea/dnd";
+import { captureException } from "@sentry/nextjs";
+import { useTranslations } from "next-intl";
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
+import { Separator } from "@/components/ui/common/separator";
+import { graphql } from "../../../../../../../../gql";
+import { SocialLinkItem } from "./social-link-item";
+
+const ReorderSocialLinksDoc = graphql(`
+mutation ReorderSocialLinks($list: [SocialLinkOrderInput!]!) {
+  reorderSocialLinks(list: $list)
+}
+`);
+
+const FindSocialLinksDoc = graphql(`
+query FindSocialLinks {
+  findSocialLinks {
+    id
+    title
+    url
+    position
+  }
+}
+`);
 
 export function SocialLinksList() {
-  const t = useTranslations('dashboard.settings.profile.socialLinks');
+  const t = useTranslations("dashboard.settings.profile.socialLinks");
 
-  const { data, refetch } = useFindSocialLinksQuery();
+  const { data, refetch } = useQuery(FindSocialLinksDoc);
   const items = useMemo(
     () => data?.findSocialLinks ?? [],
     [data?.findSocialLinks]
@@ -32,23 +47,25 @@ export function SocialLinksList() {
     setSocialLinks(items);
   }, [items]);
 
-  const [reorder, { loading: isLoadingReorder }] =
-    useReorderSocialLinksMutation({
+  const [reorder, { loading: isLoadingReorder }] = useMutation(
+    ReorderSocialLinksDoc,
+    {
       onCompleted() {
         refetch();
-        toast.success(t('reorderMessage.success'));
+        toast.success(t("reorderMessage.success"));
       },
       onError(error) {
         captureException(error, {
           extra: {
             socialLinks,
             reorder,
-            action: 'SocialLinksList.reorder',
+            action: "SocialLinksList.reorder",
           },
         });
-        toast.error(t('reorderMessage.error'));
+        toast.error(t("reorderMessage.error"));
       },
-    });
+    }
+  );
 
   function onDragEnd(result: DropResult) {
     if (!result.destination) return;

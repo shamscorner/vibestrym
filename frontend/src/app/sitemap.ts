@@ -1,38 +1,24 @@
-import type { MetadataRoute } from 'next';
-import { APP_URL, SERVER_URL } from '@/constants/url.constants';
-import {
-  FindAllCategoriesDocument,
-  type FindAllCategoriesQuery,
-} from '@/graphql/_generated/output';
+import type { MetadataRoute } from "next";
+import { APP_URL } from "@/constants/url.constants";
+import { graphql } from "@/gql";
+import { gqlFetch } from "@/gql/execute";
 
-async function findAllCategories() {
-  try {
-    const query = FindAllCategoriesDocument.loc?.source.body;
-
-    const response = await fetch(SERVER_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query }),
-      next: {
-        revalidate: 30,
-      },
-    });
-
-    const data = await response.json();
-
-    return {
-      categories: data.data
-        .findAllCategories as FindAllCategoriesQuery['findAllCategories'],
-    };
-  } catch {
-    throw new Error('Failed to fetch categories');
+const FindAllCategoriesDoc = graphql(`
+ query FindAllCategories {
+  findAllCategories {
+    id
+    updatedAt
+    title
+    slug
+    thumbnailUrl
   }
 }
+`);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { categories } = await findAllCategories();
+  const { categories } = await gqlFetch(FindAllCategoriesDoc).then((res) => ({
+    categories: res.data?.findAllCategories ?? [],
+  }));
 
   const routes: MetadataRoute.Sitemap = [
     {

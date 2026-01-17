@@ -1,15 +1,15 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import { Skeleton } from '@/components/ui/common/skeleton';
-import { ChannelAvatar } from '@/components/ui/custom/channel-avatar';
-import { ChannelVerified } from '@/components/ui/custom/channel-verified';
+import { Skeleton } from "@/components/ui/common/skeleton";
+import { ChannelAvatar } from "@/components/ui/custom/channel-avatar";
+import { ChannelVerified } from "@/components/ui/custom/channel-verified";
 
-import type { FindRandomStreamsQuery } from '@/graphql/_generated/output';
+import type { Query } from "@/gql/graphql";
 
-import { StreamThumbnail } from './stream-thumbnail';
+import { StreamThumbnail } from "./stream-thumbnail";
 
 interface StreamCardProps {
-  stream: FindRandomStreamsQuery['findRandomStreams'][0];
+  stream: Query["findRandomStreams"][0];
 }
 
 export function StreamCard({ stream }: StreamCardProps) {
@@ -21,7 +21,7 @@ export function StreamCard({ stream }: StreamCardProps) {
           url={stream.thumbnailUrl}
           user={stream.user}
         />
-        <h2 className='mt-3 truncate font-semibold text-base text-foreground hover:opacity-80'>
+        <h2 className="mt-3 truncate font-semibold text-base text-foreground hover:opacity-80">
           {stream.title}
         </h2>
       </Link>

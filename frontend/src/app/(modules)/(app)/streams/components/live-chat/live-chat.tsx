@@ -1,31 +1,50 @@
+import { useQuery } from "@apollo/client/react";
 import {
   useConnectionState,
   useRemoteParticipant,
-} from '@livekit/components-react';
-import { ConnectionState } from 'livekit-client';
-import { MessageSquareOff } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useAuth } from '@/app/(modules)/(auth)/hooks';
-import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
+} from "@livekit/components-react";
+import { ConnectionState } from "livekit-client";
+import { MessageSquareOff } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useAuth } from "@/app/(modules)/(auth)/hooks";
+import { useCurrentAccount } from "@/app/(modules)/(auth)/hooks/current-account";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from '@/components/ui/common/card';
-import { Skeleton } from '@/components/ui/common/skeleton';
-import {
-  type FindChannelByUsernameQuery,
-  useFindMyFollowingsQuery,
-  useFindSponsorsByChannelQuery,
-} from '@/graphql/_generated/output';
-import { ChatInfo } from './chat-info';
-import { LoadingChat } from './loading-chat';
-import { MessagesList } from './messages-list';
-import { SendMessageForm } from './send-message-form';
+} from "@/components/ui/common/card";
+import { Skeleton } from "@/components/ui/common/skeleton";
+import type { Query } from "@/gql/graphql";
+import { graphql } from "../../../../../../gql";
+import { ChatInfo } from "./chat-info";
+import { LoadingChat } from "./loading-chat";
+import { MessagesList } from "./messages-list";
+import { SendMessageForm } from "./send-message-form";
+
+const FindSponsorsByChannelDoc = graphql(`
+query FindSponsorsByChannel($channelId: String!) {
+  findSponsorsByChannel(channelId: $channelId) {
+    user {
+      id
+      username
+      avatar
+    }
+  }
+}
+`);
+
+const FindMyFollowingsDoc = graphql(`
+query FindMyFollowings {
+  findMyFollowings {
+    createdAt
+    followingId
+  }
+}
+`);
 
 interface LiveChatProps {
-  channel: FindChannelByUsernameQuery['findChannelByUsername'];
+  channel: Query["findChannelByUsername"];
   isChatEnabled: boolean;
   isChatFollowersOnly: boolean;
   isChatPremiumFollowersOnly: boolean;
@@ -37,23 +56,27 @@ export function LiveChat({
   isChatFollowersOnly,
   isChatPremiumFollowersOnly,
 }: LiveChatProps) {
-  const t = useTranslations('streams.chat');
+  const t = useTranslations("streams.chat");
 
   const { isAuthenticated } = useAuth();
   const { user, isLoadingProfile } = useCurrentAccount();
 
-  const { data: followingsData, loading: isLoadingFollowings } =
-    useFindMyFollowingsQuery({
+  const { data: followingsData, loading: isLoadingFollowings } = useQuery(
+    FindMyFollowingsDoc,
+    {
       skip: !isAuthenticated,
-    });
+    }
+  );
   const followings = followingsData?.findMyFollowings ?? [];
 
-  const { data: sponsorsData, loading: isLoadingSponsors } =
-    useFindSponsorsByChannelQuery({
+  const { data: sponsorsData, loading: isLoadingSponsors } = useQuery(
+    FindSponsorsByChannelDoc,
+    {
       variables: {
         channelId: channel.id,
       },
-    });
+    }
+  );
   const sponsors = sponsorsData?.findSponsorsByChannel ?? [];
 
   const isOwnerChannel = user?.id === channel.id;
@@ -82,8 +105,8 @@ export function LiveChat({
 
   return (
     <Card className="flex h-[82%] w-full flex-col overflow-y-auto lg:fixed lg:w-[21.5%] xl:mt-0">
-      <CardHeader className='border-b pb-0'>
-        <CardTitle>{t('heading')}</CardTitle>
+      <CardHeader className="border-b pb-0">
+        <CardTitle>{t("heading")}</CardTitle>
       </CardHeader>
       <CardContent className="flex h-full flex-col overflow-y-auto px-4">
         {isOnline ? (
@@ -102,9 +125,9 @@ export function LiveChat({
         ) : (
           <div className="flex h-full flex-col items-center justify-center">
             <MessageSquareOff className="size-10 text-muted-foreground" />
-            <h2 className="mt-3 font-medium text-xl">{t('unavailable')}</h2>
+            <h2 className="mt-3 font-medium text-xl">{t("unavailable")}</h2>
             <p className="mt-1 w-full text-center text-muted-foreground">
-              {t('unavailableMessage')}
+              {t("unavailableMessage")}
             </p>
           </div>
         )}

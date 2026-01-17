@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { LiveKitRoom } from '@livekit/components-react';
+import { LiveKitRoom } from "@livekit/components-react";
 
-import type { FindChannelByUsernameQuery } from '@/graphql/_generated/output';
-import { useStreamToken } from '../hooks/stream-token';
-import { AboutChannel, AboutChannelSkeleton } from './about-channel';
-import { ChannelSponsors } from './channel-sponsors';
-import { LiveChat, LiveChatSkeleton } from './live-chat/LiveChat';
-import { StreamVideo, StreamVideoSkeleton } from './player/stream-video';
-import { StreamInfo, StreamInfoSkeleton } from './stream-info';
+import type { UserModel } from "@/gql/graphql";
+import { useStreamToken } from "../hooks/stream-token";
+import { AboutChannel, AboutChannelSkeleton } from "./about-channel";
+import { ChannelSponsors } from "./channel-sponsors";
+import { LiveChat, LiveChatSkeleton } from "./live-chat/live-chat";
+import { StreamVideo, StreamVideoSkeleton } from "./player/stream-video";
+import { StreamInfo, StreamInfoSkeleton } from "./stream-info";
 
 interface StreamOverviewProps {
-  channel: FindChannelByUsernameQuery['findChannelByUsername'];
+  channel: UserModel;
 }
 
 export function StreamOverview({ channel }: StreamOverviewProps) {
@@ -23,7 +23,7 @@ export function StreamOverview({ channel }: StreamOverviewProps) {
 
   return (
     <LiveKitRoom
-      className='mx-auto grid max-w-screen-xl grid-cols-1 gap-6 pr-4 lg:grid-cols-7'
+      className="mx-auto grid max-w-screen-xl grid-cols-1 gap-6 pr-4 lg:grid-cols-7"
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
       token={token}
     >

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/common/button';
-import { useAuth } from '../../../(auth)/hooks';
-import { ProfileMenu } from '../profile-menu';
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/common/button";
+import { useAuth } from "../../../(auth)/hooks";
+import { ProfileMenu } from "../profile-menu";
 
 export function HeaderMenu() {
-  const t = useTranslations('app.header.menu');
+  const t = useTranslations("app.header.menu");
   const { isAuthenticated } = useAuth();
 
   return (
@@ -17,10 +17,10 @@ export function HeaderMenu() {
       ) : (
         <>
           <Button asChild variant="secondary">
-            <Link href="/account/login">{t('login')}</Link>
+            <Link href="/account/login">{t("login")}</Link>
           </Button>
           <Button asChild>
-            <Link href="/account/create">{t('register')}</Link>
+            <Link href="/account/create">{t("register")}</Link>
           </Button>
         </>
       )}

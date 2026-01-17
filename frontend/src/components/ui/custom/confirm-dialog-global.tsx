@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,12 +10,12 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/common/alert-dialog';
-import { useConfirmStore } from '@/store/confirm-dialog/confirm-dialog.store';
-import { Button } from '../common/button';
+} from "@/components/ui/common/alert-dialog";
+import { useConfirmStore } from "@/store/confirm-dialog/confirm-dialog.store";
+import { Button } from "../common/button";
 
 export function ConfirmDialogGlobal() {
-  const t = useTranslations('common.confirmDialog');
+  const t = useTranslations("common.confirmDialog");
   const { isOpen, item, closeConfirm, executeAction } = useConfirmStore();
 
   const handleConfirm = () => {
@@ -40,14 +40,14 @@ export function ConfirmDialogGlobal() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={handleCancel}>
-            {item?.cancelText || t('cancelButton')}
+            {item?.cancelText || t("cancelButton")}
           </AlertDialogCancel>
           <AlertDialogAction asChild>
             <Button
               onClick={handleConfirm}
-              variant={item?.actionType || 'default'}
+              variant={item?.actionType || "default"}
             >
-              {item?.confirmText || t('continueButton')}
+              {item?.confirmText || t("continueButton")}
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>

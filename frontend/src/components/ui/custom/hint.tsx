@@ -1,17 +1,17 @@
-import type { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from "react";
 
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../common/tooltip';
+} from "../common/tooltip";
 
 interface HintProps {
   label: string;
   asChild?: boolean;
-  side?: 'top' | 'bottom' | 'left' | 'right';
-  aling?: 'start' | 'center' | 'end';
+  side?: "top" | "bottom" | "left" | "right";
+  aling?: "start" | "center" | "end";
 }
 
 export function Hint({

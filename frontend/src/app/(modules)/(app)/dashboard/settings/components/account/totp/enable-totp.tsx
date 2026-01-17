@@ -1,12 +1,13 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { captureException } from '@sentry/nextjs';
-import Image from 'next/image';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
-import { Button } from '@/components/ui/common/button';
+import { useMutation, useQuery } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { captureException } from "@sentry/nextjs";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { useCurrentAccount } from "@/app/(modules)/(auth)/hooks/current-account";
+import { Button } from "@/components/ui/common/button";
 import {
   Dialog,
   DialogContent,
@@ -14,7 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/common/dialog';
+} from "@/components/ui/common/dialog";
 import {
   Form,
   FormControl,
@@ -22,48 +23,60 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/common/form';
+} from "@/components/ui/common/form";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from '@/components/ui/common/input-otp';
-import {
-  useEnableTotpMutation,
-  useGenerateTotpSecretQuery,
-} from '@/graphql/_generated/output';
-import { type EnableTotpSchema, enableTotpSchema } from './enable-totp.schema';
+} from "@/components/ui/common/input-otp";
+import { graphql } from "../../../../../../../../gql";
+import { type EnableTotpSchema, enableTotpSchema } from "./enable-totp.schema";
+
+const GenerateTotpSecretDoc = graphql(`
+query GenerateTotpSecret {
+  generateTotpSecret {
+    qrcodeUrl
+    secret
+  }
+}
+`);
+
+const EnableTotpDoc = graphql(`
+mutation EnableTotp($data: EnableTotpInput!) {
+  enableTotp(data: $data)
+}
+`);
 
 export function EnableTotp() {
-  const t = useTranslations('dashboard.settings.account.twoFactor.enable');
+  const t = useTranslations("dashboard.settings.account.twoFactor.enable");
 
   const [isOpen, setIsOpen] = useState(false);
   const { refetch } = useCurrentAccount();
 
-  const { data, loading: isLoadingGenerate } = useGenerateTotpSecretQuery();
+  const { data, loading: isLoadingGenerate } = useQuery(GenerateTotpSecretDoc);
   const twoFactorAuth = data?.generateTotpSecret;
 
   const form = useForm<EnableTotpSchema>({
     resolver: zodResolver(enableTotpSchema),
     defaultValues: {
-      pin: '',
+      pin: "",
     },
   });
 
-  const [enable, { loading: isLoadingEnable }] = useEnableTotpMutation({
+  const [enable, { loading: isLoadingEnable }] = useMutation(EnableTotpDoc, {
     onCompleted() {
       refetch();
       setIsOpen(false);
-      toast.success(t('successMessage'));
+      toast.success(t("successMessage"));
     },
     onError(error) {
       captureException(error, {
         extra: {
-          action: 'Enable TOTP',
-          pin: form.getValues('pin'),
+          action: "Enable TOTP",
+          pin: form.getValues("pin"),
         },
       });
-      toast.error(error.message || t('errorMessage'));
+      toast.error(error.message || t("errorMessage"));
     },
   });
 
@@ -73,7 +86,7 @@ export function EnableTotp() {
     enable({
       variables: {
         data: {
-          secret: twoFactorAuth?.secret ?? '',
+          secret: twoFactorAuth?.secret ?? "",
           pin: value.pin,
         },
       },
@@ -83,11 +96,11 @@ export function EnableTotp() {
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <Button>{t('trigger')}</Button>
+        <Button>{t("trigger")}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{t('heading')}</DialogTitle>
+          <DialogTitle>{t("heading")}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -96,7 +109,7 @@ export function EnableTotp() {
           >
             <div className="flex flex-col items-center justify-center gap-4">
               <span className="text-muted-foreground text-sm">
-                {twoFactorAuth?.qrcodeUrl ? t('qrInstructions') : ''}
+                {twoFactorAuth?.qrcodeUrl ? t("qrInstructions") : ""}
               </span>
               {twoFactorAuth?.qrcodeUrl && (
                 <Image
@@ -111,8 +124,8 @@ export function EnableTotp() {
             <div className="flex flex-col gap-2">
               <span className="text-center text-muted-foreground text-sm">
                 {twoFactorAuth?.secret
-                  ? t('secretCodeLabel') + twoFactorAuth.secret
-                  : ''}
+                  ? t("secretCodeLabel") + twoFactorAuth.secret
+                  : ""}
               </span>
             </div>
             <FormField
@@ -120,7 +133,7 @@ export function EnableTotp() {
               name="pin"
               render={({ field }) => (
                 <FormItem className="mt-3 flex flex-col gap-3">
-                  <FormLabel>{t('pin.label')}</FormLabel>
+                  <FormLabel>{t("pin.label")}</FormLabel>
                   <FormControl>
                     <InputOTP maxLength={6} {...field}>
                       <InputOTPGroup>
@@ -133,7 +146,7 @@ export function EnableTotp() {
                       </InputOTPGroup>
                     </InputOTP>
                   </FormControl>
-                  <FormDescription>{t('pin.description')}</FormDescription>
+                  <FormDescription>{t("pin.description")}</FormDescription>
                 </FormItem>
               )}
             />
@@ -142,7 +155,7 @@ export function EnableTotp() {
                 disabled={!isValid || isLoadingGenerate || isLoadingEnable}
                 type="submit"
               >
-                {t('submitButton')}
+                {t("submitButton")}
               </Button>
             </DialogFooter>
           </form>

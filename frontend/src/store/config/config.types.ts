@@ -1,4 +1,4 @@
-import type { TypeBaseColor } from '@/constants/colors.constants';
+import type { TypeBaseColor } from "@/constants/colors.constants";
 
 export interface ConfigStore {
   theme: TypeBaseColor;

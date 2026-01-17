@@ -1,6 +1,6 @@
-import { Logo } from '@/components/logo';
-import { Search } from '../search';
-import { HeaderMenu } from './header-menu';
+import { Logo } from "@/components/logo";
+import { Search } from "../search";
+import { HeaderMenu } from "./header-menu";
 
 export function Header() {
   return (

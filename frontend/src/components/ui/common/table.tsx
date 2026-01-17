@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import type { ComponentProps } from 'react';
-import { cn } from '@/utils/tw-merge';
+import type { ComponentProps } from "react";
+import { cn } from "@/utils/tw-merge";
 
-function Table({ className, ...props }: ComponentProps<'table'>) {
+function Table({ className, ...props }: ComponentProps<"table">) {
   return (
     <div
       className="relative w-full overflow-x-auto"
       data-slot="table-container"
     >
       <table
-        className={cn('w-full caption-bottom text-sm', className)}
+        className={cn("w-full caption-bottom text-sm", className)}
         data-slot="table"
         {...props}
       />
@@ -18,31 +18,31 @@ function Table({ className, ...props }: ComponentProps<'table'>) {
   );
 }
 
-function TableHeader({ className, ...props }: ComponentProps<'thead'>) {
+function TableHeader({ className, ...props }: ComponentProps<"thead">) {
   return (
     <thead
-      className={cn('[&_tr]:border-b', className)}
+      className={cn("[&_tr]:border-b", className)}
       data-slot="table-header"
       {...props}
     />
   );
 }
 
-function TableBody({ className, ...props }: ComponentProps<'tbody'>) {
+function TableBody({ className, ...props }: ComponentProps<"tbody">) {
   return (
     <tbody
-      className={cn('[&_tr:last-child]:border-0', className)}
+      className={cn("[&_tr:last-child]:border-0", className)}
       data-slot="table-body"
       {...props}
     />
   );
 }
 
-function TableFooter({ className, ...props }: ComponentProps<'tfoot'>) {
+function TableFooter({ className, ...props }: ComponentProps<"tfoot">) {
   return (
     <tfoot
       className={cn(
-        'border-t bg-muted/50 font-medium [&>tr]:last:border-b-0',
+        "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
         className
       )}
       data-slot="table-footer"
@@ -51,11 +51,11 @@ function TableFooter({ className, ...props }: ComponentProps<'tfoot'>) {
   );
 }
 
-function TableRow({ className, ...props }: ComponentProps<'tr'>) {
+function TableRow({ className, ...props }: ComponentProps<"tr">) {
   return (
     <tr
       className={cn(
-        'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
+        "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
         className
       )}
       data-slot="table-row"
@@ -64,11 +64,11 @@ function TableRow({ className, ...props }: ComponentProps<'tr'>) {
   );
 }
 
-function TableHead({ className, ...props }: ComponentProps<'th'>) {
+function TableHead({ className, ...props }: ComponentProps<"th">) {
   return (
     <th
       className={cn(
-        'h-10 whitespace-nowrap px-2 text-left align-middle font-medium text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        "h-10 whitespace-nowrap px-2 text-left align-middle font-medium text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       data-slot="table-head"
@@ -77,11 +77,11 @@ function TableHead({ className, ...props }: ComponentProps<'th'>) {
   );
 }
 
-function TableCell({ className, ...props }: ComponentProps<'td'>) {
+function TableCell({ className, ...props }: ComponentProps<"td">) {
   return (
     <td
       className={cn(
-        'whitespace-nowrap p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        "whitespace-nowrap p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       data-slot="table-cell"
@@ -90,10 +90,10 @@ function TableCell({ className, ...props }: ComponentProps<'td'>) {
   );
 }
 
-function TableCaption({ className, ...props }: ComponentProps<'caption'>) {
+function TableCaption({ className, ...props }: ComponentProps<"caption">) {
   return (
     <caption
-      className={cn('mt-4 text-muted-foreground text-sm', className)}
+      className={cn("mt-4 text-muted-foreground text-sm", className)}
       data-slot="table-caption"
       {...props}
     />

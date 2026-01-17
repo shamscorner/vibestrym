@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import { WifiOff } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import type { CSSProperties } from 'react';
+import { WifiOff } from "lucide-react";
+import { useTranslations } from "next-intl";
+import type { CSSProperties } from "react";
 
-import { Card } from '@/components/ui/common/card';
+import { Card } from "@/components/ui/common/card";
 
-import type { FindChannelByUsernameQuery } from '@/graphql/_generated/output';
+import type { Query } from "@/gql/graphql";
 
-import { getMediaSource } from '@/utils/get-media-source';
+import { getMediaSource } from "@/utils/get-media-source";
 
 interface OfflineStreamProps {
-  channel: FindChannelByUsernameQuery['findChannelByUsername'];
+  channel: Query["findChannelByUsername"];
 }
 
 export function StreamOffline({ channel }: OfflineStreamProps) {
-  const t = useTranslations('streams.stream.video');
+  const t = useTranslations("streams.stream.video");
 
   const backgroundStyle: CSSProperties = channel.stream.thumbnailUrl
     ? {
-      backgroundImage: `url(${getMediaSource(channel.stream.thumbnailUrl)})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    }
+        backgroundImage: `url(${getMediaSource(channel.stream.thumbnailUrl)})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }
     : {};
 
   return (
@@ -35,7 +35,7 @@ export function StreamOffline({ channel }: OfflineStreamProps) {
       )}
       <WifiOff className="z-10 size-12 text-muted-foreground" />
       <p className="z-10 mt-3 text-lg text-white">
-        {channel.displayName} {t('offline')}
+        {channel.displayName} {t("offline")}
       </p>
     </Card>
   );

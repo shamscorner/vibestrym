@@ -1,13 +1,13 @@
-import { EmptyState } from '@/components/ui/custom/empty-state';
-import { Heading } from '@/components/ui/custom/heading';
+import { EmptyState } from "@/components/ui/custom/empty-state";
+import { Heading } from "@/components/ui/custom/heading";
 
-import type { FindRandomCategoriesQuery } from '@/graphql/_generated/output';
+import type { CategoryModel } from "@/gql/graphql";
 
-import { CategoryCard } from './category-card';
+import { CategoryCard } from "./category-card";
 
 interface CategoriesListProps {
   heading?: string;
-  categories: FindRandomCategoriesQuery['findRandomCategories'];
+  categories: CategoryModel[];
 }
 
 export function CategoriesList({ heading, categories }: CategoriesListProps) {

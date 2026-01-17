@@ -1,11 +1,11 @@
-import { captureException } from '@sentry/nextjs';
-import { useConfirmStore } from '@/store/confirm-dialog/confirm-dialog.store';
-import type { ConfirmItem } from '@/store/confirm-dialog/confirm-dialog.type';
+import { captureException } from "@sentry/nextjs";
+import { useConfirmStore } from "@/store/confirm-dialog/confirm-dialog.store";
+import type { ConfirmItem } from "@/store/confirm-dialog/confirm-dialog.type";
 
 export const useConfirmDialog = () => {
   const openConfirm = useConfirmStore((state) => state.openConfirm);
 
-  const confirm = (item: Omit<ConfirmItem, 'key'> & { key?: string }) => {
+  const confirm = (item: Omit<ConfirmItem, "key"> & { key?: string }) => {
     const confirmItem: ConfirmItem = {
       ...item,
       key: item.key || `confirm-${Date.now()}-${Math.random()}`,
@@ -23,7 +23,7 @@ export const useConfirmDialog = () => {
         } catch (error) {
           captureException(error, {
             extra: {
-              action: 'ConfirmDialog.confirm',
+              action: "ConfirmDialog.confirm",
               confirmItem,
             },
           });

@@ -1,6 +1,6 @@
-import type { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from '../common/card';
+import { Card, CardContent, CardHeader, CardTitle } from "../common/card";
 
 interface FormWrapperProps {
   heading: string;

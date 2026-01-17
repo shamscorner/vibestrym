@@ -1,49 +1,69 @@
-import type { DraggableProvided } from '@hello-pangea/dnd';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { captureException } from '@sentry/nextjs';
-import { GripVerticalIcon, PencilIcon, Trash2Icon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/common/button';
+import { useMutation, useQuery } from "@apollo/client/react";
+import type { DraggableProvided } from "@hello-pangea/dnd";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { captureException } from "@sentry/nextjs";
+import { GripVerticalIcon, PencilIcon, Trash2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/common/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-} from '@/components/ui/common/form';
-import { Input } from '@/components/ui/common/input';
-import {
-  type FindSocialLinksQuery,
-  useFindSocialLinksQuery,
-  useRemoveSocialLinkMutation,
-  useUpdateSocialLinkMutation,
-} from '@/graphql/_generated/output';
-import { useConfirmDialog } from '@/hooks/confirm-dialog';
+} from "@/components/ui/common/form";
+import { Input } from "@/components/ui/common/input";
+import type { Query } from "@/gql/graphql";
+import { useConfirmDialog } from "@/hooks/confirm-dialog";
+import { graphql } from "../../../../../../../../gql";
 import {
   type SocialLinksSchema,
   socialLinksSchema,
-} from './social-links.schema';
+} from "./social-links.schema";
+
+const UpdateSocialLinkDoc = graphql(`
+mutation UpdateSocialLink($id: String!, $data: SocialLinkInput!) {
+  updateSocialLink(id: $id, data: $data)
+}
+`);
+
+const RemoveSocialLinkDoc = graphql(`
+mutation RemoveSocialLink($id: String!) {
+  removeSocialLink(id: $id)
+}
+`);
+
+const FindSocialLinksDoc = graphql(`
+query FindSocialLinks {
+  findSocialLinks {
+    id
+    title
+    url
+    position
+  }
+}
+`);
 
 interface SocialLinkItemProps {
-  socialLink: FindSocialLinksQuery['findSocialLinks'][0];
+  socialLink: Query["findSocialLinks"][0];
   provided: DraggableProvided;
 }
 
 export function SocialLinkItem({ socialLink, provided }: SocialLinkItemProps) {
-  const t = useTranslations('dashboard.settings.profile.socialLinks.editForm');
+  const t = useTranslations("dashboard.settings.profile.socialLinks.editForm");
 
   const [editingId, setIsEditingId] = useState<string | null>(null);
 
   const { confirm: confirmDelete } = useConfirmDialog();
-  const { refetch } = useFindSocialLinksQuery();
+  const { refetch } = useQuery(FindSocialLinksDoc);
 
   const form = useForm<SocialLinksSchema>({
     resolver: zodResolver(socialLinksSchema),
     values: {
-      title: socialLink.title ?? '',
-      url: socialLink.url ?? '',
+      title: socialLink.title ?? "",
+      url: socialLink.url ?? "",
     },
   });
 
@@ -53,38 +73,44 @@ export function SocialLinkItem({ socialLink, provided }: SocialLinkItemProps) {
     setIsEditingId(id);
   }
 
-  const [update, { loading: isLoadingUpdate }] = useUpdateSocialLinkMutation({
-    onCompleted() {
-      toggleEditing(null);
-      refetch();
-      toast.success(t('updateMessage.success'));
-    },
-    onError(error) {
-      captureException(error, {
-        extra: {
-          socialLinkId: socialLink.id,
-          action: 'SocialLinkItem.update',
-        },
-      });
-      toast.error(t('updateMessage.error'));
-    },
-  });
+  const [update, { loading: isLoadingUpdate }] = useMutation(
+    UpdateSocialLinkDoc,
+    {
+      onCompleted() {
+        toggleEditing(null);
+        refetch();
+        toast.success(t("updateMessage.success"));
+      },
+      onError(error) {
+        captureException(error, {
+          extra: {
+            socialLinkId: socialLink.id,
+            action: "SocialLinkItem.update",
+          },
+        });
+        toast.error(t("updateMessage.error"));
+      },
+    }
+  );
 
-  const [remove, { loading: isLoadingRemove }] = useRemoveSocialLinkMutation({
-    onCompleted() {
-      refetch();
-      toast.success(t('removeMessage.success'));
-    },
-    onError(error) {
-      captureException(error, {
-        extra: {
-          socialLinkId: socialLink.id,
-          action: 'SocialLinkItem.remove',
-        },
-      });
-      toast.error(t('removeMessage.error'));
-    },
-  });
+  const [remove, { loading: isLoadingRemove }] = useMutation(
+    RemoveSocialLinkDoc,
+    {
+      onCompleted() {
+        refetch();
+        toast.success(t("removeMessage.success"));
+      },
+      onError(error) {
+        captureException(error, {
+          extra: {
+            socialLinkId: socialLink.id,
+            action: "SocialLinkItem.remove",
+          },
+        });
+        toast.error(t("removeMessage.error"));
+      },
+    }
+  );
 
   function onSubmit(data: SocialLinksSchema) {
     update({ variables: { id: socialLink.id, data } });
@@ -97,7 +123,7 @@ export function SocialLinkItem({ socialLink, provided }: SocialLinkItemProps) {
       {...provided.draggableProps}
     >
       <div
-        className='absolute top-0 bottom-0 left-0 flex w-10 items-center justify-center border-r border-r-border text-foreground transition'
+        className="absolute top-0 bottom-0 left-0 flex w-10 items-center justify-center border-r border-r-border text-foreground transition"
         {...provided.dragHandleProps}
       >
         <GripVerticalIcon className="size-5" />
@@ -149,7 +175,7 @@ export function SocialLinkItem({ socialLink, provided }: SocialLinkItemProps) {
                   size="sm"
                   variant="secondary"
                 >
-                  {t('cancelButton')}
+                  {t("cancelButton")}
                 </Button>
                 <Button
                   disabled={
@@ -157,7 +183,7 @@ export function SocialLinkItem({ socialLink, provided }: SocialLinkItemProps) {
                   }
                   size="sm"
                 >
-                  {t('submitButton')}
+                  {t("submitButton")}
                 </Button>
               </div>
             </form>
@@ -185,11 +211,11 @@ export function SocialLinkItem({ socialLink, provided }: SocialLinkItemProps) {
           className="hover:opacity-80"
           onClick={async () =>
             await confirmDelete({
-              title: t('deleteConfirmDialog.heading'),
-              description: t('deleteConfirmDialog.message'),
-              confirmText: t('deleteConfirmDialog.confirmButton'),
-              cancelText: t('deleteConfirmDialog.cancelButton'),
-              actionType: 'destructive',
+              title: t("deleteConfirmDialog.heading"),
+              description: t("deleteConfirmDialog.message"),
+              confirmText: t("deleteConfirmDialog.confirmButton"),
+              cancelText: t("deleteConfirmDialog.cancelButton"),
+              actionType: "destructive",
               action: async () => {
                 await remove({ variables: { id: socialLink.id } });
                 return true;

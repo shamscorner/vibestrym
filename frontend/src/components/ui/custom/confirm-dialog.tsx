@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import type { PropsWithChildren } from 'react';
+import { useTranslations } from "next-intl";
+import type { PropsWithChildren } from "react";
 
 import {
   AlertDialog,
@@ -13,14 +13,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '../common/alert-dialog';
-import { Button, type ButtonVariants } from '../common/button';
+} from "../common/alert-dialog";
+import { Button, type ButtonVariants } from "../common/button";
 
 interface ConfirmDialogProps {
   heading: string;
   message: string;
   confirmButton?: string;
-  actionType?: ButtonVariants['variant'];
+  actionType?: ButtonVariants["variant"];
   onConfirm: () => void;
 }
 
@@ -28,14 +28,14 @@ export function ConfirmDialog({
   children,
   heading,
   message,
-  confirmButton = '',
-  actionType = 'default',
+  confirmButton = "",
+  actionType = "default",
   onConfirm,
 }: PropsWithChildren<ConfirmDialogProps>) {
-  const t = useTranslations('common.confirmDialog');
+  const t = useTranslations("common.confirmDialog");
 
   if (!confirmButton) {
-    confirmButton = t('continueButton');
+    confirmButton = t("continueButton");
   }
 
   return (
@@ -47,7 +47,7 @@ export function ConfirmDialog({
           <AlertDialogDescription>{message}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t('cancelButton')}</AlertDialogCancel>
+          <AlertDialogCancel>{t("cancelButton")}</AlertDialogCancel>
           <AlertDialogAction asChild>
             <Button onClick={onConfirm} variant={actionType}>
               {confirmButton}

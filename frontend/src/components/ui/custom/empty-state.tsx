@@ -1,15 +1,15 @@
-import { SearchX } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { SearchX } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function EmptyState() {
-  const t = useTranslations('common.emptyState');
+  const t = useTranslations("common.emptyState");
 
   return (
-    <div className='mx-auto flex h-[75vh] w-full max-w-3xl flex-col items-center justify-center text-balance'>
+    <div className="mx-auto flex h-[75vh] w-full max-w-3xl flex-col items-center justify-center text-balance">
       <SearchX className="size-20 text-muted-foreground" />
-      <h1 className="mt-6 font-semibold text-2xl">{t('heading')}</h1>
+      <h1 className="mt-6 font-semibold text-2xl">{t("heading")}</h1>
       <p className="mt-3 w-full items-center text-center text-muted-foreground lg:w-[60%]">
-        {t('description')}
+        {t("description")}
       </p>
     </div>
   );

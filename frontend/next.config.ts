@@ -1,18 +1,18 @@
-import { withSentryConfig } from '@sentry/nextjs';
-import type { NextConfig } from 'next';
-import createNextIntlPlugin from 'next-intl/plugin';
+import { withSentryConfig } from "@sentry/nextjs";
+import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin('./src/libs/i18n/request.ts');
+const withNextIntl = createNextIntlPlugin("./src/libs/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   experimental: {
-    optimizePackageImports: ['@sentry/nextjs'],
+    optimizePackageImports: ["@sentry/nextjs"],
   },
   images: {
     remotePatterns: [
-      new URL('https://bucketbdlive.s3.ap-south-1.amazonaws.com/**'),
+      new URL("https://bucketbdlive.s3.ap-south-1.amazonaws.com/**"),
     ],
   },
 };
@@ -21,8 +21,8 @@ export default withSentryConfig(withNextIntl(nextConfig), {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-  org: 'shamscorner-llc',
-  project: 'bdlive',
+  org: "shamscorner-llc",
+  project: "bdlive",
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -37,7 +37,7 @@ export default withSentryConfig(withNextIntl(nextConfig), {
   // This can increase your server load as well as your hosting bill.
   // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
   // side errors will fail.
-  tunnelRoute: '/monitoring',
+  tunnelRoute: "/monitoring",
 
   // Automatically tree-shake Sentry logger statements to reduce bundle size
   disableLogger: true,

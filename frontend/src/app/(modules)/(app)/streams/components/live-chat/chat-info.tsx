@@ -1,6 +1,6 @@
-import { Info } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useAuth } from '@/app/(modules)/(auth)/hooks';
+import { Info } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useAuth } from "@/app/(modules)/(auth)/hooks";
 
 interface ChatInfoProps {
   isOwnerChannel: boolean;
@@ -19,26 +19,26 @@ export function ChatInfo({
   isChatFollowersOnly,
   isChatPremiumFollowersOnly,
 }: ChatInfoProps) {
-  const t = useTranslations('streams.chat.info');
+  const t = useTranslations("streams.chat.info");
 
   const { isAuthenticated } = useAuth();
 
-  let message = '';
+  let message = "";
 
   switch (true) {
     case !isAuthenticated:
-      message = t('authRequired');
+      message = t("authRequired");
       break;
     case isOwnerChannel:
       return null;
     case !isChatEnabled:
-      message = t('chatDisabled');
+      message = t("chatDisabled");
       break;
     case isChatPremiumFollowersOnly && !isSponsor:
-      message = t('premiumFollowersOnly');
+      message = t("premiumFollowersOnly");
       break;
     case isChatFollowersOnly && !isFollower:
-      message = t('followersOnly');
+      message = t("followersOnly");
       break;
     default:
       return null;
@@ -47,7 +47,7 @@ export function ChatInfo({
   return (
     <div className="mt-2 flex h-10 w-full items-center gap-x-2 rounded-md border bg-accent px-3 text-muted-foreground">
       <Info className="size-4" />
-      <p className='font-semibold text-sm'>{message}</p>
+      <p className="font-semibold text-sm">{message}</p>
     </div>
   );
 }

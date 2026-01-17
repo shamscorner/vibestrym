@@ -1,27 +1,59 @@
-import { useEffect, useState } from 'react';
+import { useQuery, useSubscription } from "@apollo/client/react";
+import { useEffect, useState } from "react";
+import { graphql } from "@/gql";
+import type { ChatMessageAddedSubscription, Query } from "@/gql/graphql";
+import { MessageItem } from "./message-item";
 
-import {
-  type FindChannelByUsernameQuery,
-  type FindChatMessagesByStreamQuery,
-  useChatMessageAddedSubscription,
-  useFindChatMessagesByStreamQuery,
-  useFindSponsorsByChannelQuery,
-} from '@/graphql/_generated/output';
+const FindSponsorsByChannelDoc = graphql(`
+query FindSponsorsByChannel($channelId: String!) {
+  findSponsorsByChannel(channelId: $channelId) {
+    user {
+      id
+      username
+      avatar
+    }
+  }
+}
+`);
 
-import { MessageItem } from './message-item';
+const FindChatMessagesByStreamDoc = graphql(`
+query FindChatMessagesByStream($streamId: String!) {
+  findChatMessagesByStream(streamId: $streamId) {
+    createdAt
+    text
+    user {
+      id
+      username
+    }
+  }
+}
+`);
+
+const ChatMessageAddedDoc = graphql(`
+subscription ChatMessageAdded($streamId: String!) {
+  chatMessageAdded(streamId: $streamId) {
+    createdAt
+    text
+    user {
+      id
+      username
+    }
+  }
+}
+`);
 
 interface MessagesListProps {
-  channel: FindChannelByUsernameQuery['findChannelByUsername'];
+  channel: Query["findChannelByUsername"];
 }
 
 export function MessagesList({ channel }: MessagesListProps) {
-  const { data } = useFindChatMessagesByStreamQuery({
+  const { data } = useQuery(FindChatMessagesByStreamDoc, {
     variables: {
       streamId: channel.stream.id,
     },
   });
 
-  const { data: sponsorsData } = useFindSponsorsByChannelQuery({
+  const { data: sponsorsData } = useQuery(FindSponsorsByChannelDoc, {
     variables: {
       channelId: channel.id,
     },
@@ -31,10 +63,10 @@ export function MessagesList({ channel }: MessagesListProps) {
   const sponsorIds = new Set(sponsors.map((sponor) => sponor.user.id));
 
   const [messages, setMessages] = useState<
-    FindChatMessagesByStreamQuery['findChatMessagesByStream']
+    ChatMessageAddedSubscription["chatMessageAdded"][]
   >([]);
 
-  const { data: newMessageData } = useChatMessageAddedSubscription({
+  const { data: newMessageData } = useSubscription(ChatMessageAddedDoc, {
     variables: {
       streamId: channel.stream.id,
     },

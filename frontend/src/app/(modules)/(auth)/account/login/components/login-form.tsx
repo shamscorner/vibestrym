@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { captureException } from '@sentry/nextjs';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { type ComponentProps, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { GoogleIcon } from '@/components/icons/google-icon';
-import { Button } from '@/components/ui/common/button';
+import { useMutation } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { captureException } from "@sentry/nextjs";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { type ComponentProps, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { GoogleIcon } from "@/components/icons/google-icon";
+import { Button } from "@/components/ui/common/button";
 import {
   Form,
   FormControl,
@@ -18,20 +19,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/common/form';
-import { Input } from '@/components/ui/common/input';
+} from "@/components/ui/common/form";
+import { Input } from "@/components/ui/common/input";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from '@/components/ui/common/input-otp';
-import { useLoginUserMutation } from '@/graphql/_generated/output';
-import { cn } from '@/utils/tw-merge';
-import { useAuth } from '../../../hooks';
-import { type LoginSchema, loginSchema } from '../login.schema';
+} from "@/components/ui/common/input-otp";
+import { graphql } from "@/gql";
+import { cn } from "@/utils/tw-merge";
+import { useAuth } from "../../../hooks";
+import { type LoginSchema, loginSchema } from "../login.schema";
 
-export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
-  const t = useTranslations('auth.login');
+const LoginUserDoc = graphql(`
+mutation LoginUser($data: LoginInput!) {
+  loginUser(data: $data) {
+    user {
+      username
+    }
+    message
+  }
+}
+`);
+
+export function LoginForm({ className, ...props }: ComponentProps<"form">) {
+  const t = useTranslations("auth.login");
 
   const router = useRouter();
   const { auth } = useAuth();
@@ -41,50 +53,52 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      login: '',
-      password: '',
+      login: "",
+      password: "",
     },
   });
 
   const { isSubmitting, isValid } = form.formState;
+  const [loginUser, { loading: isLoadingLogin }] = useMutation(LoginUserDoc);
 
-  const [loginUser, { loading: isLoadingLogin }] = useLoginUserMutation({
-    onCompleted: (data) => {
-      if (data.loginUser.message) {
-        setIsShowTwoFactor(true);
-        return;
-      }
-      auth();
-      router.replace('/dashboard/settings');
-    },
-    onError: (error) => {
-      toast.error(error.message || t('errorMessage'));
+  async function onSubmit(values: LoginSchema) {
+    const { data, error } = await loginUser({
+      variables: { data: values },
+    });
+
+    if (error) {
+      toast.error(error.message || t("errorMessage"));
       captureException(error, {
         extra: {
-          action: 'login',
+          action: "login",
           variables: form.getValues(),
         },
       });
-    },
-  });
+      return;
+    }
 
-  function onSubmit(values: LoginSchema) {
-    loginUser({
-      variables: { data: values },
-    });
+    console.log("Login response data:", data);
+
+    if (data?.loginUser.message) {
+      setIsShowTwoFactor(true);
+      return;
+    }
+
+    auth();
+    router.replace("/dashboard/settings");
   }
 
   return (
     <Form {...form}>
       <form
         {...props}
-        className={cn('flex flex-col gap-6', className)}
+        className={cn("flex flex-col gap-6", className)}
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className="mb-6 flex flex-col items-center gap-2 text-center">
-          <h1 className="font-bold text-2xl">{t('heading')}</h1>
+          <h1 className="font-bold text-2xl">{t("heading")}</h1>
           <p className="text-balance text-muted-foreground text-sm">
-            {t('description')}
+            {t("description")}
           </p>
         </div>
         <div className="grid gap-6">
@@ -94,7 +108,7 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
               name="pin"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('pin.label')}</FormLabel>
+                  <FormLabel>{t("pin.label")}</FormLabel>
                   <FormControl>
                     <InputOTP maxLength={6} {...field}>
                       <InputOTPGroup>
@@ -107,7 +121,7 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
                       </InputOTPGroup>
                     </InputOTP>
                   </FormControl>
-                  <FormDescription>{t('pin.description')}</FormDescription>
+                  <FormDescription>{t("pin.description")}</FormDescription>
                 </FormItem>
               )}
             />
@@ -118,7 +132,7 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
                 name="login"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('login.label')}</FormLabel>
+                    <FormLabel>{t("login.label")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isSubmitting || isLoadingLogin}
@@ -126,7 +140,7 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>{t('login.description')}</FormDescription>
+                    <FormDescription>{t("login.description")}</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -137,12 +151,12 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center">
-                      <FormLabel>{t('password.label')}</FormLabel>
+                      <FormLabel>{t("password.label")}</FormLabel>
                       <Link
                         className="ml-auto text-sm underline-offset-4 hover:underline"
                         href="/account/recovery/reset-password"
                       >
-                        {t('forgotPassword')}
+                        {t("forgotPassword")}
                       </Link>
                     </div>
                     <FormControl>
@@ -153,7 +167,7 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
                       />
                     </FormControl>
                     <FormDescription>
-                      {t('password.description')}
+                      {t("password.description")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -166,11 +180,11 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
             disabled={isSubmitting || !isValid || isLoadingLogin}
             type="submit"
           >
-            {t('submitButton')}
+            {t("submitButton")}
           </Button>
           <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-border after:border-t">
             <span className="relative z-10 bg-background px-2 text-muted-foreground">
-              {t('socialDivider')}
+              {t("socialDivider")}
             </span>
           </div>
           <Button
@@ -180,13 +194,13 @@ export function LoginForm({ className, ...props }: ComponentProps<'form'>) {
             variant="outline"
           >
             <GoogleIcon />
-            {t('googleButton')}
+            {t("googleButton")}
           </Button>
         </div>
         <div className="text-center text-sm">
-          {t('registerText')}{' '}
+          {t("registerText")}{" "}
           <Link className="underline underline-offset-4" href="/account/create">
-            {t('registerLink')}
+            {t("registerLink")}
           </Link>
         </div>
       </form>

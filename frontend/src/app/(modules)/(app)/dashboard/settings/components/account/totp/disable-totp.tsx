@@ -1,11 +1,12 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { captureException } from '@sentry/nextjs';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { useCurrentAccount } from '@/app/(modules)/(auth)/hooks/current-account';
-import { Button } from '@/components/ui/common/button';
+import { useMutation } from "@apollo/client/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { captureException } from "@sentry/nextjs";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { useCurrentAccount } from "@/app/(modules)/(auth)/hooks/current-account";
+import { Button } from "@/components/ui/common/button";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/common/dialog';
+} from "@/components/ui/common/dialog";
 import {
   Form,
   FormControl,
@@ -21,20 +22,26 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/common/form';
+} from "@/components/ui/common/form";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from '@/components/ui/common/input-otp';
-import { useDisableTotpMutation } from '@/graphql/_generated/output';
+} from "@/components/ui/common/input-otp";
+import { graphql } from "../../../../../../../../gql";
 import {
   type DisableTotpSchema,
   disableTotpSchema,
-} from './disable-totp.schema';
+} from "./disable-totp.schema";
+
+const DisableTotpDoc = graphql(`
+mutation DisableTotp($data: DisableTotpInput!) {
+  disableTotp(data: $data)
+}
+`);
 
 export function DisableTotp() {
-  const t = useTranslations('dashboard.settings.account.twoFactor.disable');
+  const t = useTranslations("dashboard.settings.account.twoFactor.disable");
 
   const [isOpen, setIsOpen] = useState(false);
   const { refetch } = useCurrentAccount();
@@ -42,24 +49,24 @@ export function DisableTotp() {
   const form = useForm<DisableTotpSchema>({
     resolver: zodResolver(disableTotpSchema),
     defaultValues: {
-      pin: '',
+      pin: "",
     },
   });
 
-  const [enable, { loading: isLoadingEnable }] = useDisableTotpMutation({
+  const [enable, { loading: isLoadingEnable }] = useMutation(DisableTotpDoc, {
     onCompleted() {
       refetch();
       setIsOpen(false);
-      toast.success(t('successMessage'));
+      toast.success(t("successMessage"));
     },
     onError(error) {
       captureException(error, {
         extra: {
-          action: 'Disable TOTP',
-          pin: form.getValues('pin'),
+          action: "Disable TOTP",
+          pin: form.getValues("pin"),
         },
       });
-      toast.error(error.message || t('errorMessage'));
+      toast.error(error.message || t("errorMessage"));
     },
   });
 
@@ -78,24 +85,24 @@ export function DisableTotp() {
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <Button>{t('trigger')}</Button>
+        <Button>{t("trigger")}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{t('heading')}</DialogTitle>
+          <DialogTitle>{t("heading")}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
             className="mt-4 flex flex-col gap-4"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <p>{t('message')}</p>
+            <p>{t("message")}</p>
             <FormField
               control={form.control}
               name="pin"
               render={({ field }) => (
                 <FormItem className="mt-3 flex flex-col gap-3">
-                  <FormLabel>{t('pin.label')}</FormLabel>
+                  <FormLabel>{t("pin.label")}</FormLabel>
                   <FormControl>
                     <InputOTP maxLength={6} {...field}>
                       <InputOTPGroup>
@@ -108,13 +115,13 @@ export function DisableTotp() {
                       </InputOTPGroup>
                     </InputOTP>
                   </FormControl>
-                  <FormDescription>{t('pin.description')}</FormDescription>
+                  <FormDescription>{t("pin.description")}</FormDescription>
                 </FormItem>
               )}
             />
             <DialogFooter className="mt-4">
               <Button disabled={!isValid || isLoadingEnable} type="submit">
-                {t('submitButton')}
+                {t("submitButton")}
               </Button>
             </DialogFooter>
           </form>

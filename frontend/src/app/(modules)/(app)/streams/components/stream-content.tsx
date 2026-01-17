@@ -1,36 +1,49 @@
-'use client';
+"use client";
 
-import { useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { useQuery } from "@apollo/client/react";
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Heading } from "@/components/ui/custom/heading";
+import { graphql } from "@/gql";
+import type { StreamModel } from "@/gql/graphql";
+import { StreamCardSkeleton } from "./stream-card";
+import { StreamsList } from "./stream-list";
 
-import { Heading } from '@/components/ui/custom/heading';
-
-import {
-  type FindAllStreamsQuery,
-  useFindAllStreamsQuery,
-} from '@/graphql/_generated/output';
-
-import { StreamCardSkeleton } from './stream-card';
-import { StreamsList } from './stream-list';
+const FindAllStreamsDoc = graphql(`
+query FindAllStreams($filters: FiltersInput!) {
+  findAllStreams(filters: $filters) {
+    title
+    thumbnailUrl
+    isLive
+    user {
+      username
+      avatar
+      isVerified
+    }
+    category {
+      title
+      slug
+    }
+  }
+}
+`);
 
 interface StreamsContentProps {
-  streams: FindAllStreamsQuery['findAllStreams'];
+  streams: StreamModel[];
 }
 
 export function StreamsContent({ streams }: StreamsContentProps) {
-  const t = useTranslations('streams');
+  const t = useTranslations("streams");
 
   const searchParams = useSearchParams();
-  const searchTerm = searchParams.get('searchTerm');
+  const searchTerm = searchParams.get("searchTerm");
 
-  const [streamList, setStreamList] = useState<
-    FindAllStreamsQuery['findAllStreams']
-  >(streams ?? []);
+  const [streamList, setStreamList] = useState<StreamModel[]>(streams ?? []);
   const [hasMore, setHasMore] = useState(true);
 
-  const { data, fetchMore } = useFindAllStreamsQuery({
+  const { data, fetchMore } = useQuery(FindAllStreamsDoc, {
     variables: {
       filters: {
         searchTerm,
@@ -38,12 +51,12 @@ export function StreamsContent({ streams }: StreamsContentProps) {
         skip: 0,
       },
     },
-    fetchPolicy: 'network-only',
+    fetchPolicy: "network-only",
   });
 
   useEffect(() => {
     if (data?.findAllStreams) {
-      setStreamList(data.findAllStreams);
+      setStreamList(data.findAllStreams as StreamModel[]);
       setHasMore(data.findAllStreams.length === 12);
     }
   }, [data]);
@@ -62,8 +75,11 @@ export function StreamsContent({ streams }: StreamsContentProps) {
         },
       });
 
-      if (newData.findAllStreams.length) {
-        setStreamList((prev) => [...prev, ...newData.findAllStreams]);
+      if (newData?.findAllStreams.length) {
+        setStreamList((prev) => [
+          ...prev,
+          ...(newData.findAllStreams as StreamModel[]),
+        ]);
       } else {
         setHasMore(false);
       }
@@ -74,7 +90,7 @@ export function StreamsContent({ streams }: StreamsContentProps) {
     <>
       <Heading
         title={
-          searchTerm ? `${t('searchHeading')} "${searchTerm}"` : t('heading')
+          searchTerm ? `${t("searchHeading")} "${searchTerm}"` : t("heading")
         }
       />
       <InfiniteScroll

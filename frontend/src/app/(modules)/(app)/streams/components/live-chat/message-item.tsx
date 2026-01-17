@@ -1,27 +1,27 @@
-import { Medal } from 'lucide-react';
+import { Medal } from "lucide-react";
 
-import type { FindChatMessagesByStreamQuery } from '@/graphql/_generated/output';
+import type { ChatMessageAddedSubscription } from "@/gql/graphql";
 
-import { stringToColor } from '@/utils/color';
+import { stringToColor } from "@/utils/color";
 
 interface MessageItemProps {
-  message: FindChatMessagesByStreamQuery['findChatMessagesByStream'][0];
+  message: ChatMessageAddedSubscription["chatMessageAdded"];
   isSponsor: boolean;
 }
 
 export function MessageItem({ message, isSponsor }: MessageItemProps) {
-  const color = stringToColor(message.user.username ?? '');
+  const color = stringToColor(message.user.username ?? "");
 
   const formattedTime = new Date(message.createdAt).toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
+    hour: "2-digit",
+    minute: "2-digit",
   });
 
   return (
     <div className="flex gap-2 rounded-md p-2 hover:bg-accent">
-      <p className='text-muted-foreground'>{formattedTime}</p>
+      <p className="text-muted-foreground">{formattedTime}</p>
       <div className="flex grow flex-wrap items-baseline gap-1">
-        <p className='flex items-center whitespace-nowrap font-semibold'>
+        <p className="flex items-center whitespace-nowrap font-semibold">
           <span className="truncate" style={{ color }}>
             {message.user.username}
           </span>
